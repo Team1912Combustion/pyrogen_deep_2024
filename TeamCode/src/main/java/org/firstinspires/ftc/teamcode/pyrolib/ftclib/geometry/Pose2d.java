@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry;
 
-import androidx.annotation.NonNull;
-
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.interpolation.Interpolatable;
 
 /**
@@ -207,7 +205,6 @@ public class Pose2d implements Interpolatable<Pose2d> {
         return new Twist2d(translationPart.getX(), translationPart.getY(), dtheta);
     }
 
-    @NonNull
     @Override
     public String toString() {
         return String.format("Pose2d(%s, %s)", m_translation, m_rotation);
