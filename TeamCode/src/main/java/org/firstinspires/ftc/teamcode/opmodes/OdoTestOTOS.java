@@ -6,7 +6,6 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -32,7 +31,6 @@ import org.firstinspires.ftc.teamcode.pyrolib.OTOS.OTOSSensor;
  * See the sensor's product page: https://www.sparkfun.com/products/24904
  */
 @TeleOp(name = "Test OTOS Odometry", group = "Sensor")
-@Disabled
 public class OdoTestOTOS extends LinearOpMode {
     // Create an instance of the sensor
     OTOSSensor myOtos;

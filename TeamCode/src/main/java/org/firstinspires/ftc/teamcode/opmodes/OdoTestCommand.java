@@ -7,10 +7,8 @@ import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.commands.DefaultDrive;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @TeleOp
-@Disabled
 public class OdoTestCommand extends CommandOpMode {
 
     private DriveSubsystem m_drive;
@@ -31,7 +29,7 @@ public class OdoTestCommand extends CommandOpMode {
         m_driveCommand = new DefaultDrive(m_drive,
                 () -> m_driverStick.getLeftX(),
                 () -> m_driverStick.getLeftY(),
-                () -> m_driverStick.getLeftX());
+                () -> m_driverStick.getRightX());
         m_drive.setDefaultCommand(m_driveCommand);
     }
 
