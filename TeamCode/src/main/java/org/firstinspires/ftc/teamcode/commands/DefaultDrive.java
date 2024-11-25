@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.commands;
 
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
-import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.Drive;
 
 import java.util.function.DoubleSupplier;
 
@@ -11,7 +11,7 @@ import java.util.function.DoubleSupplier;
  */
 public class DefaultDrive extends CommandBase {
 
-    private final DriveSubsystem m_drive;
+    private final Drive m_drive;
     private final DoubleSupplier m_strafe;
     private final DoubleSupplier m_forward;
     private final DoubleSupplier m_rotation;
@@ -24,7 +24,7 @@ public class DefaultDrive extends CommandBase {
      * @param strafe    The control input for strafing left/right
      * @param rotation  The control input for turning
      */
-    public DefaultDrive(DriveSubsystem subsystem, DoubleSupplier strafe, DoubleSupplier forward, DoubleSupplier rotation) {
+    public DefaultDrive(Drive subsystem, DoubleSupplier strafe, DoubleSupplier forward, DoubleSupplier rotation) {
         m_drive = subsystem;
         m_strafe = strafe;
         m_forward = forward;
@@ -34,7 +34,11 @@ public class DefaultDrive extends CommandBase {
 
     @Override
     public void execute() {
-        m_drive.drive(m_strafe.getAsDouble(), m_forward.getAsDouble(), m_rotation.getAsDouble());
+        m_drive.drive(
+                -1.*m_strafe.getAsDouble(),
+                -1.*m_forward.getAsDouble(),
+                -1.*m_rotation.getAsDouble()
+        );
     }
 
 }

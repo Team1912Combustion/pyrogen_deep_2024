@@ -11,14 +11,14 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class DriveSubsystem extends SubsystemBase {
+public class Drive extends SubsystemBase {
 
     private final MecanumDrive m_drive;
     public final OTOSOdometry m_odometry;
 
-    public DriveSubsystem(MotorEx frontLeftMotor, MotorEx frontRightMotor,
-                          MotorEx backLeftMotor, MotorEx backRightMotor, OTOSSensor otos,
-                          Pose2d initialPose) {
+    public Drive(MotorEx frontLeftMotor, MotorEx frontRightMotor,
+                 MotorEx backLeftMotor, MotorEx backRightMotor, OTOSSensor otos,
+                 Pose2d initialPose) {
         m_drive = new MecanumDrive(
                 frontLeftMotor,
                 frontRightMotor,
@@ -27,8 +27,8 @@ public class DriveSubsystem extends SubsystemBase {
         m_odometry = new OTOSOdometry(otos::getPose2d, initialPose);
     }
 
-    public DriveSubsystem(HardwareMap hMap, String frontLeftMotorName, String frontRightMotorName,
-                          String backLeftMotorName, String backRightMotorName, OTOSSensor otos) {
+    public Drive(HardwareMap hMap, String frontLeftMotorName, String frontRightMotorName,
+                 String backLeftMotorName, String backRightMotorName, OTOSSensor otos) {
         this(
                 new MotorEx(hMap, frontLeftMotorName),
                 new MotorEx(hMap, frontRightMotorName),
@@ -39,8 +39,8 @@ public class DriveSubsystem extends SubsystemBase {
         );
     }
 
-    public DriveSubsystem(HardwareMap hMap, String frontLeftMotorName, String frontRightMotorName,
-                          String backLeftMotorName, String backRightMotorName) {
+    public Drive(HardwareMap hMap, String frontLeftMotorName, String frontRightMotorName,
+                 String backLeftMotorName, String backRightMotorName) {
         OTOSSensor m_OTOS = hMap.get(OTOSSensor.class, "sensor_otos");
         m_drive = new MecanumDrive(
                 new MotorEx(hMap, frontLeftMotorName),
