@@ -229,6 +229,16 @@ public class Pose2d implements Interpolatable<Pose2d> {
         return new Pose2d(m_translation, new Rotation2d(getHeading() + deltaTheta));
     }
 
+    public static Pose2d newnull() {
+        Translation2d null_translation = new Translation2d(0., 0.);
+        Rotation2d null_rotation = new Rotation2d().fromDegrees(0.);
+        return new Pose2d(null_translation, null_rotation);
+    }
+
+    public boolean isnull() {
+        return this.equals(newnull());
+    }
+
     public double getHeading() {
         return m_rotation.getRadians();
     }
@@ -244,4 +254,5 @@ public class Pose2d implements Interpolatable<Pose2d> {
             return this.exp(scaledTwist);
         }
     }
+
 }

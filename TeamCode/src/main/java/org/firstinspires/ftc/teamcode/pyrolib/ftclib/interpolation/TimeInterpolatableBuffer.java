@@ -4,6 +4,7 @@
 
 package org.firstinspires.ftc.teamcode.pyrolib.ftclib.interpolation;
 
+//import edu.wpi.first.math.MathUtil;
 import java.util.NavigableMap;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -47,8 +48,18 @@ public final class TimeInterpolatableBuffer<T> {
    * @return The new TimeInterpolatableBuffer.
    */
   public static <T extends Interpolatable<T>> TimeInterpolatableBuffer<T> createBuffer(
-          double historySizeSeconds) {
+      double historySizeSeconds) {
     return new TimeInterpolatableBuffer<>(Interpolatable::interpolate, historySizeSeconds);
+  }
+
+  /**
+   * Create a new TimeInterpolatableBuffer to store Double values.
+   *
+   * @param historySizeSeconds The history size of the buffer.
+   * @return The new TimeInterpolatableBuffer.
+   */
+  public static TimeInterpolatableBuffer<Double> createDoubleBuffer(double historySizeSeconds) {
+    return new TimeInterpolatableBuffer<>(MathUtil::interpolate, historySizeSeconds);
   }
 
   /**

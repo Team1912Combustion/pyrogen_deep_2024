@@ -30,6 +30,6 @@ public class ArmIntake extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return m_arm.atTarget();
     }
 }

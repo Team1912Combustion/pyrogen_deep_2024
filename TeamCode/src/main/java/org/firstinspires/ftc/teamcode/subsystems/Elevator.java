@@ -6,11 +6,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
-import org.firstinspires.ftc.teamcode.robot.Constants;
+import org.firstinspires.ftc.teamcode.robot.Constants.ElevatorConstants;
 
 public class Elevator extends SubsystemBase {
     private final MotorEx m_elevator;
     private final Motor.Encoder m_encoder;
+    private int current_target;
 
     public Elevator(HardwareMap hMap, String motorName) {
         m_elevator = new MotorEx(hMap, motorName);
@@ -25,22 +26,32 @@ public class Elevator extends SubsystemBase {
     }
 
     public boolean allIn() {
-        return (m_encoder.getPosition() < Constants.ElevatorConstants.threshold);
+        return (m_encoder.getPosition() < ElevatorConstants.threshold);
     }
     public boolean allOut() {
-        return (Constants.ElevatorConstants.full_out - m_encoder.getPosition() < Constants.ElevatorConstants.threshold);
+        return (ElevatorConstants.full_out - m_encoder.getPosition() < ElevatorConstants.threshold);
     }
+
+    public boolean atTarget() {
+        return (Math.abs(m_encoder.getPosition() - current_target) < ElevatorConstants.threshold);
+    }
+
     public boolean safeToMove() {
         return (! allIn() && ! allOut());
     }
 
-    public void runToPosition(int target) {
-        int fix_target = Math.min(
-                Constants.ElevatorConstants.full_out,
-                Math.max(Constants.ElevatorConstants.full_in, target)
+    private int fix_target(int target) {
+        return Math.min(
+                ElevatorConstants.full_out,
+                Math.max(ElevatorConstants.full_in, target)
         );
+    }
+
+    public void runToPosition(int target) {
+        current_target = fix_target(target);
         m_elevator.setRunMode(Motor.RunMode.PositionControl);
-        m_elevator.setTargetPosition(fix_target);
+        m_elevator.setTargetPosition(current_target);
+        m_elevator.set(ElevatorConstants.run_speed);
     }
 
     public void move(double speed) {

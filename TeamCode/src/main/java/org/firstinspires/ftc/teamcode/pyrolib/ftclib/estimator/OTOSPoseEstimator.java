@@ -386,7 +386,7 @@ public class OTOSPoseEstimator {
   private void init_timer() {
     start_time = System.currentTimeMillis();
   }
-  private double getTimestamp() {
+  public double getTimestamp() {
     return (System.currentTimeMillis() - start_time) / 1000.;
   }
 

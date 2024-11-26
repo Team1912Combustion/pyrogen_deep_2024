@@ -30,6 +30,6 @@ public class ElevatorLowBasket extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return m_elevator.atTarget();
     }
 }
