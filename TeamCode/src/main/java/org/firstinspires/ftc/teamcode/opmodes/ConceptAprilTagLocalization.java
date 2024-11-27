@@ -41,7 +41,7 @@ public class ConceptAprilTagLocalization extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        vision = new Vision(hardwareMap);
+        vision = new Vision(hardwareMap, telemetry);
 
         waitForStart();
 

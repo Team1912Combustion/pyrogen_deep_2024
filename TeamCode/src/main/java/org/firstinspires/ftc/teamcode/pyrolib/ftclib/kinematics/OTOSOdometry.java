@@ -22,13 +22,18 @@ public class OTOSOdometry extends Odometry {
         super(initialPose);
         m_OTOSSensor = OTOSSensor;
         m_offset = new Translation2d(xOffset, yOffset);
+        prevX = initialPose.getX(); prevY = initialPose.getY();
+        prevAngle = initialPose.getRotation();
     }
 
     public OTOSOdometry(Supplier<Pose2d> OTOSSensor, Pose2d initialPose) {
         super(initialPose);
         m_OTOSSensor = OTOSSensor;
         m_offset = new Translation2d(0., 0.);
+        prevX = initialPose.getX(); prevY = initialPose.getY();
+        prevAngle = initialPose.getRotation();
     }
+
     /**
      * This handles all the calculations for you.
      */
@@ -38,8 +43,8 @@ public class OTOSOdometry extends Odometry {
     }
     @Override
     public void updatePose(Pose2d pose) {
-        prevX = 0.;
-        prevY = 0.;
+        prevX = pose.getX();
+        prevY = pose.getY();
         prevAngle = pose.getRotation();
         robotPose = pose;
     }

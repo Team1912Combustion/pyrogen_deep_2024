@@ -38,9 +38,9 @@ public class SystemTest extends CommandOpMode {
         m_driverStick = new GamepadEx(gamepad1);
         m_opStick = new GamepadEx(gamepad2);
 
-        m_vision = new Vision(hardwareMap);
+        m_vision = new Vision(hardwareMap, telemetry);
         m_odometry = new Odometry(hardwareMap);
-        m_estimator = new Estimator(m_odometry, m_vision);
+        m_estimator = new Estimator(m_odometry, m_vision, telemetry);
 
         // create our drive object
         m_drive = new Drive(hardwareMap, "front_left", "front_right",

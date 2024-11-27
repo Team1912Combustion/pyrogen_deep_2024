@@ -11,7 +11,7 @@ public class Constants {
         public final static String sensor_name = "otos_sensor";
         public final static double[] vec_stateStdDevs = {1., 1., .1};
         public final static double[] vec_visionStdDevs = {4., 4., 999.};
-        public final static double max_apriltag_poserr = 6.;
+        public final static double max_apriltag_poserr = 48.;
     }
     public static class ArmConstants {
         public static final int intake = 0;

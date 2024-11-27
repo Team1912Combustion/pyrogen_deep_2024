@@ -36,7 +36,8 @@ public class Vision extends SubsystemBase {
     private VisionPortal visionPortal;
     private Telemetry telemetry;
 
-    public Vision(HardwareMap hMap) {
+    public Vision(HardwareMap hMap, Telemetry t_telemetry) {
+        telemetry = t_telemetry;
         cameraPosition = Constants.VisionConstants.cameraPosition;
         cameraOrientation = Constants.VisionConstants.cameraOrientation;
         aprilTag = new AprilTagProcessor.Builder()
@@ -105,6 +106,9 @@ public class Vision extends SubsystemBase {
     }
     public void close() {
         visionPortal.close();
+    }
+    public void periodic() {
+        add_telemetry();
     }
 
     public Pose2d get_robot_pose(AprilTagDetection detection) {
