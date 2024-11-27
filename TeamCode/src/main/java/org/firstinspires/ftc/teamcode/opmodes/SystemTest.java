@@ -40,7 +40,7 @@ public class SystemTest extends CommandOpMode {
 
         m_vision = new Vision(hardwareMap, telemetry);
         m_odometry = new Odometry(hardwareMap);
-        m_estimator = new Estimator(m_odometry, m_vision, telemetry);
+        m_estimator = new Estimator(m_odometry, m_vision);
 
         // create our drive object
         m_drive = new Drive(hardwareMap, "front_left", "front_right",
