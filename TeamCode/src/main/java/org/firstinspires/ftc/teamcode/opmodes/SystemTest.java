@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.DefaultDrive;
-import org.firstinspires.ftc.teamcode.pyrolib.OTOS.OTOSSensor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.RunCommand;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.InstantCommand;
@@ -43,13 +42,13 @@ public class SystemTest extends CommandOpMode {
         m_estimator = new Estimator(m_odometry, m_vision);
 
         // create our drive object
-        m_drive = new Drive(hardwareMap, "front_left", "front_right",
-                "back_left", "back_right", m_estimator);
+        m_drive = new Drive(hardwareMap);
         register(m_drive);
         m_driveCommand = new DefaultDrive(m_drive,
                 () -> m_driverStick.getLeftX(),
                 () -> m_driverStick.getLeftY(),
-                () -> m_driverStick.getRightX());
+                () -> m_driverStick.getRightX(),
+                () -> m_estimator.getRotation());
         m_drive.setDefaultCommand(m_driveCommand);
 
         m_arm = new Arm(hardwareMap, "arm");

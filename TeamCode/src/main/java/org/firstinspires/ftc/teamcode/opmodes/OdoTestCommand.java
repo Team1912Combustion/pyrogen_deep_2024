@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import org.firstinspires.ftc.teamcode.pyrolib.OTOS.OTOSSensor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.gamepad.GamepadEx;
 
@@ -26,20 +25,18 @@ public class OdoTestCommand extends CommandOpMode {
 
         m_driverStick = new GamepadEx(gamepad1);
 
-        // get our OTOS sensor
-        OTOSSensor m_OTOS = hardwareMap.get(OTOSSensor.class, "sensor_otos");
         m_vision = new Vision(hardwareMap, telemetry);
         m_odometry = new Odometry(hardwareMap);
         m_estimator = new Estimator(m_odometry, m_vision);
 
         // create our drive object
-        m_drive = new Drive(hardwareMap, "front_left", "front_right",
-                "back_left", "back_right", m_estimator);
+        m_drive = new Drive(hardwareMap);
         register(m_drive);
         m_driveCommand = new DefaultDrive(m_drive,
                 () -> m_driverStick.getLeftX(),
                 () -> m_driverStick.getLeftY(),
-                () -> m_driverStick.getRightX());
+                () -> m_driverStick.getRightX(),
+                () -> m_estimator.getRotation());
         m_drive.setDefaultCommand(m_driveCommand);
     }
 

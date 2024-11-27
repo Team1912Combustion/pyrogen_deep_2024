@@ -4,7 +4,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
-import org.firstinspires.ftc.teamcode.pyrolib.jama.Matrix;
 
 public class Constants {
     public static class OdometryConstants {
@@ -38,8 +37,14 @@ public class Constants {
         public static final double output_speed = -1.;
     }
 
-    public static class VisionConstants {
+    public static class DriveConstants {
+        public static final String front_left_name = "front_left";
+        public static final String front_right_name = "front_right";
+        public static final String back_left_name = "back_left";
+        public static final String back_right_name = "back_right";
+    }
 
+    public static class VisionConstants {
     /**
      * Camera axes:
      * Origin location: Center of the lens

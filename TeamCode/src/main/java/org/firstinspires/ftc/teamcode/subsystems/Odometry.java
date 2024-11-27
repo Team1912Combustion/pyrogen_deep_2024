@@ -11,24 +11,33 @@ import org.firstinspires.ftc.teamcode.robot.Constants.OdometryConstants;
 
 public class Odometry extends SubsystemBase {
 
-    public final OTOSOdometry m_odometry;
+    public final OTOSOdometry m_robotOdometry;
 
     public Odometry(OTOSSensor otos, Pose2d initialPose) {
-        m_odometry = new OTOSOdometry(otos::getPose2d, initialPose);
+        m_robotOdometry = new OTOSOdometry(otos::getPose2d, initialPose);
     }
 
     public Odometry(OTOSSensor otos) {
-        this(
-                otos,
-                new Pose2d(0., 0., Rotation2d.fromDegrees(0.))
-        );
+        this( otos, new Pose2d(0., 0., Rotation2d.fromDegrees(0.)) );
+    }
+
+    public Odometry(HardwareMap hMap, Pose2d initialPose) {
+        this( hMap.get(OTOSSensor.class, OdometryConstants.sensor_name), initialPose );
     }
 
     public Odometry(HardwareMap hMap) {
-        this(hMap.get(OTOSSensor.class, OdometryConstants.sensor_name));
+        this( hMap.get(OTOSSensor.class, OdometryConstants.sensor_name) );
     }
 
     public Pose2d getPose() {
-        return m_odometry.getPose();
+        return m_robotOdometry.getPose();
     }
+
+    public void update() {
+        m_robotOdometry.updatePose();
+    }
+
+    @Override
+    public void periodic() { this.update(); }
+
 }

@@ -5,6 +5,7 @@ import android.provider.ContactsContract;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.estimator.OTOSPoseEstimator;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Pose2d;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Rotation2d;
 import org.firstinspires.ftc.teamcode.pyrolib.jama.Matrix;
 import org.firstinspires.ftc.teamcode.pyrolib.utils.Datalogger;
 
@@ -30,7 +31,7 @@ public class Estimator extends SubsystemBase {
         m_vision = vision;
         m_odometry = odometry;
         m_estimator = new OTOSPoseEstimator(
-                m_odometry.m_odometry,
+                m_odometry.m_robotOdometry,
                 stateStdDevs,
                 visionMeasurementStdDevs);
         m_log = new Datalogger("estimator.log");
@@ -50,8 +51,13 @@ public class Estimator extends SubsystemBase {
         return m_estimator.getEstimatedPosition();
     }
 
-    @Override
-    public void periodic() {
+    public Rotation2d getRotation() {
+        return m_estimator.getEstimatedPosition().getRotation();
+    }
+
+    // the odometry subsystem is updating every loop in its periodic
+    // this method updates this poseEstimator when called
+    public void update() {
         m_estimator.update(m_odometry.getPose());
         List<Pose2d> pose2ds = m_vision.get_robot_pose_list();
         for (Pose2d vispose : pose2ds) {
@@ -76,4 +82,9 @@ public class Estimator extends SubsystemBase {
         }
     }
 
+    // update this poseEstimator every loop
+    @Override
+    public void periodic() {
+        this.update();
+    }
 }
