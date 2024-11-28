@@ -13,6 +13,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Drive extends SubsystemBase {
 
     private final MecanumDrive m_drive;
+    private boolean robotCentric;
+    private boolean squareInputs;
 
     public Drive(MotorEx frontLeftMotor, MotorEx frontRightMotor,
                  MotorEx backLeftMotor, MotorEx backRightMotor) {
@@ -22,6 +24,8 @@ public class Drive extends SubsystemBase {
                 backLeftMotor,
                 backRightMotor
         );
+        robotCentric = false;
+        squareInputs = true;
     }
 
     public Drive(HardwareMap hMap, String frontLeftMotorName, String frontRightMotorName,
@@ -44,15 +48,29 @@ public class Drive extends SubsystemBase {
     }
 
     public void drive(double strafeSpeed, double forwardSpeed, double turnSpeed) {
-        m_drive.driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, 0.0);
+        m_drive.driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, 0.0, squareInputs);
     }
 
     public void drive(double strafeSpeed, double forwardSpeed, double turnSpeed,
                                   Rotation2d poseRot2d) {
-        m_drive.driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed, poseRot2d.getDegrees());
+        if (robotCentric) {
+            m_drive.driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed,
+                    0.0, squareInputs);
+        } else {
+            m_drive.driveFieldCentric(strafeSpeed, forwardSpeed, turnSpeed,
+                    poseRot2d.getDegrees(), squareInputs);
+        }
     }
 
     public void stop() {
         m_drive.stop();
+    }
+
+    public void swapMode () {
+        robotCentric = ! robotCentric;
+    }
+
+    public void set_squareInputs(boolean squareInputs) {
+        this.squareInputs = squareInputs;
     }
 }
