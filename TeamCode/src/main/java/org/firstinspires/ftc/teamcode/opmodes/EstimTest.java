@@ -47,8 +47,8 @@ public class EstimTest extends CommandOpMode {
         m_drive.setDefaultCommand(m_driveCommand);
 
         telemetry.addLine(String.format("Estimator XYZ %6.1f %6.1f %6.1f  (inch)",
-                m_estimator.getX(),
-                m_estimator.getY(),
+                m_estimator.getPose().getX(),
+                m_estimator.getPose().getY(),
                 m_estimator.getPose().getHeading()));
 
         // update telemetry every loop
