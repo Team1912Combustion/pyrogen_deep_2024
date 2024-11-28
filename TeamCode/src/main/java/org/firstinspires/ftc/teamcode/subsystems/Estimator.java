@@ -19,6 +19,8 @@ public class Estimator extends SubsystemBase {
     private final Odometry m_odometry;
     private final Vision m_vision;
     private final Datalogger m_log;
+    private double distance = 0.;
+    private Matrix visStdDevs = new Matrix(3, 1);
 
     public Estimator(Odometry odometry, Vision vision) {
         super();
@@ -28,13 +30,13 @@ public class Estimator extends SubsystemBase {
             stateStdDevs.set(i, 0, OdometryConstants.vec_stateStdDevs[i]);
             visionMeasurementStdDevs.set(i, 0, OdometryConstants.vec_visionStdDevs[i]);
         }
+        m_log = new Datalogger("estimator.log");
         m_vision = vision;
         m_odometry = odometry;
         m_estimator = new OTOSPoseEstimator(
                 m_odometry.m_robotOdometry,
                 stateStdDevs,
                 visionMeasurementStdDevs);
-        m_log = new Datalogger("estimator.log");
         m_log.addField("odoX");
         m_log.addField("odoY");
         m_log.addField("odoH");
@@ -58,14 +60,21 @@ public class Estimator extends SubsystemBase {
     // the odometry subsystem is updating every loop in its periodic
     // this method updates this poseEstimator when called
     public void update() {
-        m_estimator.update(m_odometry.getPose());
+        m_estimator.update();
         List<Pose2d> pose2ds = m_vision.get_robot_pose_list();
         for (Pose2d vispose : pose2ds) {
+            m_log.addField("vispose:");
+            m_log.addField(vispose.getX());
+            m_log.addField(vispose.getY());
+            m_log.newLine();
             // check that apriltag pose is less than 6in (max_apriltag_poserr) from the current
             // pose estimate before adding it
-            if (m_odometry.getPose().minus(vispose).getTranslation().getNorm() <
-                    OdometryConstants.max_apriltag_poserr) {
-                m_estimator.addVisionMeasurement(vispose, m_estimator.getTimestamp());
+            distance = m_odometry.getPose().minus(vispose).getTranslation().getNorm();
+            visStdDevs.set(0,0, distance);
+                visStdDevs.set(1,0, distance); visStdDevs.set(2,0, Math.PI / 6.);
+            if (m_odometry.getPose().minus(vispose).getTranslation().getNorm() < 144.) {
+                    //OdometryConstants.max_apriltag_poserr) {
+                m_estimator.addVisionMeasurement(vispose, m_estimator.getTimestamp(), visStdDevs);
             }
             Pose2d pose2d = m_odometry.getPose();
             m_log.addField(pose2d.getX());

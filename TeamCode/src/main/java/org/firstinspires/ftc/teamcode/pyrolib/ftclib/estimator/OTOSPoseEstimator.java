@@ -2,6 +2,8 @@
 
 package org.firstinspires.ftc.teamcode.pyrolib.ftclib.estimator;
 
+import android.provider.ContactsContract;
+
 import java.util.NavigableMap;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -207,6 +209,12 @@ public class OTOSPoseEstimator {
     m_visionUpdates.headMap(newestNeededVisionUpdateTimestamp, false).clear();
   }
 
+  public void addVisionMeasurement(Pose2d visionRobotPose, double timestampSeconds,
+                                   Matrix visionMeasurementStdDevs) {
+    setVisionMeasurementStdDevs(visionMeasurementStdDevs);
+    addVisionMeasurement(visionRobotPose, timestampSeconds);
+  }
+
   /**
    * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
    * while still accounting for measurement noise.
@@ -283,11 +291,10 @@ public class OTOSPoseEstimator {
    * Updates the pose estimator with wheel encoder and gyro information. This should be called every
    * loop.
    *
-   * @param newPose The current OTOSSensor pose
    * @return The estimated pose of the robot in meters.
    */
-  public Pose2d update(Pose2d newPose) {
-    return updateWithTime(getTimestamp(), newPose);
+  public Pose2d update() {
+    return updateWithTime(getTimestamp());
   }
 
   /**
@@ -295,11 +302,10 @@ public class OTOSPoseEstimator {
    * loop.
    *
    * @param currentTimeSeconds Time at which this method was called, in seconds.
-   * @param newPose The current pose from the OTOS sensor.
    * @return The estimated pose of the robot in meters.
    */
-  public Pose2d updateWithTime(double currentTimeSeconds, Pose2d newPose) {
-    Pose2d odometryEstimate = m_odometry.update(newPose);
+  public Pose2d updateWithTime(double currentTimeSeconds) {
+    Pose2d odometryEstimate = m_odometry.getPose();
 
     m_odometryPoseBuffer.addSample(currentTimeSeconds, odometryEstimate);
 
@@ -317,7 +323,7 @@ public class OTOSPoseEstimator {
    * Represents a vision update record. The record contains the vision-compensated pose estimate as
    * well as the corresponding odometry pose estimate.
    */
-  private static final class VisionUpdate {
+  private class VisionUpdate {
     // The vision-compensated pose estimate.
     private final Pose2d visionPose;
 
