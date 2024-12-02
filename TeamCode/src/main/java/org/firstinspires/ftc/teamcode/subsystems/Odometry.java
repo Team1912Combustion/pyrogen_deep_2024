@@ -11,10 +11,11 @@ import org.firstinspires.ftc.teamcode.robot.Constants.OdometryConstants;
 
 public class Odometry extends SubsystemBase {
 
-    public final OTOSOdometry m_robotOdometry;
+    public final OTOSOdometry m_otosOdometry;
 
     public Odometry(OTOSSensor otos, Pose2d initialPose) {
-        m_robotOdometry = new OTOSOdometry(otos::getPose2d, initialPose);
+        otos.calibrateImu();
+        m_otosOdometry = new OTOSOdometry(otos, initialPose);
     }
 
     public Odometry(OTOSSensor otos) {
@@ -30,11 +31,11 @@ public class Odometry extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return m_robotOdometry.getPose();
+        return m_otosOdometry.getPose();
     }
 
     public void update() {
-        m_robotOdometry.updatePose();
+        m_otosOdometry.updatePose();
     }
 
     @Override

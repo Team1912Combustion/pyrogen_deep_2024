@@ -1,35 +1,35 @@
 package org.firstinspires.ftc.teamcode.pyrolib.ftclib.kinematics;
 
+import org.firstinspires.ftc.teamcode.pyrolib.OTOS.OTOSSensor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Pose2d;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Rotation2d;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Translation2d;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Twist2d;
 
-import java.util.function.Supplier;
-
 public class OTOSOdometry extends Odometry {
 
     private double prevX, prevY;
     private Rotation2d prevAngle;
-    private Translation2d m_offset;
 
     private double m_xOffset, m_yOffset;
 
     // the suppliers
-    Supplier<Pose2d> m_OTOSSensor;
+    OTOSSensor m_OTOSSensor;
 
-    public OTOSOdometry(Supplier<Pose2d> OTOSSensor, Pose2d initialPose, double xOffset, double yOffset) {
+    public OTOSOdometry(OTOSSensor OTOSSensor, Pose2d initialPose, double xOffset, double yOffset) {
         super(initialPose);
         m_OTOSSensor = OTOSSensor;
-        m_offset = new Translation2d(xOffset, yOffset);
+        m_OTOSSensor.initialize();
+        m_OTOSSensor.setPose2d(initialPose);
         prevX = initialPose.getX(); prevY = initialPose.getY();
         prevAngle = initialPose.getRotation();
     }
 
-    public OTOSOdometry(Supplier<Pose2d> OTOSSensor, Pose2d initialPose) {
+    public OTOSOdometry(OTOSSensor OTOSSensor, Pose2d initialPose) {
         super(initialPose);
         m_OTOSSensor = OTOSSensor;
-        m_offset = new Translation2d(0., 0.);
+        m_OTOSSensor.initialize();
+        m_OTOSSensor.setPose2d(initialPose);
         prevX = initialPose.getX(); prevY = initialPose.getY();
         prevAngle = initialPose.getRotation();
     }
@@ -39,10 +39,12 @@ public class OTOSOdometry extends Odometry {
      */
     @Override
     public void updatePose() {
-        update(m_OTOSSensor.get());
+        update(m_OTOSSensor.getPose2d());
     }
+
     @Override
     public void updatePose(Pose2d pose) {
+        m_OTOSSensor.setPose2d(pose);
         prevX = pose.getX();
         prevY = pose.getY();
         prevAngle = pose.getRotation();
@@ -54,8 +56,6 @@ public class OTOSOdometry extends Odometry {
         double X = new_Pose2d.getX();
         double Y = new_Pose2d.getY();
         Rotation2d angle = new_Pose2d.getRotation();
-
-        Translation2d newOffset = m_offset.rotateBy(angle);
 
         double dx = X - prevX;
         double dy = Y - prevY;
@@ -70,7 +70,7 @@ public class OTOSOdometry extends Odometry {
         return robotPose;
     }
 
-    public Pose2d getPose() {
-        return robotPose;
+    public Pose2d getSensorPose() {
+        return m_OTOSSensor.getPose2d();
     }
 }

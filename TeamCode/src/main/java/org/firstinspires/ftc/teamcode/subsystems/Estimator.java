@@ -34,9 +34,10 @@ public class Estimator extends SubsystemBase {
         m_vision = vision;
         m_odometry = odometry;
         m_estimator = new OTOSPoseEstimator(
-                m_odometry.m_robotOdometry,
+                m_odometry.m_otosOdometry,
                 stateStdDevs,
                 visionMeasurementStdDevs);
+                // m_log);
         m_log.addField("odoX");
         m_log.addField("odoY");
         m_log.addField("odoH");
@@ -51,6 +52,9 @@ public class Estimator extends SubsystemBase {
 
     public Pose2d getPose() {
         return m_estimator.getEstimatedPosition();
+    }
+    public void resetPose(Pose2d newpose) {
+        m_estimator.resetPose(newpose);
     }
 
     public Rotation2d getRotation() {

@@ -22,7 +22,19 @@ public class OTOSSensor extends SparkFunOTOS {
 
     public Pose2d getPose2d() {
         Pose2D sensor_pos = getPosition();
-        return new Pose2d(sensor_pos.x, sensor_pos.y, Rotation2d.fromDegrees(sensor_pos.h));
+        return new Pose2d(
+                -1. * sensor_pos.y,
+                sensor_pos.x,
+                Rotation2d.fromDegrees(sensor_pos.h)
+        );
+    }
+
+    public void setPose2d(Pose2d pose2d) {
+        Pose2D sensor_pos = new Pose2D();
+        sensor_pos.x = pose2d.getY();
+        sensor_pos.y = -1. * pose2d.getX();
+        sensor_pos.h = pose2d.getHeading();
+        this.setPosition(sensor_pos);
     }
 
 }

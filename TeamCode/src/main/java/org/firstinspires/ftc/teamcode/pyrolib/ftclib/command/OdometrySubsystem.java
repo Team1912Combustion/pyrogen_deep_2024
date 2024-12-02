@@ -14,14 +14,14 @@ public class OdometrySubsystem extends SubsystemBase {
     public OdometrySubsystem(HardwareMap hwmap, Pose2d initialPose) {
         // create our odometry object and subsystem
         OTOSSensor m_OTOS = hwmap.get(OTOSSensor.class, "sensor_otos");
-        OTOSOdometry m_odometry = new OTOSOdometry(m_OTOS::getPose2d, initialPose);
+        OTOSOdometry m_odometry = new OTOSOdometry(m_OTOS, initialPose);
     }
 
     public OdometrySubsystem(HardwareMap hwmap) {
         // create our odometry object and subsystem
         OTOSSensor m_OTOS = hwmap.get(OTOSSensor.class, "sensor_otos");
         Pose2d initialPose = new Pose2d(0., 0., Rotation2d.fromDegrees(0.));
-        OTOSOdometry m_odometry = new OTOSOdometry(m_OTOS::getPose2d, initialPose);
+        OTOSOdometry m_odometry = new OTOSOdometry(m_OTOS, initialPose);
     }
 
     public Pose2d getPose() {
