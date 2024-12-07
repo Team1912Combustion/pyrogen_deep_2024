@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.PController;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
 import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
@@ -10,47 +12,53 @@ import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
 public class Arm extends SubsystemBase {
     private final MotorEx m_arm;
     private final Motor.Encoder m_encoder;
-    private int current_target;
+    private final PController pid;
+    private final ArmFeedforward feedforward;
+    private double current_target;
 
     public Arm(HardwareMap hMap, String motorName) {
         m_arm = new MotorEx(hMap, motorName);
         m_encoder = m_arm.encoder;
         m_arm.stopAndResetEncoder();
-        m_arm.setRunMode(Motor.RunMode.VelocityControl);
+        current_target = get_angle();
+        m_arm.setRunMode(Motor.RunMode.RawPower);
+        m_arm.set(0.);
+        pid = new PController(ArmConstants.kP);
+        pid.setTolerance(ArmConstants.angle_threshold);
+        feedforward = new ArmFeedforward(
+                ArmConstants.kS,
+                ArmConstants.kG,
+                ArmConstants.kV,
+                ArmConstants.kA);
     }
 
     public int get_position() {
         return m_encoder.getPosition();
     }
 
-    public boolean atBottom() {
-        return (Math.abs(m_encoder.getPosition()) < ArmConstants.threshold);
-    }
-    public boolean atTop() {
-        return (Math.abs(m_encoder.getPosition() - ArmConstants.encoder_max) < ArmConstants.threshold);
-    }
-    public boolean atTarget() {
-        return (Math.abs(m_encoder.getPosition() - current_target) < ArmConstants.threshold);
+    public double get_angle() {
+        return (double) get_position() * (Math.PI * 0.5) / ArmConstants.pos_90;
     }
 
-    public boolean safeToMove() {
-        return (! atBottom() && ! atTop());
+    public double fix_target(double target) {
+        return  Math.min(ArmConstants.angle_90,
+                Math.max(ArmConstants.angle_intake, target));
     }
 
-    public int fix_target(int target) {
-        return Math.min(ArmConstants.encoder_max, Math.max(ArmConstants.intake, target));
-    }
-
-    public void runToPosition(int target) {
+    public void runToPosition(double target) {
         current_target = fix_target(target);
-        m_arm.setRunMode(Motor.RunMode.PositionControl);
-        m_arm.setTargetPosition(current_target);
-        m_arm.set(ArmConstants.run_speed);
+        pid.setSetPoint(current_target);
     }
 
-    public void move(double speed) {
-        m_arm.setRunMode(Motor.RunMode.VelocityControl);
-        m_arm.set(speed);
+    public boolean atTarget() {
+        return pid.atSetPoint();
+    }
+
+    @Override
+    public void periodic() {
+        double power =  pid.calculate(get_angle()) +
+                feedforward.calculate(get_angle(),ArmConstants.vel_radpersec);
+        m_arm.set(power);
     }
 
     public void stop() {

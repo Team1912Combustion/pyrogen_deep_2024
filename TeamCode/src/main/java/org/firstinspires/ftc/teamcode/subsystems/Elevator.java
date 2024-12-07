@@ -5,43 +5,38 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.PController;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
+import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.robot.Constants.ElevatorConstants;
 
 public class Elevator extends SubsystemBase {
     private final MotorEx m_elevator;
     private final Motor.Encoder m_encoder;
     private int current_target;
-    private Telemetry m_telemetry;
+    private Telemetry telemetry;
+    private final PController pid;
 
-    public Elevator(HardwareMap hMap, String motorName, Telemetry telemetry) {
+    public Elevator(HardwareMap hMap, String motorName, Telemetry t_telemetry) {
+        telemetry = t_telemetry;
         m_elevator = new MotorEx(hMap, motorName);
         m_elevator.setInverted(true);
         m_encoder = m_elevator.encoder;
-
         m_elevator.stopAndResetEncoder();
-        m_elevator.setRunMode(Motor.RunMode.VelocityControl);
-        m_telemetry = telemetry;
+        current_target = get_position();
+        m_elevator.setRunMode(Motor.RunMode.RawPower);
+        pid = new PController(Constants.ElevatorConstants.kP);
+        pid.setTolerance(Constants.ElevatorConstants.threshold);
     }
 
     public int get_position() {
         return m_encoder.getPosition();
     }
 
-    public boolean allIn() {
-        return (m_encoder.getPosition() < ElevatorConstants.threshold);
-    }
-    public boolean allOut() {
-        return (ElevatorConstants.full_out - m_encoder.getPosition() < ElevatorConstants.threshold);
-    }
-
     public boolean atTarget() {
-        return (Math.abs(m_encoder.getPosition() - current_target) < ElevatorConstants.threshold);
-    }
-
-    public boolean safeToMove() {
-        return (! allIn() && ! allOut());
+        return pid.atSetPoint();
     }
 
     private int fix_target(int target) {
@@ -53,20 +48,15 @@ public class Elevator extends SubsystemBase {
 
     public void runToPosition(int target) {
         current_target = fix_target(target);
-        m_elevator.setRunMode(Motor.RunMode.PositionControl);
-        m_elevator.setTargetPosition(current_target);
-        m_elevator.set(ElevatorConstants.run_speed);
-        m_telemetry.addData("elev enc:",m_encoder.getPosition());
+        pid.setSetPoint(current_target);
     }
 
-    public void move(double speed) {
-        m_elevator.setRunMode(Motor.RunMode.VelocityControl);
-        m_elevator.set(speed);
-        m_telemetry.addData("elev enc:",m_encoder.getPosition());
-    }
-
-    public int getPosition() {
-        return m_encoder.getPosition();
+    @Override
+    public void periodic() {
+        double power = pid.calculate(get_position());
+        m_elevator.set(power);
+        telemetry.addLine(String.format("elev enc: %d power %f\n",
+                m_encoder.getPosition(),power));
     }
 
     public void stop() {
