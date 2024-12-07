@@ -26,11 +26,11 @@ public class Constants {
         public static final int full_in = 0;
         // 581 PPR
         // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
-        public static final int full_out = 581;
-        public static final int high_basket = 200;
-        public static final int low_basket = 100;
-        public static final int threshold = 5;
-        public static final double run_speed = 0.2;
+        public static final int full_out = 4000;
+        public static final int high_basket = 3500;
+        public static final int low_basket = 2000;
+        public static final int threshold = 25;
+        public static final double run_speed = 0.25;
     }
     public static class IntakeConstants {
         public static final double intake_speed = 1.;
