@@ -5,29 +5,28 @@ import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 
 /**
- * A command to drive the arm to the high basket position.
+ * A command to nudge the arm down.
  */
-public class ArmHighBasket extends CommandBase {
+public class ArmDown extends CommandBase {
 
     private final Arm m_arm;
+    private double target;
 
-    public ArmHighBasket(Arm arm) {
+    public ArmDown(Arm arm) {
         m_arm = arm;
         addRequirements(m_arm);
     }
 
     @Override
     public void execute() {
-        m_arm.runToAngle(Constants.ArmConstants.angle_high);
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        m_arm.stop();
+        m_arm.runToAngle(
+                m_arm.get_angle() -
+                Constants.ArmConstants.angle_threshold);
     }
 
     @Override
     public boolean isFinished() {
-        return m_arm.atTarget();
+        return true;
     }
+
 }

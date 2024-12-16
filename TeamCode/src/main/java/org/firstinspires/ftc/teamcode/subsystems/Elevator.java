@@ -15,13 +15,13 @@ import org.firstinspires.ftc.teamcode.robot.Constants.ElevatorConstants;
 public class Elevator extends SubsystemBase {
     private final MotorEx m_elevator;
     private final Motor.Encoder m_encoder;
-    private int current_target;
+    public int current_target;
     private Telemetry telemetry;
     private final PController pid;
 
     public Elevator(HardwareMap hMap, String motorName, Telemetry t_telemetry) {
         telemetry = t_telemetry;
-        m_elevator = new MotorEx(hMap, motorName);
+        m_elevator = new MotorEx(hMap, motorName, Motor.GoBILDA.RPM_312);
         m_elevator.setInverted(true);
         m_encoder = m_elevator.encoder;
         m_elevator.stopAndResetEncoder();
@@ -55,8 +55,8 @@ public class Elevator extends SubsystemBase {
     public void periodic() {
         double power = pid.calculate(get_position());
         m_elevator.set(power);
-        telemetry.addLine(String.format("elev enc: %d power %f\n",
-                m_encoder.getPosition(),power));
+        telemetry.addLine(String.format("elev enc %d tgt %d power %f\n",
+                m_encoder.getPosition(),current_target,power));
     }
 
     public void stop() {

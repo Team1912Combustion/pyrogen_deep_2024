@@ -7,12 +7,11 @@ import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 /**
  * A command to run the elevator back in.
  */
-public class ElevatorUp extends CommandBase {
+public class ElevatorDown extends CommandBase {
 
     private final Elevator m_elevator;
-    private double target;
 
-    public ElevatorUp(Elevator elevator) {
+    public ElevatorDown(Elevator elevator) {
         m_elevator = elevator;
         addRequirements(m_elevator);
     }
@@ -20,8 +19,13 @@ public class ElevatorUp extends CommandBase {
     @Override
     public void execute() {
         m_elevator.runToPosition(
-                m_elevator.get_position() +
+                m_elevator.get_position() -
                 Constants.ElevatorConstants.threshold);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
 }

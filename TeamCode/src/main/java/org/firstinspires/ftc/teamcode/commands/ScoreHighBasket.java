@@ -21,7 +21,7 @@ public class ScoreHighBasket extends SequentialCommandGroup {
                 new InstantCommand(intake::runIn),
                 new WaitCommand(2000),
                 new InstantCommand(intake::stop),
-                new ParallelCommandGroup(new ArmIntake(arm), new ElevatorFullIn(elevator))
+                new ParallelCommandGroup(new ArmIntake(arm, elevator), new ElevatorFullIn(elevator))
         );
         addRequirements(arm, elevator, intake);
     }

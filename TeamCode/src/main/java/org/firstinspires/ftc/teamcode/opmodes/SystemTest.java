@@ -51,13 +51,11 @@ public class SystemTest extends CommandOpMode {
                 () -> m_estimator.getRotation());
         m_drive.setDefaultCommand(m_driveCommand);
 
-        m_arm = new Arm(hardwareMap, "arm");
+        m_arm = new Arm(hardwareMap, "arm", telemetry);
         register(m_arm);
 
         m_elevator = new Elevator(hardwareMap, "elevator", telemetry);
         register(m_elevator);
-        ElevatorDrive m_driveElevator = new ElevatorDrive(m_elevator, ()->m_opStick.getLeftY());
-        m_elevator.setDefaultCommand(m_driveElevator);
 
         m_intake = new Intake(hardwareMap, "intake");
         register(m_intake);
@@ -74,9 +72,26 @@ public class SystemTest extends CommandOpMode {
         m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new ArmLowBasket(m_arm));
         m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new ArmIntake(m_arm));
          */
-        m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new ElevatorHighBasket(m_elevator));
-        m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new ElevatorLowBasket(m_elevator));
-        m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new ElevatorFullIn(m_elevator));
+        m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_UP).
+                  whenPressed(new ArmHighBasket(m_arm));
+        m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).
+                  whenPressed(new ArmLowBasket(m_arm));
+        m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).
+                  whenPressed(new ArmIntake(m_arm, m_elevator));
+        m_opStick.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).
+                  whenPressed(new ArmDown(m_arm));
+        m_opStick.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).
+                  whenPressed(new ArmUp(m_arm));
+        m_opStick.getGamepadButton(GamepadKeys.Button.Y).
+                whenPressed(new ElevatorHighBasket(m_elevator));
+        m_opStick.getGamepadButton(GamepadKeys.Button.X).
+                whenPressed(new ElevatorLowBasket(m_elevator));
+        m_opStick.getGamepadButton(GamepadKeys.Button.A).
+                whenPressed(new ElevatorFullIn(m_elevator));
+        m_opStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
+                  whenPressed(new ElevatorDown(m_elevator));
+        m_opStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
+                  whenPressed(new ElevatorUp(m_elevator));
 
         // update telemetry every loop
         schedule(new RunCommand(telemetry::update));
