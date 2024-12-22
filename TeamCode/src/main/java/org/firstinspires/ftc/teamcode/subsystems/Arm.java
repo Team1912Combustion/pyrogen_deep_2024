@@ -10,18 +10,20 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.PController;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
+import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
     private final MotorEx m_arm;
+    private final Elevator m_elevator;
     private final Motor.Encoder m_encoder;
     private final PController pid;
     private final ArmFeedforward feedforward;
     public double current_target;
-    private Telemetry m_telemetry;
+    private Telemetry telemetry;
 
-    public Arm(HardwareMap hMap, String motorName, Telemetry telemetry) {
-        m_telemetry = telemetry;
+    public Arm(HardwareMap hMap, String motorName, Elevator e_elevator, Telemetry t_telemetry) {
+        telemetry = t_telemetry;
         m_arm = new MotorEx(hMap, motorName, Motor.GoBILDA.RPM_30);
         m_arm.setInverted(true);
         m_encoder = m_arm.encoder;
@@ -37,6 +39,7 @@ public class Arm extends SubsystemBase {
                 ArmConstants.kV,
                 ArmConstants.kA);
         pid.setSetPoint(current_target);
+        m_elevator = e_elevator;
     }
 
     public int get_position() {
@@ -44,12 +47,19 @@ public class Arm extends SubsystemBase {
     }
 
     public double get_angle() {
-        return (double) get_position() * (Math.PI * 0.5) / ArmConstants.tick_90;
+        return (double) get_position() * ArmConstants.radPerTick;
+    }
+
+    public double old_fix_target(double target) {
+        return Math.min(ArmConstants.angle_limit_high,
+               Math.max(ArmConstants.angle_limit_low, target));
     }
 
     public double fix_target(double target) {
-        return  Math.min(ArmConstants.angle_limit_high,
+        double fix_target = Math.min(ArmConstants.angle_limit_high,
                 Math.max(ArmConstants.angle_limit_low, target));
+        double adjust_min = ArmConstants.angle_zero * m_elevator.get_fraction();
+        return Math.max(fix_target, adjust_min);
     }
 
     public void runToAngle(double angle) {
@@ -68,9 +78,9 @@ public class Arm extends SubsystemBase {
         double feed_power = feedforward.calculate(get_angle(),ArmConstants.vel_radpersec);
         double power =  pid_power + feed_power;
         m_arm.set(power);
-        m_telemetry.addLine(String.format("arm enc %d power %f\n", get_position(),power));
-        m_telemetry.addLine(String.format("arm pid %f feed %f\n", pid_power, feed_power));
-        m_telemetry.addLine(String.format("cur ang %f tgt ang %f\n", current_target, get_angle()));
+        telemetry.addLine(String.format("arm enc %d power %f\n", get_position(),power));
+        telemetry.addLine(String.format("arm pid %f feed %f\n", pid_power, feed_power));
+        telemetry.addLine(String.format("cur ang %f tgt ang %f\n", current_target, get_angle()));
     }
 
     public void stop() {

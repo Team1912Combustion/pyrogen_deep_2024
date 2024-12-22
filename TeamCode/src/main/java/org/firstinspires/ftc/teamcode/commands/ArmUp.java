@@ -20,8 +20,8 @@ public class ArmUp extends CommandBase {
     @Override
     public void execute() {
         m_arm.runToAngle(
-                m_arm.get_angle() +
-                Constants.ArmConstants.angle_threshold);
+                m_arm.current_target +
+                3.*Constants.ArmConstants.angle_threshold);
     }
 
     @Override

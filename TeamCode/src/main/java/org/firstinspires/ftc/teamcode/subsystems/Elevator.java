@@ -31,6 +31,11 @@ public class Elevator extends SubsystemBase {
         pid.setTolerance(Constants.ElevatorConstants.threshold);
     }
 
+    public double get_fraction() {
+        double range =  ElevatorConstants.full_out - ElevatorConstants.full_in;
+        return (get_position() - ElevatorConstants.full_in) / range;
+    }
+
     public int get_position() {
         return m_encoder.getPosition();
     }
