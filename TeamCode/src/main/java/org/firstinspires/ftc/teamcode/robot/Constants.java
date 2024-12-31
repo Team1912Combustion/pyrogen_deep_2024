@@ -23,7 +23,8 @@ public class Constants {
         public static final int pos_limit_low = 0;
         public static final int pos_high= 2600;
         public static final int pos_mid= 2010;
-        public static final int pos_zero = 120;
+        public static final int pos_level= 850;
+        public static final int pos_zero = 320;
         public static final int pos_intake = 20;
         public static final int pos_threshold = 20;
         public static final double maxVoltage = 12.; // = pos_90 * radPerTick;
@@ -32,6 +33,7 @@ public class Constants {
         public static final double angle_high = pos_high * radPerTick;
         public static final double angle_mid = pos_mid * radPerTick;
         public static final double angle_zero = pos_zero * radPerTick;
+        public static final double angle_level = pos_level * radPerTick;
         public static final double angle_intake = pos_intake * radPerTick;
         public static final double angle_threshold = pos_threshold * radPerTick;
         // PController P
@@ -51,7 +53,8 @@ public class Constants {
         public static final int full_out = 4500;
         public static final int high_basket = 4000;
         public static final int low_basket = 2160;
-        public static final int threshold = 200;
+        public static final int hang = 150;
+        public static final int threshold = 100;
         public static final double kP = .01 ; // percent power (-1/1) per encoder tick error
     }
 
