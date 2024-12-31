@@ -40,13 +40,13 @@ public class SystemTest extends CommandOpMode {
                 m_estimator::getRotation);
         m_drive.setDefaultCommand(m_driveCommand);
 
-        Elevator m_elevator = new Elevator(hardwareMap, "elevator", telemetry);
+        Elevator m_elevator = new Elevator(hardwareMap, telemetry);
         register(m_elevator);
 
-        Arm m_arm = new Arm(hardwareMap, "arm", m_elevator, telemetry);
+        Arm m_arm = new Arm(hardwareMap, m_elevator, telemetry);
         register(m_arm);
 
-        Intake m_intake = new Intake(hardwareMap, "intake", telemetry);
+        Intake m_intake = new Intake(hardwareMap, telemetry);
         register(m_intake);
 
         // button bindings for the mechanisms
@@ -68,6 +68,7 @@ public class SystemTest extends CommandOpMode {
                   whenPressed(new ArmIntake(m_arm, m_elevator));
         m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).
                 whenPressed(new ArmLevel(m_arm));
+
         // elevator
         m_opStick.getGamepadButton(GamepadKeys.Button.Y).
                 whenPressed(new ElevatorHighBasket(m_elevator));
@@ -75,8 +76,8 @@ public class SystemTest extends CommandOpMode {
                 whenPressed(new ElevatorLowBasket(m_elevator));
         m_opStick.getGamepadButton(GamepadKeys.Button.A).
                 whenPressed(new ElevatorFullIn(m_elevator));
-        m_driverStick.getGamepadButton(GamepadKeys.Button.A).
-                whenPressed(new ElevatorHang(m_elevator));
+
+        // adjustments for arm
         m_opStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
                   whenPressed(new ArmDown(m_arm));
         m_opStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).

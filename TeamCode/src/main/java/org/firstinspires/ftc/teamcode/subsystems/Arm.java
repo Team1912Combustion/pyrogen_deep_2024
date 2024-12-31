@@ -22,9 +22,9 @@ public class Arm extends SubsystemBase {
     public double current_target;
     private Telemetry telemetry;
 
-    public Arm(HardwareMap hMap, String motorName, Elevator e_elevator, Telemetry t_telemetry) {
+    public Arm(HardwareMap hMap, Elevator e_elevator, Telemetry t_telemetry) {
         telemetry = t_telemetry;
-        m_arm = new MotorEx(hMap, motorName, Motor.GoBILDA.RPM_30);
+        m_arm = new MotorEx(hMap, ArmConstants.motor_name, Motor.GoBILDA.RPM_30);
         m_arm.setInverted(true);
         m_encoder = m_arm.encoder;
         m_arm.stopAndResetEncoder();

@@ -13,8 +13,8 @@ public class Intake extends SubsystemBase {
     private final Telemetry telemetry;
     private double speed;
 
-    public Intake(HardwareMap hMap, String servoName, Telemetry t_telemetry) {
-        m_intake = new CRServo(hMap, servoName);
+    public Intake(HardwareMap hMap, Telemetry t_telemetry) {
+        m_intake = new CRServo(hMap, Constants.IntakeConstants.servo_name);
         telemetry = t_telemetry;
         speed = 0.;
         m_intake.set(speed);

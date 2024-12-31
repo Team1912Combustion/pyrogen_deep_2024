@@ -1,7 +1,9 @@
 
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
@@ -18,10 +20,12 @@ public class Elevator extends SubsystemBase {
     public int current_target;
     private Telemetry telemetry;
     private final PController pid;
+    private final TouchSensor touchSensor;  // Touch sensor Object
 
-    public Elevator(HardwareMap hMap, String motorName, Telemetry t_telemetry) {
+    public Elevator(HardwareMap hMap, Telemetry t_telemetry) {
         telemetry = t_telemetry;
-        m_elevator = new MotorEx(hMap, motorName, Motor.GoBILDA.RPM_312);
+        touchSensor = hMap.get(TouchSensor.class, ElevatorConstants.touch_sensor_name);
+        m_elevator = new MotorEx(hMap, ElevatorConstants.motor_name, Motor.GoBILDA.RPM_312);
         m_elevator.setInverted(true);
         m_encoder = m_elevator.encoder;
         m_elevator.stopAndResetEncoder();
@@ -44,6 +48,10 @@ public class Elevator extends SubsystemBase {
         return pid.atSetPoint();
     }
 
+    public boolean atBottom() {
+        return touchSensor.isPressed();
+    }
+
     private int fix_target(int target) {
         return Math.min(
                 ElevatorConstants.full_out,
@@ -58,8 +66,13 @@ public class Elevator extends SubsystemBase {
 
     @Override
     public void periodic() {
+        if (atBottom()) {
+            m_encoder.reset();
+        }
         double power = pid.calculate(get_position());
-        if (current_target < ElevatorConstants.threshold) {power = Math.max(power, -0.1);}
+        // if (current_target < ElevatorConstants.threshold)
+        // {power = Math.max(power, -0.1);
+        // }
         m_elevator.set(power);
         telemetry.addLine(String.format("elev enc %d tgt %d power %f\n",
                 m_encoder.getPosition(),current_target,power));
