@@ -24,7 +24,7 @@ public class Drive extends SubsystemBase {
                 backLeftMotor,
                 backRightMotor
         );
-        robotCentric = false;
+        robotCentric = true;
         squareInputs = true;
     }
 

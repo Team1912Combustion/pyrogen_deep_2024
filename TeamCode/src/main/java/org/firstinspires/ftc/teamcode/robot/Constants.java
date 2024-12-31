@@ -16,12 +16,13 @@ public class Constants {
     public static class ArmConstants {
         // gobilda.com/5202-series-yellow-jacket-planetary-gear-motor-188-1-ratio-24mm-length-6mm-d-shaft-30-rpm-36mm-gearbox-3-3-5v-encoder/
         // 5281 PPR * (90/360) * (2:1 bevel gear)
-        public static final int tick_90 = (5281*2)/4;   // = 2640
+        //public static final int tick_90 = (5281*2)/4;   // = 2640
+        public static final int tick_90 = 3000;   // = 2640
         public static final double radPerTick = Math.PI * 0.5 / tick_90;
         public static final int pos_limit_high = tick_90 * 8 / 10;
         public static final int pos_limit_low = 0;
-        public static final int pos_high= 2200;
-        public static final int pos_mid= 1200;
+        public static final int pos_high= 2600;
+        public static final int pos_mid= 2010;
         public static final int pos_zero = 120;
         public static final int pos_intake = 20;
         public static final int pos_threshold = 20;
@@ -47,9 +48,9 @@ public class Constants {
         public static final int full_in = 0;
         // 581 PPR
         // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
-        public static final int full_out = 4000;
-        public static final int high_basket = 3500;
-        public static final int low_basket = 2000;
+        public static final int full_out = 4500;
+        public static final int high_basket = 4000;
+        public static final int low_basket = 2160;
         public static final int threshold = 200;
         public static final double kP = .01 ; // percent power (-1/1) per encoder tick error
     }

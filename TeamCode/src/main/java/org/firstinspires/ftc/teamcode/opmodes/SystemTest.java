@@ -79,6 +79,14 @@ public class SystemTest extends CommandOpMode {
                   whenPressed(new ArmDown(m_arm));
         m_opStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
                   whenPressed(new ArmUp(m_arm));
+        m_opStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
+                whenPressed(new ArmDown(m_arm));
+        m_opStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
+                whenPressed(new ArmUp(m_arm));
+        m_driverStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
+                whenPressed(new ElevatorDown(m_elevator));
+        m_driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
+                whenPressed(new ElevatorUp(m_elevator));
 
         /*
         m_opStick.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).
