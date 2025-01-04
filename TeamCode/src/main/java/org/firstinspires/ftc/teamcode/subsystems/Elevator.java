@@ -74,8 +74,8 @@ public class Elevator extends SubsystemBase {
         // {power = Math.max(power, -0.1);
         // }
         m_elevator.set(power);
-        telemetry.addLine(String.format("elev enc %d tgt %d power %f\n",
-                m_encoder.getPosition(),current_target,power));
+        telemetry.addLine(String.format("elev enc %d tgt %d power %f touch %b\n",
+                m_encoder.getPosition(),current_target,power,atBottom()));
     }
 
     public void stop() {
