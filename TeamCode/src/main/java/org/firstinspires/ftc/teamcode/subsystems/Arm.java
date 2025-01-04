@@ -15,14 +15,13 @@ import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
     private final MotorEx m_arm;
-    private final Elevator m_elevator;
     private final Motor.Encoder m_encoder;
     private final PController pid;
     private final ArmFeedforward feedforward;
     public double current_target;
     private Telemetry telemetry;
 
-    public Arm(HardwareMap hMap, Elevator e_elevator, Telemetry t_telemetry) {
+    public Arm(HardwareMap hMap, Telemetry t_telemetry) {
         telemetry = t_telemetry;
         m_arm = new MotorEx(hMap, ArmConstants.motor_name, Motor.GoBILDA.RPM_30);
         m_arm.setInverted(true);
@@ -39,7 +38,6 @@ public class Arm extends SubsystemBase {
                 ArmConstants.kV,
                 ArmConstants.kA);
         pid.setSetPoint(current_target);
-        m_elevator = e_elevator;
     }
 
     public int get_position() {
@@ -58,8 +56,9 @@ public class Arm extends SubsystemBase {
     public double fix_target(double target) {
         double fix_target = Math.min(ArmConstants.angle_limit_high,
                 Math.max(ArmConstants.angle_limit_low, target));
-        double adjust_min = ArmConstants.angle_zero * m_elevator.get_fraction();
-        return Math.max(fix_target, adjust_min);
+        //double adjust_min = ArmConstants.angle_zero * m_elevator.get_fraction();
+        //return Math.max(fix_target, adjust_min);
+        return fix_target;
     }
 
     public void runToAngle(double angle) {

@@ -40,11 +40,11 @@ public class SystemTest extends CommandOpMode {
                 m_estimator::getRotation);
         m_drive.setDefaultCommand(m_driveCommand);
 
-        Elevator m_elevator = new Elevator(hardwareMap, telemetry);
-        register(m_elevator);
-
-        Arm m_arm = new Arm(hardwareMap, m_elevator, telemetry);
+        Arm m_arm = new Arm(hardwareMap, telemetry);
         register(m_arm);
+
+        Elevator m_elevator = new Elevator(hardwareMap, m_arm, telemetry);
+        register(m_elevator);
 
         Intake m_intake = new Intake(hardwareMap, telemetry);
         register(m_intake);

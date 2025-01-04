@@ -13,17 +13,20 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
 import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.robot.Constants.ElevatorConstants;
+import org.firstinspires.ftc.teamcode.subsystems.Arm;
 
 public class Elevator extends SubsystemBase {
     private final MotorEx m_elevator;
     private final Motor.Encoder m_encoder;
     public int current_target;
+    private Arm m_arm;
     private Telemetry telemetry;
     private final PController pid;
     private final TouchSensor touchSensor;  // Touch sensor Object
 
-    public Elevator(HardwareMap hMap, Telemetry t_telemetry) {
+    public Elevator(HardwareMap hMap, Arm a_arm, Telemetry t_telemetry) {
         telemetry = t_telemetry;
+        m_arm = a_arm;
         touchSensor = hMap.get(TouchSensor.class, ElevatorConstants.touch_sensor_name);
         m_elevator = new MotorEx(hMap, ElevatorConstants.motor_name, Motor.GoBILDA.RPM_312);
         m_elevator.setInverted(true);
@@ -64,15 +67,19 @@ public class Elevator extends SubsystemBase {
         pid.setSetPoint(current_target);
     }
 
+    public int limitRange(int target) {
+        if (m_arm.get_position() < Constants.ArmConstants.pos_mid) {
+            return Math.min(target, 2350 + m_arm.get_position());
+        }
+        return target;
+    }
+
     @Override
     public void periodic() {
-        if (atBottom()) {
-            m_encoder.reset();
-        }
+        if (atBottom()) { m_encoder.reset(); }
+        int newSetpoint = limitRange(current_target);
+        pid.setSetPoint(newSetpoint);
         double power = pid.calculate(get_position());
-        // if (current_target < ElevatorConstants.threshold)
-        // {power = Math.max(power, -0.1);
-        // }
         m_elevator.set(power);
         telemetry.addLine(String.format("elev enc %d tgt %d power %f touch %b\n",
                 m_encoder.getPosition(),current_target,power,atBottom()));
