@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.RunCommand;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.InstantCommand;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.gamepad.GamepadEx;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.gamepad.GamepadKeys;
+import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.commands.*;
 
 import org.firstinspires.ftc.teamcode.subsystems.Estimator;
 import org.firstinspires.ftc.teamcode.subsystems.Odometry;
+import org.firstinspires.ftc.teamcode.subsystems.Specimen;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 
 @TeleOp
@@ -49,13 +51,16 @@ public class SystemTest extends CommandOpMode {
         Intake m_intake = new Intake(hardwareMap, telemetry);
         register(m_intake);
 
+        Specimen m_specimen = new Specimen(hardwareMap, telemetry);
+        register(m_specimen);
+
         // button bindings for the mechanisms
 
         // intake
-        m_opStick.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+        m_driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
             .whenHeld(new InstantCommand(m_intake::runIn, m_intake))
             .whenReleased(new InstantCommand(m_intake::stop, m_intake));
-        m_opStick.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+        m_driverStick.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenHeld(new InstantCommand(m_intake::runOut, m_intake))
                 .whenReleased(new InstantCommand(m_intake::stop, m_intake));
 
@@ -91,12 +96,10 @@ public class SystemTest extends CommandOpMode {
         m_driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
                 whenPressed(new ElevatorUp(m_elevator));
 
-        /*
         m_opStick.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).
-                whileHeld(new IntakeOut(m_intake));
+                whenPressed(new SpecimenHold(m_specimen));
         m_opStick.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).
-                whileHeld(new IntakeIn(m_intake));
-         */
+                whenPressed(new SpecimenSafe(m_specimen));
 
         // update telemetry every loop
         schedule(new RunCommand(telemetry::update));

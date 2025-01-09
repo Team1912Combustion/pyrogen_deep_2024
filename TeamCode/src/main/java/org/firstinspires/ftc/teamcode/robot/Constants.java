@@ -60,6 +60,13 @@ public class Constants {
         public static final double kP = .01 ; // percent power (-1/1) per encoder tick error
     }
 
+    public static class SpecimenConstants {
+        public static final String servo_name = "specimen";
+        public static final double init_pos = 0.0;
+        public static final double safe_pos = 0.0;
+        public static final double hold_pos = 0.35;
+    }
+
     public static class IntakeConstants {
         public static final String servo_name = "intake";
         public static final double intake_speed = 1.;
