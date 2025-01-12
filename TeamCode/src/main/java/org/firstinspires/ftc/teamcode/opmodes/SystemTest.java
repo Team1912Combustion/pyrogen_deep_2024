@@ -33,7 +33,7 @@ public class SystemTest extends CommandOpMode {
         Estimator m_estimator = new Estimator(m_odometry, m_vision);
 
         // create our drive object
-        Drive m_drive = new Drive(hardwareMap);
+        Drive m_drive = new Drive(hardwareMap, telemetry);
         register(m_drive);
         DefaultDrive m_driveCommand = new DefaultDrive(m_drive,
                 m_driverStick::getLeftX,
@@ -68,11 +68,11 @@ public class SystemTest extends CommandOpMode {
         m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_UP).
                   whenPressed(new ArmHighBasket(m_arm));
         m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).
-                  whenPressed(new ArmLowBasket(m_arm));
+                  whenPressed(new ArmElevLowBasket(m_arm,m_elevator));
         m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).
-                  whenPressed(new ArmIntake(m_arm, m_elevator));
+                  whenPressed(new ArmElevIntake(m_arm, m_elevator));
         m_opStick.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).
-                whenPressed(new ArmLevel(m_arm));
+                whenPressed(new ArmDownSpecimen(m_arm));
 
         // elevator
         m_opStick.getGamepadButton(GamepadKeys.Button.Y).

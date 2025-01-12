@@ -38,7 +38,7 @@ public class Constants {
         public static final double angle_intake = pos_intake * radPerTick;
         public static final double angle_threshold = pos_threshold * radPerTick;
         // PController P
-        public static final double kP = 2.; // V per angle error radians
+        public static final double kP = 2.0; // V per angle error radians
         // ArmFeedForward constants
         public static final double vel_radpersec = 0.;
         public static final double kS = 0.; // V

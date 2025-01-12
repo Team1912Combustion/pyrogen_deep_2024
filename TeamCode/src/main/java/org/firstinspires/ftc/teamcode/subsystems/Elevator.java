@@ -63,13 +63,14 @@ public class Elevator extends SubsystemBase {
     }
 
     public void runToPosition(int target) {
-        current_target = fix_target(target);
+        int currentTarget = fix_target(target);
+        current_target = currentTarget;
         pid.setSetPoint(current_target);
     }
 
     public int limitRange(int target) {
         if (m_arm.get_position() < Constants.ArmConstants.pos_mid) {
-            return Math.min(target, 2350 + m_arm.get_position());
+            return Math.min(target, 1500 + m_arm.get_position());
         }
         return target;
     }

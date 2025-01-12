@@ -9,9 +9,12 @@ import org.firstinspires.ftc.teamcode.subsystems.Odometry;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 import org.firstinspires.ftc.teamcode.commands.DefaultDrive;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp
+@Disabled
+
 public class OdoTestCommand extends CommandOpMode {
 
     private Drive m_drive;
@@ -30,7 +33,7 @@ public class OdoTestCommand extends CommandOpMode {
         m_estimator = new Estimator(m_odometry, m_vision);
 
         // create our drive object
-        m_drive = new Drive(hardwareMap);
+        m_drive = new Drive(hardwareMap, telemetry);
         register(m_drive);
         m_driveCommand = new DefaultDrive(m_drive,
                 () -> m_driverStick.getLeftX(),
