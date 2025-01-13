@@ -27,24 +27,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.oldAuto;
+package org.firstinspires.ftc.teamcode.auto.commands;
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pyrolib.OTOS.OTOSSensor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Pose2d;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Rotation2d;
 
-@Autonomous(name="PushPreBackSubBlue", group="Robot")
-public class PushPreBackSubBlue extends LinearOpMode {
+public class AutoDriveHelpers {
 
-    /* Declare OpMode members. */
+    CommandOpMode opMode;
+    Telemetry telemetry;
+
     private DcMotor         leftFront   = null;
     private DcMotor         rightFront = null;
     private DcMotor         leftBack   = null;
@@ -88,9 +88,12 @@ public class PushPreBackSubBlue extends LinearOpMode {
     static final double     P_TURN_GAIN            = 0.02;     // Larger is more responsive, but also less stable.
     static final double     P_DRIVE_GAIN           = 0.03;     // Larger is more responsive, but also less stable.
 
+    public AutoDriveHelpers(CommandOpMode o_opMode, Telemetry t_telemetry)  {
+        opMode = o_opMode;
+        telemetry = t_telemetry;
+    }
 
-    @Override
-    public void runOpMode() {
+    public void init(HardwareMap hardwareMap) {
 
         // Initialize the drive system variables.
         leftFront  = hardwareMap.get(DcMotor.class, "front_left");
@@ -106,17 +109,6 @@ public class PushPreBackSubBlue extends LinearOpMode {
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         rightBack.setDirection(DcMotor.Direction.FORWARD);
 
-        /* The next two lines define Hub orientation.
-         * The Default Orientation (shown) is when a hub is mounted horizontally with the printed logo pointing UP and the USB port pointing FORWARD.
-         *
-         * To Do:  EDIT these two lines to match YOUR mounting configuration.
-         */
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
-        RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
-
-        // Now initialize the IMU with this mounting orientation
-        // This sample expects the IMU to be in a REV Hub and named "imu".
         imu = hardwareMap.get(OTOSSensor.class, "otos_sensor");
         imu.initialize();
 
@@ -130,12 +122,6 @@ public class PushPreBackSubBlue extends LinearOpMode {
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // Wait for the game to start (Display Gyro value while waiting)
-        while (opModeInInit()) {
-            telemetry.addData(">", "Robot Heading = %4.0f", getHeading());
-            telemetry.update();
-        }
-
         // Set the encoders for closed loop speed control, and reset the heading.
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -143,24 +129,6 @@ public class PushPreBackSubBlue extends LinearOpMode {
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         resetHeading();
 
-        // Step through each leg of the path,
-        // Notes:   Reverse movement is obtained by setting a negative distance (not speed)
-        //          holdHeading() is used after turns to let the heading stabilize
-        //          Add a sleep(2000) after any step to keep the telemetry data visible for review
-
-        driveStraight(DRIVE_SPEED, 24.0, 0.0);
-        holdHeading( TURN_SPEED, 0.0, 1.0);
-
-        driveStraight(DRIVE_SPEED, -6.0, 0.0);
-        holdHeading( TURN_SPEED, 0.0, 1.0);
-
-        strafeStraight(DRIVE_SPEED, 20.0, 0.0);
-        holdHeading( TURN_SPEED, 0.0, 1.0);
-
-        driveStraight(DRIVE_SPEED, -18.0, 0.0);
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
     }
 
     /*
@@ -190,7 +158,7 @@ public class PushPreBackSubBlue extends LinearOpMode {
                               double heading) {
 
         // Ensure that the OpMode is still active
-        if (opModeIsActive()) {
+        if (opMode.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
             int moveCounts = (int)(distance * COUNTS_PER_INCH);
@@ -216,7 +184,7 @@ public class PushPreBackSubBlue extends LinearOpMode {
             moveRobot(maxDriveSpeed, 0);
 
             // keep looping while we are still active, and BOTH motors are running.
-            while (opModeIsActive() &&
+            while (opMode.opModeIsActive() &&
                     (leftFront.isBusy() && rightFront.isBusy())) {
 
                 // Determine required steering to keep on heading
@@ -247,7 +215,7 @@ public class PushPreBackSubBlue extends LinearOpMode {
                               double heading) {
 
         // Ensure that the OpMode is still active
-        if (opModeIsActive()) {
+        if (opMode.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
             int moveCounts = (int)(distance * COUNTS_PER_INCH);
@@ -273,7 +241,7 @@ public class PushPreBackSubBlue extends LinearOpMode {
             strafeRobot(maxDriveSpeed, 0);
 
             // keep looping while we are still active, and BOTH motors are running.
-            while (opModeIsActive() &&
+            while (opMode.opModeIsActive() &&
                     (leftFront.isBusy() && rightFront.isBusy())) {
 
                 // Determine required steering to keep on heading
@@ -320,7 +288,7 @@ public class PushPreBackSubBlue extends LinearOpMode {
         getSteeringCorrection(heading, P_DRIVE_GAIN);
 
         // keep looping while we are still active, and not on heading.
-        while (opModeIsActive() && (Math.abs(headingError) > HEADING_THRESHOLD)) {
+        while (opMode.opModeIsActive() && (Math.abs(headingError) > HEADING_THRESHOLD)) {
 
             // Determine required steering to keep on heading
             turnSpeed = getSteeringCorrection(heading, P_TURN_GAIN);
@@ -358,7 +326,7 @@ public class PushPreBackSubBlue extends LinearOpMode {
         holdTimer.reset();
 
         // keep looping while we have time remaining.
-        while (opModeIsActive() && (holdTimer.time() < holdTime)) {
+        while (opMode.opModeIsActive() && (holdTimer.time() < holdTime)) {
             // Determine required steering to keep on heading
             turnSpeed = getSteeringCorrection(heading, P_TURN_GAIN);
 
@@ -429,7 +397,7 @@ public class PushPreBackSubBlue extends LinearOpMode {
     /**
      * Take separate drive (fwd/rev) and turn (right/left) requests,
      * combines them, and applies the appropriate speed commands to the left and right wheel motors.
-     * @param drive forward motor speed
+     * @param strafe right motor speed
      * @param turn  clockwise turning motor speed.
      */
     public void strafeRobot(double strafe, double turn) {

@@ -7,10 +7,11 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.PController;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller.ArmFeedforward;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller.ProfiledPIDController;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Transform2d;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.trajectory.TrapezoidProfile;
 import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.robot.Constants.ElevatorConstants;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
@@ -21,7 +22,7 @@ public class Elevator extends SubsystemBase {
     public int current_target;
     private Arm m_arm;
     private Telemetry telemetry;
-    private final PController pid;
+    private final ProfiledPIDController pid;
     private final TouchSensor touchSensor;  // Touch sensor Object
 
     public Elevator(HardwareMap hMap, Arm a_arm, Telemetry t_telemetry) {
@@ -34,7 +35,10 @@ public class Elevator extends SubsystemBase {
         m_elevator.stopAndResetEncoder();
         current_target = get_position();
         m_elevator.setRunMode(Motor.RunMode.RawPower);
-        pid = new PController(Constants.ElevatorConstants.kP);
+        TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(
+                ElevatorConstants.maxVelocity,
+                ElevatorConstants.maxAcceleration);
+        pid = new ProfiledPIDController(Constants.ElevatorConstants.kP, 0., 0., constraints);
         pid.setTolerance(Constants.ElevatorConstants.threshold);
     }
 
@@ -48,7 +52,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public boolean atTarget() {
-        return pid.atSetPoint();
+        return pid.atGoal();
     }
 
     public boolean atBottom() {
@@ -65,7 +69,7 @@ public class Elevator extends SubsystemBase {
     public void runToPosition(int target) {
         int currentTarget = fix_target(target);
         current_target = currentTarget;
-        pid.setSetPoint(current_target);
+        pid.setGoal(current_target);
     }
 
     public int limitRange(int target) {
@@ -79,11 +83,12 @@ public class Elevator extends SubsystemBase {
     public void periodic() {
         if (atBottom()) { m_encoder.reset(); }
         int newSetpoint = limitRange(current_target);
-        pid.setSetPoint(newSetpoint);
+        pid.setGoal(newSetpoint);
         double power = pid.calculate(get_position());
         m_elevator.set(power);
         telemetry.addLine(String.format("elev enc %d tgt %d power %f touch %b\n",
-                m_encoder.getPosition(),current_target,power,atBottom()));
+                m_encoder.getPosition(),newSetpoint,power,atBottom()));
+        telemetry.update();
     }
 
     public void stop() {

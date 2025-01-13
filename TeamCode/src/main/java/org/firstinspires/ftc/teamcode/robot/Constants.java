@@ -27,7 +27,7 @@ public class Constants {
         public static final int pos_level= 340;
         //public static final int pos_zero = 320;
         public static final int pos_intake = 20;
-        public static final int pos_threshold = 20;
+        public static final int pos_threshold = 10;
         public static final double maxVoltage = 12.; // = pos_90 * radPerTick;
         public static final double angle_limit_high = pos_limit_high * radPerTick;
         public static final double angle_limit_low = pos_limit_low * radPerTick;
@@ -38,13 +38,15 @@ public class Constants {
         public static final double angle_intake = pos_intake * radPerTick;
         public static final double angle_threshold = pos_threshold * radPerTick;
         // PController P
-        public static final double kP = 2.0; // V per angle error radians
+        public static final double kP = 20.0; // V per angle error radians
         // ArmFeedForward constants
         public static final double vel_radpersec = 0.;
         public static final double kS = 0.; // V
         public static final double kG = 0.7 / maxVoltage; // V
         public static final double kV = 7.3 / maxVoltage; // V*s/rad
         public static final double kA = 0.17 / maxVoltage; // V*s^2/rad
+        public static final double maxVelocity = Math.PI / 4.; // rad/s = 45 deg per second
+        public static final double maxAcceleration = maxVelocity / 2.; // rad/s/s = maxVel / 2sec
     }
 
     public static class ElevatorConstants {
@@ -58,6 +60,8 @@ public class Constants {
         public static final int low_basket = 3250;
         public static final int threshold = 100;
         public static final double kP = .01 ; // percent power (-1/1) per encoder tick error
+        public static final double maxVelocity = 4000.; // ticks/s = 1 second full out
+        public static final double maxAcceleration = maxVelocity / 2.; // ticks/s/s = full speed in 2 s
     }
 
     public static class SpecimenConstants {
