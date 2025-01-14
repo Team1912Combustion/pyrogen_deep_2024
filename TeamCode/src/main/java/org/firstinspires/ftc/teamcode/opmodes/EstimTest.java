@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.DefaultDrive;
@@ -24,6 +25,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Odometry;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 
 @TeleOp
+@Disabled
+
 public class EstimTest extends CommandOpMode {
 
     private Screen m_screen;
@@ -46,7 +49,7 @@ public class EstimTest extends CommandOpMode {
         m_estimator.resetPose(new Pose2d(0.,0., Rotation2d.fromDegrees(0.)));
 
         // create our drive object
-        m_drive = new Drive(hardwareMap);
+        m_drive = new Drive(hardwareMap, telemetry);
         register(m_drive);
         m_driveCommand = new DefaultDrive(m_drive,
                 () -> m_driverStick.getLeftX(),

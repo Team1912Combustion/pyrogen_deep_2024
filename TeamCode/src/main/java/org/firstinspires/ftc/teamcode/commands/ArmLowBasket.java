@@ -18,7 +18,7 @@ public class ArmLowBasket extends CommandBase {
 
     @Override
     public void execute() {
-        m_arm.runToPosition(Constants.ArmConstants.low_basket);
+        m_arm.runToAngle(Constants.ArmConstants.angle_mid);
     }
 
     @Override

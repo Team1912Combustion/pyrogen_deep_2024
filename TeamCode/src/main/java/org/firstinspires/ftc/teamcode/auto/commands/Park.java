@@ -1,4 +1,4 @@
-/* Copyright (c) 2024 Dryw Wade. All rights reserved.
+/* Copyright (c) 2022 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -27,43 +27,44 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.auto.commands;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.subsystems.Vision;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-@TeleOp()
-@Disabled
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 
-public class ConceptAprilTagLocalization extends LinearOpMode {
+public class Park extends CommandBase {
 
-    private Vision vision;
+    AutoDriveHelpers autodrive;
+    HardwareMap hMap;
+    boolean iAmBlue;
+    boolean amIFinished = false;
+
+    public Park(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, boolean amIBlue) {
+        autodrive = new AutoDriveHelpers(opMode, telemetry);
+        hMap = hardwareMap;
+        iAmBlue = amIBlue;
+    }
+
+    public Park(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
+        this(opMode, hardwareMap, telemetry, true);
+    }
 
     @Override
-    public void runOpMode() {
+    public void execute() {
+        amIFinished = false;
+        autodrive.init(hMap);
 
-        vision = new Vision(hardwareMap, telemetry);
-
-        waitForStart();
-
-        while (opModeIsActive()) {
-            vision.add_telemetry();
-            telemetry.update();
-
-            // Save CPU resources; can resume streaming when needed.
-            if (gamepad1.dpad_down) {
-                vision.stop();
-            } else if (gamepad1.dpad_up) {
-                vision.resume();
-            }
-
-            // Share the CPU.
-            sleep(20);
-        }
-
-        // Save more CPU resources when camera is no longer needed.
-        vision.close();
+        autodrive.driveStraight(autodrive.DRIVE_SPEED, 22.0, 0.0);
+        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
+        amIFinished = true;
     }
+
+    @Override
+    public boolean isFinished() {
+        return amIFinished;
+    }
+
 }

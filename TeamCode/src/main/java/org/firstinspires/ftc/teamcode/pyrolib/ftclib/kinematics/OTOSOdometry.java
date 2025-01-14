@@ -14,7 +14,7 @@ public class OTOSOdometry extends Odometry {
     private double m_xOffset, m_yOffset;
 
     // the suppliers
-    OTOSSensor m_OTOSSensor;
+    public OTOSSensor m_OTOSSensor;
 
     public OTOSOdometry(OTOSSensor OTOSSensor, Pose2d initialPose, double xOffset, double yOffset) {
         super(initialPose);

@@ -1,4 +1,4 @@
-/* Copyright (c) 2024 Dryw Wade. All rights reserved.
+/* Copyright (c) 2024 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -27,43 +27,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.auto.utils;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.subsystems.Vision;
+import org.firstinspires.ftc.teamcode.subsystems.AutoDrive;
 
-@TeleOp()
-@Disabled
+public class PlaceSample
+{
 
-public class ConceptAprilTagLocalization extends LinearOpMode {
+    private boolean I_AM_BLUE;
+    private boolean iAmBlue() { return I_AM_BLUE;}
 
-    private Vision vision;
+    double driveSpeed = 1.0;
+    double slowSpeed = 0.5;
+    double minDriveSpeed = 0.25;
+    double turnSpeed = 0.20;
+    double holdTime = 0.5;
 
-    @Override
-    public void runOpMode() {
+    private AutoDrive autoDrive;
 
-        vision = new Vision(hardwareMap, telemetry);
-
-        waitForStart();
-
-        while (opModeIsActive()) {
-            vision.add_telemetry();
-            telemetry.update();
-
-            // Save CPU resources; can resume streaming when needed.
-            if (gamepad1.dpad_down) {
-                vision.stop();
-            } else if (gamepad1.dpad_up) {
-                vision.resume();
-            }
-
-            // Share the CPU.
-            sleep(20);
-        }
-
-        // Save more CPU resources when camera is no longer needed.
-        vision.close();
+    public void init(AutoDrive m_autodrive, boolean m_iAmBlue) {
+        autoDrive = m_autodrive;
+        I_AM_BLUE = m_iAmBlue;
     }
+
+    public void update(boolean m_iAmBlue) {
+        I_AM_BLUE = m_iAmBlue;
+    }
+
+    public void goPushSampleAndReturn(FieldPosition fieldPosition)
+    {
+        goNet();
+    }
+
+    private void goNet() {
+        double subHeading = (iAmBlue() ? 90. : -90.);
+        double head45 = (iAmBlue() ? 45. : -45.);
+        double head135 = (iAmBlue() ? 135. : -135.);
+        autoDrive.rampStraight(driveSpeed, minDriveSpeed, 6., 24., 0.0);
+        autoDrive.driveStraight(slowSpeed, -12.0, 0.0);
+        autoDrive.turnToHeading(turnSpeed, subHeading);
+        autoDrive.holdHeading(turnSpeed, subHeading, holdTime);
+    }
+
 }

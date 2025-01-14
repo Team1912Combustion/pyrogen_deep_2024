@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.oldAuto;
 
 import org.firstinspires.ftc.teamcode.commands.PyroPPCommand;
 import org.firstinspires.ftc.teamcode.pyrolib.OTOS.OTOSSensor;
@@ -17,8 +17,10 @@ import org.firstinspires.ftc.teamcode.subsystems.Screen;
 import org.firstinspires.ftc.teamcode.subsystems.Vision;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous
+@Disabled
 public class PyroPPTest extends CommandOpMode {
 
     @Override
@@ -28,7 +30,7 @@ public class PyroPPTest extends CommandOpMode {
         Vision m_vision = new Vision(hardwareMap, telemetry);
         Odometry m_robotOdometry = new Odometry(hardwareMap);
         Estimator m_estimator = new Estimator(m_robotOdometry, m_vision);
-        Drive m_robotDrive = new Drive(hardwareMap);
+        Drive m_robotDrive = new Drive(hardwareMap, telemetry);
         Screen m_screen = new Screen(m_otos, m_robotOdometry, m_estimator, telemetry);
 
         m_estimator.resetPose(new Pose2d(0.,0., Rotation2d.fromDegrees(0.)));

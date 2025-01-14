@@ -4,27 +4,27 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 
-import java.util.function.DoubleSupplier;
-
 /**
  * A command to run the elevator back in.
  */
-public class ElevatorDrive extends CommandBase {
+public class ElevatorUp extends CommandBase {
 
     private final Elevator m_elevator;
-    private final DoubleSupplier m_speed;
 
-
-    public ElevatorDrive(Elevator elevator, DoubleSupplier speed) {
+    public ElevatorUp(Elevator elevator) {
         m_elevator = elevator;
-        m_speed = speed;
         addRequirements(m_elevator);
     }
 
     @Override
     public void execute() {
-        m_elevator.move(m_speed.getAsDouble());
+        m_elevator.runToPosition(
+                m_elevator.get_position() +
+                Constants.ElevatorConstants.threshold);
     }
-
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 
 }

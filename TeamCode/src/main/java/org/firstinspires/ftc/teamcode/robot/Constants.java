@@ -12,27 +12,67 @@ public class Constants {
         public final static double[] vec_visionStdDevs = {4., 4., 999.};
         public final static double max_apriltag_poserr = 48.;
     }
+
     public static class ArmConstants {
-        public static final int intake = 0;
+        public static final String motor_name = "arm";
         // gobilda.com/5202-series-yellow-jacket-planetary-gear-motor-188-1-ratio-24mm-length-6mm-d-shaft-30-rpm-36mm-gearbox-3-3-5v-encoder/
         // 5281 PPR * (90/360) * (2:1 bevel gear)
-        public static final int encoder_max = 5281*2/4;
-        public static final int high_basket = 1000;
-        public static final int low_basket = 500;
-        public static final int threshold = 5;
-        public static final double run_speed = 0.2;
+        //public static final int tick_90 = (5281*2)/4;   // = 2640
+        public static final int tick_90 = 3000;   // = 2640
+        public static final double radPerTick = Math.PI * 0.5 / tick_90;
+        public static final int pos_limit_high = tick_90 * 8 / 10;
+        public static final int pos_limit_low = 0;
+        public static final int pos_high= 2100;
+        public static final int pos_mid= 1500;
+        public static final int pos_level= 340;
+        //public static final int pos_zero = 320;
+        public static final int pos_intake = 20;
+        public static final int pos_threshold = 10;
+        public static final double maxVoltage = 12.; // = pos_90 * radPerTick;
+        public static final double angle_limit_high = pos_limit_high * radPerTick;
+        public static final double angle_limit_low = pos_limit_low * radPerTick;
+        public static final double angle_high = pos_high * radPerTick;
+        public static final double angle_mid = pos_mid * radPerTick;
+        //public static final double angle_zero = pos_zero * radPerTick;
+        public static final double angle_level = pos_level * radPerTick;
+        public static final double angle_intake = pos_intake * radPerTick;
+        public static final double angle_threshold = pos_threshold * radPerTick;
+        // PController P
+        public static final double kP = 20.0; // V per angle error radians
+        // ArmFeedForward constants
+        public static final double vel_radpersec = 0.;
+        public static final double kS = 0.; // V
+        public static final double kG = 0.7 / maxVoltage; // V
+        public static final double kV = 7.3 / maxVoltage; // V*s/rad
+        public static final double kA = 0.17 / maxVoltage; // V*s^2/rad
+        public static final double maxVelocity = Math.PI / 4.; // rad/s = 45 deg per second
+        public static final double maxAcceleration = maxVelocity / 2.; // rad/s/s = maxVel / 2sec
     }
+
     public static class ElevatorConstants {
+        public static final String motor_name = "elevator";
+        public final static String touch_sensor_name = "elevator_touch";
         public static final int full_in = 0;
         // 581 PPR
         // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
-        public static final int full_out = 4000;
-        public static final int high_basket = 3500;
-        public static final int low_basket = 2000;
-        public static final int threshold = 25;
-        public static final double run_speed = 0.25;
+        public static final int full_out = 4500;
+        public static final int high_basket = 4300;
+        public static final int low_basket = 3250;
+        public static final int threshold = 100;
+        public static final double kP = .01 ; // percent power (-1/1) per encoder tick error
+        public static final double maxVelocity = 4000.; // ticks/s = 1 second full out
+        public static final double maxAcceleration = maxVelocity / 2.; // ticks/s/s = full speed in 2 s
     }
+
+    public static class SpecimenConstants {
+        public static final String servo_name = "specimen";
+        public static final double init_pos = 0.0;
+        public static final double safe_pos = 0.0;
+        public static final double hold_pos = 0.35;
+    }
+
     public static class IntakeConstants {
+        public static final String servo_name = "intake";
         public static final double intake_speed = 1.;
         public static final double output_speed = -1.;
     }
