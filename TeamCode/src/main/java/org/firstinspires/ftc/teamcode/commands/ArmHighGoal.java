@@ -1,31 +1,29 @@
 package org.firstinspires.ftc.teamcode.commands;
 
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
-import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
+import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
 
-import java.util.function.DoubleSupplier;
-
 /**
- * A command to drive the arm to the intake position.
+ * A command to drive the arm to the high basket position.
  */
-public class ArmIntake extends CommandBase {
+public class ArmHighGoal extends CommandBase {
 
     private final Arm arm;
     private final GamePiece gamePiece;
 
-    public ArmIntake(Arm a_arm, GamePiece g_gamePiece) {
+    public ArmHighGoal(Arm a_arm, GamePiece g_gamePiece) {
         arm = a_arm;
-        gamePiece =g_gamePiece;
+        gamePiece = g_gamePiece;
         addRequirements(arm);
     }
 
     @Override
     public void execute() {
         double target = (gamePiece.sample()) ?
-                ArmConstants.Sample.angle_intake :
-                ArmConstants.Specimen.angle_intake ;
+                Constants.ArmConstants.Sample.angle_high :
+                Constants.ArmConstants.Specimen.angle_high ;
         arm.runToAngle(target);
     }
 

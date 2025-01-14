@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
+import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
 
 @Autonomous
 public class ArmTest extends CommandOpMode {
@@ -19,8 +20,9 @@ public class ArmTest extends CommandOpMode {
 
         Arm arm = new Arm(hardwareMap, telemetry);
         Elevator elevator = new Elevator(hardwareMap, arm, telemetry);
+        GamePiece gamePiece = new GamePiece();
 
         // schedule the command
-        schedule(new ArmUpDown(arm, elevator));
+        schedule(new ArmUpDown(arm, elevator, gamePiece));
     }
 }

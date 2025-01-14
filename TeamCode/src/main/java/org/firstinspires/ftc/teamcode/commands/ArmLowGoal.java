@@ -3,22 +3,28 @@ package org.firstinspires.ftc.teamcode.commands;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
 
 /**
  * A command to drive the arm to the low basket position.
  */
-public class ArmLevel extends CommandBase {
+public class ArmLowGoal extends CommandBase {
 
     private final Arm arm;
+    private final GamePiece gamePiece;
 
-    public ArmLevel(Arm a_arm) {
+    public ArmLowGoal(Arm a_arm, GamePiece g_gamePiece) {
         arm = a_arm;
+        gamePiece = g_gamePiece;
         addRequirements(arm);
     }
 
     @Override
     public void execute() {
-        arm.runToAngle(ArmConstants.angle_level);
+        double target = (gamePiece.sample()) ?
+                ArmConstants.Sample.angle_mid :
+                ArmConstants.Specimen.angle_mid ;
+        arm.runToAngle(target);
     }
 
     @Override

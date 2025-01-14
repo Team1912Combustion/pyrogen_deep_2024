@@ -8,38 +8,37 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller.ProfiledPIDController;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Transform2d;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.trajectory.TrapezoidProfile;
-import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.robot.Constants.ElevatorConstants;
-import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
+import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
 
 public class Elevator extends SubsystemBase {
-    private final MotorEx m_elevator;
-    private final Motor.Encoder m_encoder;
+    private final MotorEx elevator;
+    private final Motor.Encoder encoder;
     public int current_target;
-    private Arm m_arm;
+    private Arm arm;
     private Telemetry telemetry;
     private final ProfiledPIDController pid;
     private final TouchSensor touchSensor;  // Touch sensor Object
 
     public Elevator(HardwareMap hMap, Arm a_arm, Telemetry t_telemetry) {
         telemetry = t_telemetry;
-        m_arm = a_arm;
+        arm = a_arm;
         touchSensor = hMap.get(TouchSensor.class, ElevatorConstants.touch_sensor_name);
-        m_elevator = new MotorEx(hMap, ElevatorConstants.motor_name, Motor.GoBILDA.RPM_312);
-        m_elevator.setInverted(true);
-        m_encoder = m_elevator.encoder;
-        m_elevator.stopAndResetEncoder();
+        elevator = new MotorEx(hMap, ElevatorConstants.motor_name, Motor.GoBILDA.RPM_312);
+        elevator.setInverted(true);
+        encoder = elevator.encoder;
+        elevator.stopAndResetEncoder();
         current_target = get_position();
-        m_elevator.setRunMode(Motor.RunMode.RawPower);
+        elevator.setRunMode(Motor.RunMode.RawPower);
         TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(
                 ElevatorConstants.maxVelocity,
                 ElevatorConstants.maxAcceleration);
-        pid = new ProfiledPIDController(Constants.ElevatorConstants.kP, 0., 0., constraints);
-        pid.setTolerance(Constants.ElevatorConstants.threshold);
+        pid = new ProfiledPIDController(ElevatorConstants.kP, 0., 0., constraints);
+        pid.setTolerance(ElevatorConstants.threshold);
     }
 
     public double get_fraction() {
@@ -48,7 +47,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public int get_position() {
-        return m_encoder.getPosition();
+        return encoder.getPosition();
     }
 
     public boolean atTarget() {
@@ -72,26 +71,30 @@ public class Elevator extends SubsystemBase {
         pid.setGoal(current_target);
     }
 
-    public int limitRange(int target) {
-        if (m_arm.get_position() < Constants.ArmConstants.pos_mid) {
-            return Math.min(target, 1500 + m_arm.get_position());
+    public int safeLimit() {
+        if (arm.get_position() < ArmConstants.pos_check) {
+            return 1500 + arm.get_position();
         }
-        return target;
+        return ElevatorConstants.full_out;
+    }
+
+    public int limitRange(int target) {
+        return Math.min(target, safeLimit());
     }
 
     @Override
     public void periodic() {
-        if (atBottom()) { m_encoder.reset(); }
+        if (atBottom()) { encoder.reset(); }
         int newSetpoint = limitRange(current_target);
         pid.setGoal(newSetpoint);
         double power = pid.calculate(get_position());
-        m_elevator.set(power);
+        elevator.set(power);
         telemetry.addLine(String.format("elev enc %d tgt %d power %f touch %b\n",
-                m_encoder.getPosition(),newSetpoint,power,atBottom()));
+                encoder.getPosition(),newSetpoint,power,atBottom()));
         telemetry.update();
     }
 
     public void stop() {
-        m_elevator.set(0.);
+        elevator.set(0.);
     }
 }
