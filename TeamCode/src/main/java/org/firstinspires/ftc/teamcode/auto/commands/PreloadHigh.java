@@ -32,38 +32,36 @@ package org.firstinspires.ftc.teamcode.auto.commands;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import org.firstinspires.ftc.teamcode.commands.ArmLowBasket;
-import org.firstinspires.ftc.teamcode.commands.ElevatorLowBasket;
+import org.firstinspires.ftc.teamcode.commands.ArmLowGoal;
+import org.firstinspires.ftc.teamcode.commands.ElevatorLowGoal;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SequentialCommandGroup;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.WaitCommand;
 
-import org.firstinspires.ftc.teamcode.commands.ArmHighBasket;
+import org.firstinspires.ftc.teamcode.commands.ArmHighGoal;
 import org.firstinspires.ftc.teamcode.commands.ArmLevel;
 import org.firstinspires.ftc.teamcode.commands.ElevatorFullIn;
-import org.firstinspires.ftc.teamcode.commands.ElevatorHighBasket;
+import org.firstinspires.ftc.teamcode.commands.ElevatorHighGoal;
 import org.firstinspires.ftc.teamcode.commands.IntakeOut;
 
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
+import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
 public class PreloadHigh extends SequentialCommandGroup {
 
-    AutoDriveHelpers autodrive;
-    HardwareMap hMap;
-
     public PreloadHigh(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry,
-                       Arm arm, Elevator elevator, Intake intake) {
+                       Arm arm, Elevator elevator, Intake intake, GamePiece gamePiece) {
         addCommands(
-                new ArmLowBasket(arm).withTimeout(2000),
+                new ArmLowGoal(arm, gamePiece).withTimeout(2000),
                 new ElevatorFullIn(elevator).withTimeout(1000),
                 new Preload(opMode, hardwareMap, telemetry).withTimeout(3000),
-                new ArmHighBasket(arm).withTimeout(3000),
+                new ArmHighGoal(arm,gamePiece).withTimeout(3000),
                 new WaitCommand(500),
-                new ElevatorLowBasket(elevator).withTimeout(2000),
+                new ElevatorLowGoal(elevator, gamePiece).withTimeout(2000),
                 new WaitCommand(500),
-                new ElevatorHighBasket(elevator).withTimeout(2000),
+                new ElevatorHighGoal(elevator, gamePiece).withTimeout(2000),
                 new WaitCommand(500),
                 new IntakeOut(intake).withTimeout(1000),
                 new WaitCommand(3000),

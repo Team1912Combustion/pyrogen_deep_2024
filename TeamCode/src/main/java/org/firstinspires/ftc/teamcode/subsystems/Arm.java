@@ -5,13 +5,13 @@ import android.annotation.SuppressLint;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.opmodes.SystemTest;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller.ProfiledPIDController;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller.ArmFeedforward;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.trajectory.TrapezoidProfile;
-import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
@@ -48,6 +48,14 @@ public class Arm extends SubsystemBase {
 
     public int get_position() {
         return m_encoder.getPosition();
+    }
+
+    public double get_target() {
+        return current_target;
+    }
+
+    public double get_setpoint() {
+        return pid.getSetpoint().position;
     }
 
     public double get_angle() {
