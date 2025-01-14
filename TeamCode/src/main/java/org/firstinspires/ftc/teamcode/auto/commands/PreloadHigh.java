@@ -66,7 +66,9 @@ public class PreloadHigh extends SequentialCommandGroup {
                 new IntakeOut(intake).withTimeout(1000),
                 new WaitCommand(3000),
                 new ElevatorFullIn(elevator).withTimeout(3000),
-                new ArmLevel(arm).withTimeout(3000)
+                new ArmLevel(arm).withTimeout(3000),
+                new WaitCommand(30000)
         );
     }
+
 }

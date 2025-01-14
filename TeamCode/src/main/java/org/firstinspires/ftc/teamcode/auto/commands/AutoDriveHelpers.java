@@ -85,8 +85,8 @@ public class AutoDriveHelpers {
     // We define one value when Turning (larger errors), and the other is used when Driving straight (smaller errors).
     // Increase these numbers if the heading does not correct strongly enough (eg: a heavy robot or using tracks)
     // Decrease these numbers if the heading does not settle on the correct value (eg: very agile robot with omni wheels)
-    static final double     P_TURN_GAIN            = 0.02;     // Larger is more responsive, but also less stable.
-    static final double     P_DRIVE_GAIN           = 0.03;     // Larger is more responsive, but also less stable.
+    static final double     P_TURN_GAIN            = 0.1;     // Larger is more responsive, but also less stable.
+    static final double     P_DRIVE_GAIN           = 0.1;     // Larger is more responsive, but also less stable.
 
     public AutoDriveHelpers(CommandOpMode o_opMode, Telemetry t_telemetry)  {
         opMode = o_opMode;
@@ -248,8 +248,7 @@ public class AutoDriveHelpers {
                 turnSpeed = getSteeringCorrection(heading, P_DRIVE_GAIN);
 
                 // if driving in reverse, the motor correction also needs to be reversed
-                // if (distance < 0)
-                //     turnSpeed *= -1.0;
+                if (distance < 0) turnSpeed *= -1.0;
 
                 // Apply the turning correction to the current driving speed.
                 strafeRobot(driveSpeed, turnSpeed);
