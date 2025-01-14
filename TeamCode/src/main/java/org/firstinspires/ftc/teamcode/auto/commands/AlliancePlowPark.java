@@ -35,42 +35,57 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 
-public class PreloadSub extends CommandBase {
+public class AlliancePlowPark extends CommandBase {
 
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
-    boolean iAmBlue;
     boolean amIFinished = false;
+    double turnSpeed = 0.;
+    double driveSpeed = 0.;
+    double head = 0.;
 
-    public PreloadSub(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, boolean amIBlue) {
+    public AlliancePlowPark(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);
         hMap = hardwareMap;
-        iAmBlue = amIBlue;
-    }
-
-    public PreloadSub(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
-        this(opMode, hardwareMap, telemetry, true);
     }
 
     @Override
     public void execute() {
         amIFinished = false;
         autodrive.init(hMap);
+        turnSpeed = autodrive.TURN_SPEED*1.5;
+        driveSpeed = autodrive.DRIVE_SPEED*1.5;
+        double holdTime = 0.25;
 
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, 24.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
+        head = 0.;
+        autodrive.strafeStraight(driveSpeed, -6.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
 
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, -6.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
+        head = 90.;
+        autodrive.turnToHeading(turnSpeed, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
 
-        if (iAmBlue) {
-            autodrive.strafeStraight(autodrive.DRIVE_SPEED, 20.0, 0.0);
-        } else {
-            autodrive.strafeStraight(autodrive.DRIVE_SPEED, -20.0, 0.0);
-        }
-        autodrive.holdHeading(autodrive.TURN_SPEED, 0.0, 1.0);
-
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, -18.0, 0.0);
+        // block 1
+        autodrive.driveStraight(driveSpeed, 48.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.strafeStraight(driveSpeed, 14.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.driveStraight(driveSpeed, -48.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        // block 2
+        autodrive.driveStraight(driveSpeed, 48.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.strafeStraight(driveSpeed, 12.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.driveStraight(driveSpeed, -48.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        // block 3
+        autodrive.driveStraight(driveSpeed, 48.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.strafeStraight(driveSpeed, 12.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.driveStraight(driveSpeed, -44.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
         amIFinished = true;
     }
 

@@ -40,6 +40,7 @@ public class Preload extends CommandBase {
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
     boolean iAmBlue;
+    boolean amIFinished;
 
     public Preload(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, boolean amIBlue) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);
@@ -53,6 +54,7 @@ public class Preload extends CommandBase {
 
     @Override
     public void execute() {
+        amIFinished = false;
         autodrive.init(hMap);
 
         autodrive.driveStraight(autodrive.DRIVE_SPEED, 24.0, 0.0);
@@ -61,6 +63,12 @@ public class Preload extends CommandBase {
         autodrive.driveStraight(autodrive.DRIVE_SPEED, -6.0, 0.0);
         autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
         autodrive.moveRobot(0.,0.);
+        amIFinished = true;
+    }
+
+    @Override
+    public boolean isFinished() {
+            return amIFinished;
     }
 
 }

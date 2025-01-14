@@ -39,6 +39,7 @@ public class PreloadPlow extends CommandBase {
 
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
+    boolean amIFinished = false;
 
     public PreloadPlow(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);
@@ -47,6 +48,7 @@ public class PreloadPlow extends CommandBase {
 
     @Override
     public void execute() {
+        amIFinished = false;
         autodrive.init(hMap);
 
         autodrive.driveStraight(autodrive.DRIVE_SPEED, 18.0, 0.0);
@@ -76,7 +78,12 @@ public class PreloadPlow extends CommandBase {
         autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
         autodrive.strafeStraight(autodrive.DRIVE_SPEED, -26.0, 0.0);
         autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
+        amIFinished = true;
+    }
 
+    @Override
+    public boolean isFinished() {
+        return amIFinished;
     }
 
 }

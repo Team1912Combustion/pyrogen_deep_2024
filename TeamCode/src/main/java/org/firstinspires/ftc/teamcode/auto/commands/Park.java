@@ -40,6 +40,7 @@ public class Park extends CommandBase {
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
     boolean iAmBlue;
+    boolean amIFinished = false;
 
     public Park(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, boolean amIBlue) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);
@@ -53,10 +54,17 @@ public class Park extends CommandBase {
 
     @Override
     public void execute() {
+        amIFinished = false;
         autodrive.init(hMap);
 
         autodrive.driveStraight(autodrive.DRIVE_SPEED, 22.0, 0.0);
         autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
+        amIFinished = true;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return amIFinished;
     }
 
 }
