@@ -97,12 +97,12 @@ public class Constants {
         public static final String left_name = "claw_left";
         public static final String right_name = "claw_right";
         public static final double init_pos = 0.0;
-        public static final double left_close= -0.05;
+        public static final double left_close= 0.05;
         public static final double right_close= 0.05;
-        public static final double left_safe= -0.1;
-        public static final double right_safe= 0.1;
-        public static final double left_open = -0.4;
-        public static final double right_open = 0.4;
+        public static final double left_safe= 0.2;
+        public static final double right_safe= 0.2;
+        public static final double left_open = 0.40;
+        public static final double right_open = 0.40;
     }
 
     public static class IntakeConstants {

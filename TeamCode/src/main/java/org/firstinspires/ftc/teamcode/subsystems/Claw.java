@@ -16,25 +16,11 @@ public class Claw extends SubsystemBase {
     private double pos_right;
     private boolean is_open;
 
-    /*
-    public static class ClawConstants {
-        public static final String left_name = "claw_left";
-        public static final String right_name = "claw_right";
-        public static final double init_pos = 0.0;
-        public static final double left_close = 0.0;
-        public static final double right_close = 0.0;
-        public static final double left_safe = 0.2;
-        public static final double right_safe = 0.2;
-        public static final double left_open = 0.35;
-        public static final double right_open = 0.35;
-    }
-     */
-
     public Claw(HardwareMap hMap, Telemetry t_telemetry) {
         claw_left = hMap.get(Servo.class, ClawConstants.left_name);
         claw_right = hMap.get(Servo.class, ClawConstants.right_name);
-        claw_right.setDirection(Servo.Direction.FORWARD);
-        claw_left.setDirection(Servo.Direction.REVERSE);
+        claw_right.setDirection(Servo.Direction.REVERSE);
+        claw_left.setDirection(Servo.Direction.FORWARD);
         telemetry = t_telemetry;
         pos_left = ClawConstants.init_pos;
         pos_right = ClawConstants.init_pos;
