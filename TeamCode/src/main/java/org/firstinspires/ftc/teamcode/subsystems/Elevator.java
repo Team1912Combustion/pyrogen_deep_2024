@@ -91,7 +91,7 @@ public class Elevator extends SubsystemBase {
         elevator.set(power);
         telemetry.addLine(String.format("elev enc %d tgt %d power %f touch %b\n",
                 encoder.getPosition(),newSetpoint,power,atBottom()));
-        telemetry.update();
+        //telemetry.update();
     }
 
     public void stop() {

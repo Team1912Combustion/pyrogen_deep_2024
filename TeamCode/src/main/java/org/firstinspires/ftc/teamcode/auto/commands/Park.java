@@ -39,17 +39,11 @@ public class Park extends CommandBase {
 
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
-    boolean iAmBlue;
     boolean amIFinished = false;
 
-    public Park(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, boolean amIBlue) {
+    public Park(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);
         hMap = hardwareMap;
-        iAmBlue = amIBlue;
-    }
-
-    public Park(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
-        this(opMode, hardwareMap, telemetry, true);
     }
 
     @Override

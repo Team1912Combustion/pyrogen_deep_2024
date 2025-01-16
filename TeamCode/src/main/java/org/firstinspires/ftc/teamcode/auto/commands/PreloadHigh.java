@@ -42,29 +42,31 @@ import org.firstinspires.ftc.teamcode.commands.ArmHighGoal;
 import org.firstinspires.ftc.teamcode.commands.ArmLevel;
 import org.firstinspires.ftc.teamcode.commands.ElevatorFullIn;
 import org.firstinspires.ftc.teamcode.commands.ElevatorHighGoal;
-import org.firstinspires.ftc.teamcode.commands.IntakeOut;
+import org.firstinspires.ftc.teamcode.commands.ClawOpen;
+import org.firstinspires.ftc.teamcode.commands.ClawHold;
 
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
 
 public class PreloadHigh extends SequentialCommandGroup {
 
     public PreloadHigh(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry,
-                       Arm arm, Elevator elevator, Intake intake, GamePiece gamePiece) {
+                       Arm arm, Elevator elevator, Claw claw, GamePiece gamePiece) {
         addCommands(
+                new ClawHold(claw).withTimeout(500),
                 new ArmLowGoal(arm, gamePiece).withTimeout(2000),
                 new ElevatorFullIn(elevator).withTimeout(1000),
-                new Preload(opMode, hardwareMap, telemetry).withTimeout(3000),
+                //new Preload(opMode, hardwareMap, telemetry).withTimeout(3000),
                 new ArmHighGoal(arm,gamePiece).withTimeout(3000),
                 new WaitCommand(500),
                 new ElevatorLowGoal(elevator, gamePiece).withTimeout(2000),
                 new WaitCommand(500),
                 new ElevatorHighGoal(elevator, gamePiece).withTimeout(2000),
                 new WaitCommand(500),
-                new IntakeOut(intake).withTimeout(1000),
-                new WaitCommand(3000),
+                new ClawOpen(claw).withTimeout(500),
+                new WaitCommand(500),
                 new ElevatorFullIn(elevator).withTimeout(3000),
                 new ArmLevel(arm).withTimeout(3000),
                 new WaitCommand(30000)

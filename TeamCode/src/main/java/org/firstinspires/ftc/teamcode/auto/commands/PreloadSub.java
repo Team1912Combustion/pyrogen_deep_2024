@@ -39,6 +39,7 @@ public class PreloadSub extends CommandBase {
 
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
+    boolean amIFinished;
 
     public PreloadSub(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);

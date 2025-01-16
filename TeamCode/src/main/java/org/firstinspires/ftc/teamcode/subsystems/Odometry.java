@@ -42,6 +42,10 @@ public class Odometry extends SubsystemBase {
         m_otosOdometry.updatePose();
     }
 
+    public void update(Pose2d newpose) {
+        m_otosOdometry.updatePose(newpose);
+    }
+
     @Override
     public void periodic() { this.update(); }
 

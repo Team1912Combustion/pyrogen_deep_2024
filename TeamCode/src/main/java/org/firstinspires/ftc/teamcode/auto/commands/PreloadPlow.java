@@ -40,6 +40,9 @@ public class PreloadPlow extends CommandBase {
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
     boolean amIFinished = false;
+    double turnSpeed = 0.;
+    double driveSpeed = 0.;
+    double head = 0.;
 
     public PreloadPlow(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);
@@ -50,34 +53,51 @@ public class PreloadPlow extends CommandBase {
     public void execute() {
         amIFinished = false;
         autodrive.init(hMap);
+        turnSpeed = autodrive.TURN_SPEED*1.5;
+        driveSpeed = autodrive.DRIVE_SPEED*1.5;
+        double holdTime = 0.25;
 
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, 18.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
+        head = 0.;
+        autodrive.driveStraight(driveSpeed, 18.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
 
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, -20.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
+        autodrive.driveStraight(driveSpeed, -20.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+
+        autodrive.strafeStraight(driveSpeed, 6.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+
+        head = -90.;
+        autodrive.turnToHeading(turnSpeed, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
 
         // block 1
-        autodrive.strafeStraight(autodrive.DRIVE_SPEED, 50.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, 6.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
-        autodrive.strafeStraight(autodrive.DRIVE_SPEED, -50.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
+        autodrive.driveStraight(driveSpeed, 48.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.strafeStraight(driveSpeed, -12.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.driveStraight(driveSpeed, -52.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.strafeStraight(driveSpeed, -12.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.driveStraight(driveSpeed, 4.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.strafeStraight(driveSpeed, 16.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
         // block 2
-        autodrive.strafeStraight(autodrive.DRIVE_SPEED, 50.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, 8.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
-        autodrive.strafeStraight(autodrive.DRIVE_SPEED, -40.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
+        autodrive.driveStraight(driveSpeed, 48.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.strafeStraight(driveSpeed, -12.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.driveStraight(driveSpeed, -48.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
         // block 3
-        autodrive.strafeStraight(autodrive.DRIVE_SPEED, 40.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, 10.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
-        autodrive.strafeStraight(autodrive.DRIVE_SPEED, -26.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 0.5);
+        autodrive.driveStraight(driveSpeed, 48.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.strafeStraight(driveSpeed, -12.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.driveStraight(driveSpeed, -44.0, head);
+        autodrive.holdHeading( turnSpeed, head, holdTime);
         amIFinished = true;
     }
 

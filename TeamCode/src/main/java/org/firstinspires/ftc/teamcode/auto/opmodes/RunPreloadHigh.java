@@ -4,12 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.auto.commands.PreloadHigh;
 
-@Autonomous
+@Autonomous(name="RunPreloadHigh", preselectTeleOp="RunKraken")
 public class RunPreloadHigh extends CommandOpMode {
 
     @Override
@@ -21,12 +21,12 @@ public class RunPreloadHigh extends CommandOpMode {
         Elevator elevator = new Elevator(hardwareMap, arm, telemetry);
         register(elevator);
 
-        Intake intake = new Intake(hardwareMap, telemetry);
-        register(intake);
+        Claw claw = new Claw(hardwareMap, telemetry);
+        register(claw);
 
         GamePiece gamePiece = new GamePiece();
 
         schedule(new PreloadHigh(this, hardwareMap, telemetry,
-                arm, elevator, intake, gamePiece));
+                arm, elevator, claw, gamePiece));
     }
 }

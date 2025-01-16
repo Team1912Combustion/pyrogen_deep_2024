@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.auto.commands.PreloadSub;
 
-@Autonomous
+@Autonomous(name="RunPreloadSub", preselectTeleOp="RunKraken")
 public class RunPreloadSub extends CommandOpMode {
 
     @Override

@@ -39,17 +39,11 @@ public class Preload extends CommandBase {
 
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
-    boolean iAmBlue;
     boolean amIFinished;
 
-    public Preload(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, boolean amIBlue) {
+    public Preload(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);
         hMap = hardwareMap;
-        iAmBlue = amIBlue;
-    }
-
-    public Preload(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
-        this(opMode, hardwareMap, telemetry, true);
     }
 
     @Override

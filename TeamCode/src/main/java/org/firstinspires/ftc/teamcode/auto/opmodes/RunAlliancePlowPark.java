@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.auto.commands.AlliancePlowPark;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 
-@Autonomous
+@Autonomous(name="RunAlliancePlowPark", preselectTeleOp="RunKraken")
 public class RunAlliancePlowPark extends CommandOpMode {
 
     @Override

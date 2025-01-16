@@ -5,27 +5,27 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.ParallelCommandGrou
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SequentialCommandGroup;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
 /**
  * A command to drive the arm to the high basket position.
  */
 public class ScoreHighBasket extends SequentialCommandGroup {
 
-    public ScoreHighBasket(Arm arm, Elevator elevator, Intake intake, GamePiece gamePiece) {
+    public ScoreHighBasket(Arm arm, Elevator elevator, Claw claw, GamePiece gamePiece) {
         addCommands(
                 new ParallelCommandGroup(
-                        new ArmHighGoal(arm, gamePiece),
-                        new ElevatorHighGoal(elevator, gamePiece)),
-                new InstantCommand(intake::runIn),
-                new WaitCommand(2000),
-                new InstantCommand(intake::stop),
+                        new ArmHighGoal(arm, gamePiece).withTimeout(2000),
+                        new ElevatorHighGoal(elevator, gamePiece).withTimeout(2000)
+                ),
+                new InstantCommand(claw::goOpen).andThen(new WaitCommand(500)),
                 new ParallelCommandGroup(
-                        new ArmIntake(arm, gamePiece),
-                        new ElevatorFullIn(elevator))
+                        new ArmIntake(arm, gamePiece).withTimeout(2000),
+                        new ElevatorFullIn(elevator).withTimeout(2000)
+                )
         );
-        addRequirements(arm, elevator, intake);
+        addRequirements(arm, elevator, claw);
     }
 }

@@ -8,21 +8,12 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.RunCommand;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.InstantCommand;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.gamepad.GamepadEx;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.gamepad.GamepadKeys;
-import org.firstinspires.ftc.teamcode.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.subsystems.Drive;
-import org.firstinspires.ftc.teamcode.subsystems.Arm;
-import org.firstinspires.ftc.teamcode.subsystems.Elevator;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
+
+import org.firstinspires.ftc.teamcode.subsystems.*;
 import org.firstinspires.ftc.teamcode.commands.*;
 
-import org.firstinspires.ftc.teamcode.subsystems.Estimator;
-import org.firstinspires.ftc.teamcode.subsystems.Odometry;
-import org.firstinspires.ftc.teamcode.subsystems.Specimen;
-import org.firstinspires.ftc.teamcode.subsystems.Vision;
-import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
-
 @TeleOp
-public class SystemTest extends CommandOpMode {
+public class RunKraken extends CommandOpMode {
 
     public void initialize() {
 
@@ -31,9 +22,7 @@ public class SystemTest extends CommandOpMode {
 
         GamePiece gamePiece = new GamePiece();
 
-        Vision vision = new Vision(hardwareMap, telemetry);
         Odometry odometry = new Odometry(hardwareMap);
-        Estimator estimator = new Estimator(odometry, vision);
 
         // create our drive object
         Drive drive = new Drive(hardwareMap, telemetry);
@@ -42,7 +31,7 @@ public class SystemTest extends CommandOpMode {
                 driverStick::getLeftX,
                 driverStick::getLeftY,
                 driverStick::getRightX,
-                estimator::getRotation);
+                odometry::getRotation);
         drive.setDefaultCommand(driveCommand);
 
         Arm arm = new Arm(hardwareMap, telemetry);
@@ -50,9 +39,6 @@ public class SystemTest extends CommandOpMode {
 
         Elevator elevator = new Elevator(hardwareMap, arm, telemetry);
         register(elevator);
-
-        Intake intake = new Intake(hardwareMap, telemetry);
-        register(intake);
 
         Claw claw = new Claw(hardwareMap, telemetry);
         register(claw);
@@ -69,16 +55,6 @@ public class SystemTest extends CommandOpMode {
         driverStick.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(new ClawOpen(claw))
                 .whenReleased(new ClawHold(claw));
-
-        /*
-        // intake
-        driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-            .whenHeld(new InstantCommand(intake::runIn, intake))
-            .whenReleased(new InstantCommand(intake::stop, intake));
-        driverStick.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenHeld(new InstantCommand(intake::runOut, intake))
-                .whenReleased(new InstantCommand(intake::stop, intake));
-         */
 
         // arm
         opStick.getGamepadButton(GamepadKeys.Button.DPAD_UP).
