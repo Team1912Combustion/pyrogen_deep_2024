@@ -39,17 +39,10 @@ public class PreloadSub extends CommandBase {
 
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
-    boolean iAmBlue;
-    boolean amIFinished = false;
-
-    public PreloadSub(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry, boolean amIBlue) {
-        autodrive = new AutoDriveHelpers(opMode, telemetry);
-        hMap = hardwareMap;
-        iAmBlue = amIBlue;
-    }
 
     public PreloadSub(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
-        this(opMode, hardwareMap, telemetry, true);
+        autodrive = new AutoDriveHelpers(opMode, telemetry);
+        hMap = hardwareMap;
     }
 
     @Override
@@ -63,11 +56,7 @@ public class PreloadSub extends CommandBase {
         autodrive.driveStraight(autodrive.DRIVE_SPEED, -6.0, 0.0);
         autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
 
-        if (iAmBlue) {
-            autodrive.strafeStraight(autodrive.DRIVE_SPEED, 20.0, 0.0);
-        } else {
-            autodrive.strafeStraight(autodrive.DRIVE_SPEED, -20.0, 0.0);
-        }
+        autodrive.strafeStraight(autodrive.DRIVE_SPEED, 20.0, 0.0);
         autodrive.holdHeading(autodrive.TURN_SPEED, 0.0, 1.0);
 
         autodrive.driveStraight(autodrive.DRIVE_SPEED, -18.0, 0.0);

@@ -14,6 +14,7 @@ public class Claw extends SubsystemBase {
     private final Telemetry telemetry;
     private double pos_left;
     private double pos_right;
+    private boolean is_open;
 
     /*
     public static class ClawConstants {
@@ -37,6 +38,8 @@ public class Claw extends SubsystemBase {
         telemetry = t_telemetry;
         pos_left = ClawConstants.init_pos;
         pos_right = ClawConstants.init_pos;
+        is_open = false;
+        goSafe();
         claw_left.setPosition(pos_left);
         claw_right.setPosition(pos_right);
     }
@@ -53,13 +56,21 @@ public class Claw extends SubsystemBase {
         pos_left = ClawConstants.left_close;
         pos_right = ClawConstants.right_close;
     }
+    public void Toggle() {
+        if (is_open) {
+            is_open = false;
+            goHold();
+        } else {
+            is_open = true;
+            goOpen();
+        }
+    }
 
     @Override
     public void periodic() {
         claw_left.setPosition(pos_left);
         claw_right.setPosition(pos_right);
-        telemetry.addLine(String.format("claw L/R pos %f:%f\n",
-                pos_left, pos_right));
+        telemetry.addLine(String.format("claw L/R pos %f:%f\n", pos_left, pos_right));
     }
 
 }

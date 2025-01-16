@@ -5,19 +5,18 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Pose2d;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.purepursuit.Path;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.purepursuit.PathMotionProfile;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.purepursuit.Waypoint;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
-import org.firstinspires.ftc.teamcode.subsystems.Estimator;
+import org.firstinspires.ftc.teamcode.subsystems.Odometry;
 
 public class PyroPPCommand extends CommandBase {
 
     private Drive m_drive;
-    private Estimator m_odometry;
+    private Odometry m_odometry;
     private Path m_path;
     private Telemetry m_telemetry;
 
-    public PyroPPCommand(Drive drive, Estimator odometry, Path path, Telemetry telemetry) {
+    public PyroPPCommand(Drive drive, Odometry odometry, Path path, Telemetry telemetry) {
         m_path = path;
         m_drive = drive;
         m_odometry = odometry;

@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.auto.commands.PreloadSub;
 
 @Autonomous
-public class RunPreloadSubBlue extends CommandOpMode {
+public class RunPreloadSub extends CommandOpMode {
 
     @Override
     public void initialize() {

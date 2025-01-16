@@ -12,6 +12,7 @@ public class Specimen extends SubsystemBase {
     private final Servo m_specimen;
     private final Telemetry telemetry;
     private double position;
+    private boolean is_open;
 
    /*
     public static final String servo_name = "specimen";
@@ -24,6 +25,8 @@ public class Specimen extends SubsystemBase {
         m_specimen = hMap.get(Servo.class, SpecimenConstants.servo_name);
         telemetry = t_telemetry;
         position = SpecimenConstants.init_pos;
+        is_open = false;
+        goSafe();
         m_specimen.setPosition(position);
     }
 
@@ -32,6 +35,15 @@ public class Specimen extends SubsystemBase {
     }
     public void goHold() {
         position = SpecimenConstants.hold_pos;
+    }
+    public void Toggle() {
+        if (is_open) {
+            is_open = false;
+            goHold();
+        } else {
+            is_open = true;
+            goSafe();
+        }
     }
 
     @Override
