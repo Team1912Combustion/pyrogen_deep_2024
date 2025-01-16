@@ -8,12 +8,12 @@ import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
 /**
  * A command to run the elevator to the high basket.
  */
-public class ElevatorHighGoal extends CommandBase {
+public class ElevatorIntake extends CommandBase {
 
     private final Elevator elevator;
     private final GamePiece gamePiece;
 
-    public ElevatorHighGoal(Elevator e_elevator, GamePiece g_gamePiece) {
+    public ElevatorIntake(Elevator e_elevator, GamePiece g_gamePiece) {
         elevator = e_elevator;
         gamePiece = g_gamePiece;
         addRequirements(elevator);
@@ -22,11 +22,11 @@ public class ElevatorHighGoal extends CommandBase {
     @Override
     public void execute() {
         int arm_target = (gamePiece.sample()) ?
-                Constants.ArmConstants.Sample.pos_high :
-                Constants.ArmConstants.Specimen.pos_high;
+                Constants.ArmConstants.Sample.pos_intake :
+                Constants.ArmConstants.Specimen.pos_intake;
         int target = (gamePiece.sample()) ?
-                Constants.ElevatorConstants.Sample.high_goal :
-                Constants.ElevatorConstants.Specimen.high_goal;
+                Constants.ElevatorConstants.Sample.intake :
+                Constants.ElevatorConstants.Specimen.intake;
         int position = elevator.safeLimit(target, arm_target);
         elevator.runToPosition(position);
     }

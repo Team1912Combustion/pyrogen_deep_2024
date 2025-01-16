@@ -90,7 +90,7 @@ public class Arm extends SubsystemBase {
         telemetry.addLine(String.format("arm enc %d power %f\n", get_position(),power));
         telemetry.addLine(String.format("arm pid %f feed %f\n", pid_power, feed_power));
         telemetry.addLine(String.format("cur ang %f tgt ang %f\n", current_target, get_angle()));
-        telemetry.update();
+        //telemetry.update();
     }
 
     public void stop() {

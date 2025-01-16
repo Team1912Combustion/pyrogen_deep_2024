@@ -14,13 +14,6 @@ public class Specimen extends SubsystemBase {
     private double position;
     private boolean is_open;
 
-   /*
-    public static final String servo_name = "specimen";
-    public static final double init_pos = 0.0;
-    public static final double safe_pos = 0.0;
-    public static final double hold_pos = 0.5;
-    */
-
     public Specimen(HardwareMap hMap, Telemetry t_telemetry) {
         m_specimen = hMap.get(Servo.class, SpecimenConstants.servo_name);
         telemetry = t_telemetry;

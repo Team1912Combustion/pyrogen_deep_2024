@@ -31,7 +31,7 @@ public class Constants {
         public static final double angle_level = pos_level * radPerTick;
 
         public class Sample {
-            public static final int pos_high = 1800;
+            public static final int pos_high = 2400;
             public static final int pos_mid = 1200;
             public static final int pos_intake = 0;
             public static final double angle_high = pos_high * radPerTick;
@@ -40,7 +40,7 @@ public class Constants {
         }
 
         public class Specimen {
-            public static final int pos_high = 1200;
+            public static final int pos_high = 2120;
             public static final int pos_mid = 900;
             public static final int pos_intake = 20;
             public static final double angle_high = pos_high * radPerTick;
@@ -74,15 +74,17 @@ public class Constants {
         public static final double kP = .01 ; // percent power (-1/1) per encoder tick error
         // ProfiledPIDcontroller
         public static final double maxVelocity = 4000.; // ticks/s = 1 second full out
-        public static final double maxAcceleration = maxVelocity / 2.; // ticks/s/s = full speed in 2 s
+        public static final double maxAcceleration = maxVelocity / 1.; // ticks/s/s = full speed in 1 s
 
         public class Sample {
             public static final int high_goal = 4300;
             public static final int low_goal = 3250;
+            public static final int intake = 500;
         }
         public class Specimen {
             public static final int high_goal = 3300;
             public static final int low_goal = 2250;
+            public static final int intake = 0;
         }
     }
 
@@ -97,12 +99,12 @@ public class Constants {
         public static final String left_name = "claw_left";
         public static final String right_name = "claw_right";
         public static final double init_pos = 0.0;
-        public static final double left_close= 0.05;
-        public static final double right_close= 0.05;
-        public static final double left_safe= 0.2;
-        public static final double right_safe= 0.2;
-        public static final double left_open = 0.40;
-        public static final double right_open = 0.40;
+        public static final double left_open= 0.05;
+        public static final double right_open= 0.05;
+        public static final double left_safe= 0.1;
+        public static final double right_safe= 0.1;
+        public static final double left_close = 0.2;
+        public static final double right_close = 0.2;
     }
 
     public static class IntakeConstants {

@@ -21,9 +21,13 @@ public class ElevatorLowGoal extends CommandBase {
 
     @Override
     public void execute() {
-        int position = (gamePiece.sample()) ?
+        int arm_target = (gamePiece.sample()) ?
+                Constants.ArmConstants.Sample.pos_mid :
+                Constants.ArmConstants.Specimen.pos_mid;
+        int target = (gamePiece.sample()) ?
                 Constants.ElevatorConstants.Sample.low_goal :
                 Constants.ElevatorConstants.Specimen.low_goal;
+        int position = elevator.safeLimit(target, arm_target);
         elevator.runToPosition(position);
     }
 

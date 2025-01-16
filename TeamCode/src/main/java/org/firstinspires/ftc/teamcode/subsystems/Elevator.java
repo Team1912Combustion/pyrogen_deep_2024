@@ -71,21 +71,32 @@ public class Elevator extends SubsystemBase {
         pid.setGoal(current_target);
     }
 
-    public int safeLimit() {
-        if (arm.get_position() < ArmConstants.pos_check) {
-            return 1500 + arm.get_position();
+    public int safeLimit(int target, int arm_target) {
+        if (arm_target < ArmConstants.pos_check) {
+            return Math.min(target, 1500 + arm_target);
         }
-        return ElevatorConstants.full_out;
+        // else, arm_target is safely high enough
+        return Math.min(target, ElevatorConstants.full_out);
+    }
+
+    public int safeLimit(int target) {
+        if (arm.get_position() < ArmConstants.pos_check) {
+            return Math.min(target, 1500 + arm.get_position());
+        }
+        return Math.min(target, ElevatorConstants.full_out);
     }
 
     public int limitRange(int target) {
-        return Math.min(target, safeLimit());
+        return Math.min(
+               ElevatorConstants.full_out,
+               Math.max(ElevatorConstants.full_in, target)
+        );
     }
 
     @Override
     public void periodic() {
         if (atBottom()) { encoder.reset(); }
-        int newSetpoint = limitRange(current_target);
+        int newSetpoint = limitRange(safeLimit(current_target));
         pid.setGoal(newSetpoint);
         double power = pid.calculate(get_position());
         elevator.set(power);

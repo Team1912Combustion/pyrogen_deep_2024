@@ -48,29 +48,29 @@ public class RunKraken extends CommandOpMode {
 
         // button bindings for the mechanisms
 
-        // claw
-        driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenPressed(new ClawOpen(claw))
-                .whenReleased(new ClawHold(claw));
-        driverStick.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(new ClawOpen(claw))
-                .whenReleased(new ClawHold(claw));
+        // elevator adjustment
+        driverStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
+                whenPressed(new ElevatorDown(elevator));
+        driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
+                whenPressed(new ElevatorUp(elevator));
 
         // arm
         opStick.getGamepadButton(GamepadKeys.Button.DPAD_UP).
-                  whenPressed(new ArmHighGoal(arm, gamePiece));
+                  whenPressed(new ArmElevHighGoal(arm, elevator, gamePiece));
         opStick.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).
-                  whenPressed(new ArmElevLowGoal(arm,elevator,gamePiece));
+                  whenPressed(new ArmElevLowGoal(arm,elevator, gamePiece));
         opStick.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).
                   whenPressed(new ArmElevIntake(arm, elevator, gamePiece));
         opStick.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).
+                whenPressed(new ArmElevHome(arm, elevator));
+        opStick.getGamepadButton(GamepadKeys.Button.BACK).
                 whenPressed(new ArmDownSpecimen(arm));
 
         // elevator
-        opStick.getGamepadButton(GamepadKeys.Button.Y).
-                whenPressed(new ElevatorHighGoal(elevator, gamePiece));
-        opStick.getGamepadButton(GamepadKeys.Button.X).
-                whenPressed(new ElevatorLowGoal(elevator, gamePiece));
+        //opStick.getGamepadButton(GamepadKeys.Button.Y).
+        //        whenPressed(new ElevatorHighGoal(elevator, gamePiece));
+        //opStick.getGamepadButton(GamepadKeys.Button.X).
+        //        whenPressed(new ElevatorLowGoal(elevator, gamePiece));
         opStick.getGamepadButton(GamepadKeys.Button.A).
                 whenPressed(new ElevatorFullIn(elevator));
 
@@ -79,21 +79,14 @@ public class RunKraken extends CommandOpMode {
                   whenPressed(new ArmDown(arm));
         opStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
                   whenPressed(new ArmUp(arm));
-        opStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
-                whenPressed(new ArmDown(arm));
-        opStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
-                whenPressed(new ArmUp(arm));
-        driverStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
-                whenPressed(new ElevatorDown(elevator));
-        driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
-                whenPressed(new ElevatorUp(elevator));
 
-        opStick.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).
-                whenPressed(new SpecimenHold(specimen));
-        opStick.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).
-                whenPressed(new SpecimenSafe(specimen));
+        // claw
+        opStick.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(new ClawToggle(claw));
+        opStick.getGamepadButton(GamepadKeys.Button.B)
+                .whenPressed(new SpecimenToggle(specimen));
 
-        opStick.getGamepadButton(GamepadKeys.Button.BACK).
+        opStick.getGamepadButton(GamepadKeys.Button.START).
                 whenPressed(new InstantCommand(gamePiece::toggle));
 
         // update telemetry every loop
