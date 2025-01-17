@@ -15,8 +15,14 @@ public class GamePiece extends SubsystemBase {
         type = gamePiece.SAMPLE;
     }
 
-    public boolean sample() {
+    public boolean is_sample() {
         return type == gamePiece.SAMPLE;
+    }
+    public void sample() {
+        type = gamePiece.SAMPLE;
+    }
+    public void specimen() {
+        type = gamePiece.SPECIMEN;
     }
     public void toggle() {
         if (type == gamePiece.SPECIMEN) {

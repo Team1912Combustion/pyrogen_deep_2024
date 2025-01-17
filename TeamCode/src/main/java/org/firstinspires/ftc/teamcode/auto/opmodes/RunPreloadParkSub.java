@@ -3,15 +3,15 @@ package org.firstinspires.ftc.teamcode.auto.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
-import org.firstinspires.ftc.teamcode.auto.commands.PreloadSub;
+import org.firstinspires.ftc.teamcode.auto.commands.PreloadParkSubStart;
 
 @Autonomous(name="RunPreloadSub", preselectTeleOp="RunKraken")
-public class RunPreloadSub extends CommandOpMode {
+public class RunPreloadParkSub extends CommandOpMode {
 
     @Override
     public void initialize() {
 
         // schedule the command
-        schedule(new PreloadSub(this, hardwareMap, telemetry));
+        schedule(new PreloadParkSubStart(this, hardwareMap, telemetry));
     }
 }

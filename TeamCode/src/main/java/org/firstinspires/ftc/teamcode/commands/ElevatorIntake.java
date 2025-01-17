@@ -21,10 +21,10 @@ public class ElevatorIntake extends CommandBase {
 
     @Override
     public void execute() {
-        int arm_target = (gamePiece.sample()) ?
+        int arm_target = (gamePiece.is_sample()) ?
                 Constants.ArmConstants.Sample.pos_intake :
                 Constants.ArmConstants.Specimen.pos_intake;
-        int target = (gamePiece.sample()) ?
+        int target = (gamePiece.is_sample()) ?
                 Constants.ElevatorConstants.Sample.intake :
                 Constants.ElevatorConstants.Specimen.intake;
         int position = elevator.safeLimit(target, arm_target);

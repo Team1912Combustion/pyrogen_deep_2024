@@ -21,7 +21,7 @@ public class ArmLowGoal extends CommandBase {
 
     @Override
     public void execute() {
-        double target = (gamePiece.sample()) ?
+        double target = (gamePiece.is_sample()) ?
                 ArmConstants.Sample.angle_mid :
                 ArmConstants.Specimen.angle_mid ;
         arm.runToAngle(target);

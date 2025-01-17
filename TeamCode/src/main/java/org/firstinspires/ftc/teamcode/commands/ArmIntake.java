@@ -23,7 +23,7 @@ public class ArmIntake extends CommandBase {
 
     @Override
     public void execute() {
-        double target = (gamePiece.sample()) ?
+        double target = (gamePiece.is_sample()) ?
                 ArmConstants.Sample.angle_intake :
                 ArmConstants.Specimen.angle_intake ;
         arm.runToAngle(target);

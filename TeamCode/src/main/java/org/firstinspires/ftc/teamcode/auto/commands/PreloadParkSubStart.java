@@ -35,13 +35,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 
-public class PreloadSub extends CommandBase {
+public class PreloadParkSubStart extends CommandBase {
 
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
     boolean amIFinished;
 
-    public PreloadSub(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
+    public PreloadParkSubStart(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);
         hMap = hardwareMap;
     }
@@ -51,17 +51,14 @@ public class PreloadSub extends CommandBase {
         amIFinished = false;
         autodrive.init(hMap);
 
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, 24.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
-
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, -6.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
-
-        autodrive.strafeStraight(autodrive.DRIVE_SPEED, 20.0, 0.0);
-        autodrive.holdHeading(autodrive.TURN_SPEED, 0.0, 1.0);
-
         autodrive.driveStraight(autodrive.DRIVE_SPEED, -18.0, 0.0);
-        amIFinished = true;
+        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
+
+        autodrive.driveStraight(autodrive.DRIVE_SPEED, 20.0, 0.0);
+        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
+
+        autodrive.strafeStraight(autodrive.DRIVE_SPEED, -54.0, 0.0);
+        autodrive.holdHeading(autodrive.TURN_SPEED, 0.0, 1.0);
     }
 
     @Override
