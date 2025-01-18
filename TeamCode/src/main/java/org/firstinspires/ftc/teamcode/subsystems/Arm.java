@@ -2,7 +2,10 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import android.annotation.SuppressLint;
 
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
@@ -11,12 +14,14 @@ import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.trajectory.TrapezoidProfile;
+import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
     private final MotorEx m_arm;
     private final Motor.Encoder m_encoder;
     private final Telemetry telemetry;
+    //private final DigitalChannel touchSensor;
 
     private final ProfiledPIDController pid;
     private final ArmFeedforward feedforward;
@@ -25,6 +30,8 @@ public class Arm extends SubsystemBase {
 
     public Arm(HardwareMap hMap, Telemetry t_telemetry) {
         telemetry = t_telemetry;
+        //touchSensor = hMap.get(DigitalChannel.class, Constants.ArmConstants.limit_name);
+        //touchSensor.setMode(DigitalChannel.Mode.INPUT);
         m_arm = new MotorEx(hMap, ArmConstants.motor_name, Motor.GoBILDA.RPM_30);
         m_arm.setInverted(true);
         m_encoder = m_arm.encoder;
@@ -44,6 +51,10 @@ public class Arm extends SubsystemBase {
                 ArmConstants.kA);
         pid.setGoal(current_target);
     }
+
+    //public boolean atBottom() {
+    //    return touchSensor.getState() ;
+   // }
 
     public int get_position() {
         return m_encoder.getPosition();
@@ -83,11 +94,12 @@ public class Arm extends SubsystemBase {
     @SuppressLint("DefaultLocale")
     @Override
     public void periodic() {
+        //if (atBottom()) { m_encoder.reset(); }
         double pid_power =  pid.calculate(get_angle());
         double feed_power = feedforward.calculate(get_angle(),ArmConstants.vel_radpersec);
         double power =  pid_power + feed_power;
         m_arm.set(power);
-        telemetry.addLine(String.format("arm enc %d power %f\n", get_position(),power));
+        telemetry.addLine(String.format("arm enc %d power %f \n", get_position(),power));
         telemetry.addLine(String.format("arm pid %f feed %f\n", pid_power, feed_power));
         telemetry.addLine(String.format("cur ang %f tgt ang %f\n", current_target, get_angle()));
         //telemetry.update();

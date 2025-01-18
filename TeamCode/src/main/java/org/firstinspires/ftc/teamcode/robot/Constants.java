@@ -15,6 +15,7 @@ public class Constants {
 
     public static class ArmConstants {
         public static final String motor_name = "arm";
+        public final static String limit_name = "arm_limit";
         // gobilda.com/5202-series-yellow-jacket-planetary-gear-motor-188-1-ratio-24mm-length-6mm-d-shaft-30-rpm-36mm-gearbox-3-3-5v-encoder/
         // 5281 PPR * (90/360) * (2:1 bevel gear)
         //public static final int tick_90 = (5281*2)/4;   // = 2640
@@ -32,7 +33,7 @@ public class Constants {
 
         public class Sample {
             public static final int pos_high = 2400;
-            public static final int pos_mid = 1200;
+            public static final int pos_mid = 1970;
             public static final int pos_intake = 0;
             public static final double angle_high = pos_high * radPerTick;
             public static final double angle_mid = pos_mid * radPerTick;
@@ -40,9 +41,9 @@ public class Constants {
         }
 
         public class Specimen {
-            public static final int pos_high = 2120;
-            public static final int pos_mid = 900;
-            public static final int pos_intake = 20;
+            public static final int pos_high = 1590;
+            public static final int pos_mid = 790;
+            public static final int pos_intake = 320;
             public static final double angle_high = pos_high * radPerTick;
             public static final double angle_mid = pos_mid * radPerTick;
             public static final double angle_intake = pos_intake * radPerTick;
@@ -77,13 +78,13 @@ public class Constants {
         public static final double maxAcceleration = maxVelocity / 1.; // ticks/s/s = full speed in 1 s
 
         public class Sample {
-            public static final int high_goal = 4300;
-            public static final int low_goal = 3250;
+            public static final int high_goal = 4470;
+            public static final int low_goal = 2164;
             public static final int intake = 500;
         }
         public class Specimen {
-            public static final int high_goal = 3300;
-            public static final int low_goal = 2250;
+            public static final int high_goal = 1435;
+            public static final int low_goal = 480;
             public static final int intake = 0;
         }
     }
