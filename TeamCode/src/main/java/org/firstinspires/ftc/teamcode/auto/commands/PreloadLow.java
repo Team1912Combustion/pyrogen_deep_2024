@@ -32,39 +32,42 @@ package org.firstinspires.ftc.teamcode.auto.commands;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
+import org.firstinspires.ftc.teamcode.commands.ArmLevel;
+import org.firstinspires.ftc.teamcode.commands.ArmLowGoal;
+import org.firstinspires.ftc.teamcode.commands.ArmUp;
+import org.firstinspires.ftc.teamcode.commands.ClawHold;
+import org.firstinspires.ftc.teamcode.commands.ClawOpen;
+import org.firstinspires.ftc.teamcode.commands.ElevatorFullIn;
+import org.firstinspires.ftc.teamcode.commands.ElevatorLowGoal;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SequentialCommandGroup;
+import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.subsystems.Elevator;
+import org.firstinspires.ftc.teamcode.subsystems.GamePiece;
 
-public class PreloadHighMove extends CommandBase {
+public class PreloadLow extends SequentialCommandGroup {
 
-    AutoDriveHelpers autodrive;
-    HardwareMap hMap;
-    boolean amIFinished;
-
-    public PreloadHighMove(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
-        autodrive = new AutoDriveHelpers(opMode, telemetry);
-        hMap = hardwareMap;
-    }
-
-    @Override
-    public void execute() {
-        amIFinished = false;
-        autodrive.init(hMap);
-
-        autodrive.strafeStraight(autodrive.DRIVE_SPEED, 30.0, 0.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 0.0, 1.0);
-
-        autodrive.turnToHeading(autodrive.TURN_SPEED, 45.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 45.0, 1.0);
-        autodrive.driveStraight(autodrive.DRIVE_SPEED, 26.0, 45.0);
-        autodrive.holdHeading( autodrive.TURN_SPEED, 45.0, 1.0);
-        autodrive.moveRobot(0.,0.);
-        amIFinished = true;
-    }
-
-    @Override
-    public boolean isFinished() {
-            return amIFinished;
+    public PreloadLow(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry,
+                      Arm arm, Elevator elevator, Claw claw, GamePiece gamePiece) {
+        addCommands(
+                new ClawHold(claw).withTimeout(500),
+                new ArmUp(arm).withTimeout(2000),
+                new PreloadSamplePrep(opMode, hardwareMap, telemetry),
+                new ElevatorFullIn(elevator).withTimeout(1000),
+                //new Preload(opMode, hardwareMap, telemetry).withTimeout(3000),
+                new ArmLowGoal(arm,gamePiece).withTimeout(3000),
+                new WaitCommand(500),
+                new ElevatorLowGoal(elevator, gamePiece).withTimeout(2000),
+                new WaitCommand(500),
+                new ClawOpen(claw).withTimeout(500),
+                new WaitCommand(500),
+                new Backup6In(opMode, hardwareMap, telemetry),
+                new ElevatorFullIn(elevator).withTimeout(3000),
+                new ArmLevel(arm).withTimeout(3000),
+                new WaitCommand(30000)
+        );
     }
 
 }

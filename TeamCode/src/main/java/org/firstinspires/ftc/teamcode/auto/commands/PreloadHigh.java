@@ -32,9 +32,7 @@ package org.firstinspires.ftc.teamcode.auto.commands;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import org.firstinspires.ftc.teamcode.commands.ArmLowGoal;
 import org.firstinspires.ftc.teamcode.commands.ArmUp;
-import org.firstinspires.ftc.teamcode.commands.ElevatorLowGoal;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SequentialCommandGroup;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.WaitCommand;
@@ -58,7 +56,7 @@ public class PreloadHigh extends SequentialCommandGroup {
         addCommands(
                 new ClawHold(claw).withTimeout(500),
                 new ArmUp(arm).withTimeout(2000),
-                new PreloadHighMove(opMode, hardwareMap, telemetry),
+                new PreloadSamplePrep(opMode, hardwareMap, telemetry),
                 new ElevatorFullIn(elevator).withTimeout(1000),
                 //new Preload(opMode, hardwareMap, telemetry).withTimeout(3000),
                 new ArmHighGoal(arm,gamePiece).withTimeout(3000),

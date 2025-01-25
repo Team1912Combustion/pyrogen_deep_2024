@@ -85,6 +85,8 @@ public class RunKraken extends CommandOpMode {
                 .whenPressed(new ClawToggle(claw));
         opStick.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new SpecimenToggle(specimen));
+        opStick.getGamepadButton(GamepadKeys.Button.X)
+                .whenPressed(new LiftSpecimen(arm));
 
         opStick.getGamepadButton(GamepadKeys.Button.START).
                 whenPressed(new InstantCommand(gamePiece::toggle));

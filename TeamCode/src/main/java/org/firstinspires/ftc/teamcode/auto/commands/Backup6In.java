@@ -35,16 +35,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
 
-public class AlliancePlowPark extends CommandBase {
+public class Backup6In extends CommandBase {
 
     AutoDriveHelpers autodrive;
     HardwareMap hMap;
-    boolean amIFinished = false;
-    double turnSpeed = 0.;
-    double driveSpeed = 0.;
-    double head = 0.;
+    boolean amIFinished;
 
-    public AlliancePlowPark(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
+    public Backup6In(CommandOpMode opMode, HardwareMap hardwareMap, Telemetry telemetry) {
         autodrive = new AutoDriveHelpers(opMode, telemetry);
         hMap = hardwareMap;
     }
@@ -53,52 +50,16 @@ public class AlliancePlowPark extends CommandBase {
     public void execute() {
         amIFinished = false;
         autodrive.init(hMap);
-        turnSpeed = autodrive.TURN_SPEED*1.5;
-        driveSpeed = autodrive.DRIVE_SPEED*1.5;
-        double holdTime = 0.25;
+        double heading = autodrive.getHeading();
 
-        head = 0.;
-        autodrive.driveStraight(driveSpeed, 12.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-
-        autodrive.strafeStraight(driveSpeed, -6.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-
-        head = 0.;
-        autodrive.strafeStraight(driveSpeed, -6.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-
-        head = 90.;
-        autodrive.turnToHeading(turnSpeed, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-
-        // block 1
-        autodrive.driveStraight(driveSpeed, 48.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-        autodrive.strafeStraight(driveSpeed, 6.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-        autodrive.driveStraight(driveSpeed, -48.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-        // block 2
-        autodrive.driveStraight(driveSpeed, 48.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-        autodrive.strafeStraight(driveSpeed, 12.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-        autodrive.driveStraight(driveSpeed, -48.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-        // block 3
-        autodrive.driveStraight(driveSpeed, 48.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-        autodrive.strafeStraight(driveSpeed, 12.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
-        autodrive.driveStraight(0.8*driveSpeed, -48.0, head);
-        autodrive.holdHeading( turnSpeed, head, holdTime);
+        autodrive.driveStraight(autodrive.DRIVE_SPEED, -6.0, heading);
+        autodrive.moveRobot(0.,0.);
         amIFinished = true;
     }
 
     @Override
     public boolean isFinished() {
-        return amIFinished;
+            return amIFinished;
     }
 
 }

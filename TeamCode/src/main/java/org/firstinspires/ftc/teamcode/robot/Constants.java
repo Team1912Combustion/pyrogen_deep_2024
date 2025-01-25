@@ -32,7 +32,7 @@ public class Constants {
         public static final double angle_level = pos_level * radPerTick;
 
         public class Sample {
-            public static final int pos_high = 2400;
+            public static final int pos_high = 2500;
             public static final int pos_mid = 1970;
             public static final int pos_intake = 0;
             public static final double angle_high = pos_high * radPerTick;
@@ -52,7 +52,7 @@ public class Constants {
         // PController P
         public static final double kP = 20.0; // V per angle error radians
         // ProfiledController
-        public static final double maxVelocity = Math.PI / 4.; // rad/s = 45 deg per second
+        public static final double maxVelocity = Math.PI / 2.; // rad/s = 90 deg per second
         public static final double maxAcceleration = maxVelocity / 2.; // rad/s/s = maxVel / 2sec
         // ArmFeedForward
         public static final double vel_radpersec = 0.;

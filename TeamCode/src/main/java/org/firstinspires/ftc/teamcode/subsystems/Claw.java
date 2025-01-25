@@ -25,7 +25,7 @@ public class Claw extends SubsystemBase {
         pos_left = ClawConstants.init_pos;
         pos_right = ClawConstants.init_pos;
         is_open = false;
-        goSafe();
+        goHold();
         claw_left.setPosition(pos_left);
         claw_right.setPosition(pos_right);
     }
