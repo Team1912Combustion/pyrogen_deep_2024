@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.commands;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Pose2d;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.purepursuit.Path;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.purepursuit.PathMotionProfile;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandBase;
+import org.team1912.pyrogen.pyrolib.ftclib.geometry.Pose2d;
+import org.team1912.pyrogen.pyrolib.ftclib.purepursuit.Path;
+import org.team1912.pyrogen.pyrolib.ftclib.purepursuit.PathMotionProfile;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Odometry;

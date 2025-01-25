@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.pyrolib.OTOS.OTOSSensor;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Rotation2d;
+import org.team1912.pyrogen.pyrolib.OTOS.OTOSSensor;
+import org.team1912.pyrogen.pyrolib.ftclib.geometry.Rotation2d;
 import org.firstinspires.ftc.teamcode.robot.Constants;
 
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.drivebase.MecanumDrive;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
+import org.team1912.pyrogen.pyrolib.ftclib.command.SubsystemBase;
+import org.team1912.pyrogen.pyrolib.ftclib.drivebase.MecanumDrive;
+import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.MotorEx;
 import org.firstinspires.ftc.teamcode.robot.Constants.DriveConstants;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;

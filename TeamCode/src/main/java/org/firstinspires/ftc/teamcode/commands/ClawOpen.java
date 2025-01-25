@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.commands;
 
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 
 public class ClawOpen extends CommandBase {

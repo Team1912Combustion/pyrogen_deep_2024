@@ -1,7 +1,7 @@
 
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
+import org.team1912.pyrogen.pyrolib.ftclib.command.SubsystemBase;
 
 public class GamePiece extends SubsystemBase {
     private enum gamePiece {

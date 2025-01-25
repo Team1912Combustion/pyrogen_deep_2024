@@ -5,11 +5,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.controller.wpilibcontroller.ProfiledPIDController;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.MotorEx;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.trajectory.TrapezoidProfile;
+import org.team1912.pyrogen.pyrolib.ftclib.command.SubsystemBase;
+import org.team1912.pyrogen.pyrolib.ftclib.controller.wpilibcontroller.ProfiledPIDController;
+import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.Motor;
+import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.MotorEx;
+import org.team1912.pyrogen.pyrolib.ftclib.trajectory.TrapezoidProfile;
 import org.firstinspires.ftc.teamcode.robot.Constants.ElevatorConstants;
 import org.firstinspires.ftc.teamcode.robot.Constants.ArmConstants;
 import org.firstinspires.ftc.teamcode.subsystems.GamePiece;

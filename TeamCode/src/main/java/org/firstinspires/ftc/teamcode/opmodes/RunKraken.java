@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.DefaultDrive;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.RunCommand;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.InstantCommand;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.gamepad.GamepadEx;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.gamepad.GamepadKeys;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
+import org.team1912.pyrogen.pyrolib.ftclib.command.RunCommand;
+import org.team1912.pyrogen.pyrolib.ftclib.command.InstantCommand;
+import org.team1912.pyrogen.pyrolib.ftclib.gamepad.GamepadEx;
+import org.team1912.pyrogen.pyrolib.ftclib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.subsystems.*;
 import org.firstinspires.ftc.teamcode.commands.*;

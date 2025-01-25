@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SubsystemBase;
+import org.team1912.pyrogen.pyrolib.ftclib.command.SubsystemBase;
 import org.firstinspires.ftc.teamcode.robot.Constants.ClawConstants;
 
 public class Claw extends SubsystemBase {
