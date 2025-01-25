@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.auto.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.auto.commands.PreloadParkSubStart;
 
 @Autonomous(name="RunPreloadParkSub", preselectTeleOp="RunKraken")

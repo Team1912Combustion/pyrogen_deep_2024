@@ -33,9 +33,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import org.firstinspires.ftc.teamcode.commands.ArmUp;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SequentialCommandGroup;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.WaitCommand;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
+import org.team1912.pyrogen.pyrolib.ftclib.command.SequentialCommandGroup;
+import org.team1912.pyrogen.pyrolib.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.commands.ArmHighGoal;
 import org.firstinspires.ftc.teamcode.commands.ArmLevel;

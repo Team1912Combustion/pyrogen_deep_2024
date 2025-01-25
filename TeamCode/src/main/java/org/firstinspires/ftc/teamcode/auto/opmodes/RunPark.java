@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
 import org.firstinspires.ftc.teamcode.auto.commands.Park;
 
 @Autonomous(name="RunPark", preselectTeleOp="RunKraken")
