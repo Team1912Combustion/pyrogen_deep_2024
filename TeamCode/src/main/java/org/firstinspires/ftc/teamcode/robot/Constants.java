@@ -4,6 +4,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.team1912.pyrogen.pyrolib.ftclib.geometry.Translation2d;
+import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
 
 public class Constants {
     public static class OdometryConstants {
@@ -11,6 +13,34 @@ public class Constants {
         public final static double[] vec_stateStdDevs = {1., 1., .1};
         public final static double[] vec_visionStdDevs = {4., 4., 999.};
         public final static double max_apriltag_poserr = 48.;
+    }
+
+    public static class TapeConstants {
+        public static final String motor_name = "tape";
+        public final static String limit_name = "tape_limit";
+        // 581 PPR
+        // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
+        public static final int full_out = 100;
+        public static final int full_in = 0;
+        public static final int limit_high = full_out;
+        public static final int limit_low = full_in;
+        public static final int threshold = 10;
+        // PController P
+        public static final double kP = 1.0; // V per tick
+    }
+
+    public static class LiftConstants {
+        public static final String motor_name = "lift";
+        public final static String limit_name = "lift_limit";
+        // 581 PPR
+        // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
+        public static final int full_out = 1600;
+        public static final int full_in = 0;
+        public static final int limit_high = full_out;
+        public static final int limit_low = full_in;
+        public static final int threshold = 10;
+        // PController P
+        public static final double kP = 1.0; // V per tick
     }
 
     public static class ArmConstants {
@@ -119,6 +149,16 @@ public class Constants {
         public static final String front_right_name = "front_right";
         public static final String back_left_name = "back_left";
         public static final String back_right_name = "back_right";
+        public static Translation2d frontLeftInches = new Translation2d(8,8);
+        public static Translation2d backLeftInches = new Translation2d(-8,8);
+        public static Translation2d frontRightInches = new Translation2d(8,-8);
+        public static Translation2d backRightInches = new Translation2d(-8,-8);
+        public static MecanumDriveKinematics kinematics =
+                new MecanumDriveKinematics(
+                        frontLeftInches,
+                        frontRightInches,
+                        backLeftInches,
+                        backRightInches);
     }
 
     public static class VisionConstants {

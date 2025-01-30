@@ -32,15 +32,8 @@ package org.firstinspires.ftc.teamcode.auto.commands;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.commands.ArmHighGoal;
-import org.firstinspires.ftc.teamcode.commands.ArmLevel;
-import org.firstinspires.ftc.teamcode.commands.ArmLowGoal;
-import org.firstinspires.ftc.teamcode.commands.ClawHold;
-import org.firstinspires.ftc.teamcode.commands.ClawOpen;
-import org.firstinspires.ftc.teamcode.commands.ElevatorFullIn;
-import org.firstinspires.ftc.teamcode.commands.ElevatorHighGoal;
-import org.firstinspires.ftc.teamcode.commands.ElevatorIntake;
-import org.firstinspires.ftc.teamcode.commands.ElevatorLowGoal;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmLowGoal;
+import org.firstinspires.ftc.teamcode.commands.elevator.ElevatorIntake;
 import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
 import org.team1912.pyrogen.pyrolib.ftclib.command.InstantCommand;
 import org.team1912.pyrogen.pyrolib.ftclib.command.SequentialCommandGroup;
