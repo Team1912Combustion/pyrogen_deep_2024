@@ -6,6 +6,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.team1912.pyrogen.pyrolib.ftclib.geometry.Translation2d;
 import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
+import org.team1912.pyrogen.pyrolib.ftclib.trajectory.TrapezoidProfile;
 
 public class Constants {
     public static class OdometryConstants {
@@ -15,9 +16,9 @@ public class Constants {
         public final static double max_apriltag_poserr = 48.;
     }
 
-    public static class TapeConstants {
-        public static final String motor_name = "tape";
-        public final static String limit_name = "tape_limit";
+    public static class WinchConstants {
+        public static final String motor_name = "winch";
+        public final static String limit_name = "winch_limit";
         // 581 PPR
         // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
         public static final int full_out = 100;
@@ -142,6 +143,19 @@ public class Constants {
         public static final String servo_name = "intake";
         public static final double intake_speed = 1.;
         public static final double output_speed = -1.;
+    }
+
+    public static class AutoConstants {
+        public static double kPXController  = 0.1;
+        public static double kPYController  = 0.1;
+        public static double kPThetaController  = 0.1;
+        public static double kMaxSpeedMetersPerSecond  = 12;
+        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+
+        public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+                new TrapezoidProfile.Constraints(
+                        kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
 
     public static class DriveConstants {

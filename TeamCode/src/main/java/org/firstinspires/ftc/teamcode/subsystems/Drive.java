@@ -11,6 +11,7 @@ import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.Motor;
 import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.MotorEx;
 import org.firstinspires.ftc.teamcode.robot.Constants.DriveConstants;
 import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
+import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveWheelSpeeds;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -99,4 +100,10 @@ public class Drive extends SubsystemBase {
     public void set_squareInputs(boolean squareInputs) {
         this.squareInputs = squareInputs;
     }
+
+    public void driveWithSpeeds(MecanumDriveWheelSpeeds speeds) {
+        m_drive.driveWithMecanumDriveWheelSpeeds(speeds);
+    }
+
+
 }

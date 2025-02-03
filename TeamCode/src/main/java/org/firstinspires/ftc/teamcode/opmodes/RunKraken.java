@@ -3,24 +3,20 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.DefaultDrive;
-import org.firstinspires.ftc.teamcode.commands.arm.ArmDown;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmDownSpecimen;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmElevHighGoal;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmElevHome;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmElevIntake;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmElevLowGoal;
-import org.firstinspires.ftc.teamcode.commands.arm.ArmUp;
 import org.firstinspires.ftc.teamcode.commands.claw.ClawToggle;
-import org.firstinspires.ftc.teamcode.commands.elevator.ElevatorDown;
 import org.firstinspires.ftc.teamcode.commands.elevator.ElevatorFullIn;
-import org.firstinspires.ftc.teamcode.commands.elevator.ElevatorUp;
 import org.firstinspires.ftc.teamcode.commands.arm.LiftSpecimen;
 import org.firstinspires.ftc.teamcode.commands.specimen.SpecimenToggle;
 
 import org.firstinspires.ftc.teamcode.commands.lift.LiftDown;
 import org.firstinspires.ftc.teamcode.commands.lift.LiftUp;
-import org.firstinspires.ftc.teamcode.commands.tape.TapeDown;
-import org.firstinspires.ftc.teamcode.commands.tape.TapeUp;
+import org.firstinspires.ftc.teamcode.commands.Winch.WinchDown;
+import org.firstinspires.ftc.teamcode.commands.Winch.WinchUp;
 
 import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
 import org.team1912.pyrogen.pyrolib.ftclib.command.RunCommand;
@@ -58,8 +54,8 @@ public class RunKraken extends CommandOpMode {
         Lift lift = new Lift(hardwareMap, telemetry);
         register(lift);
 
-        Tape tape = new Tape(hardwareMap, telemetry);
-        register(tape);
+        Winch winch = new Winch(hardwareMap, telemetry);
+        register(winch);
 
         Elevator elevator = new Elevator(hardwareMap, arm, telemetry);
         register(elevator);
@@ -100,9 +96,9 @@ public class RunKraken extends CommandOpMode {
 
         // tape adjustment
         driverStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
-                whenPressed(new TapeDown(tape));
+                whenPressed(new WinchDown(winch));
         driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
-                whenPressed(new TapeUp(tape));
+                whenPressed(new WinchUp(winch));
 
         // claw
         opStick.getGamepadButton(GamepadKeys.Button.Y)

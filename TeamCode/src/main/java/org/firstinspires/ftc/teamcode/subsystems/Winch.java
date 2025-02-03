@@ -5,13 +5,13 @@ import android.annotation.SuppressLint;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.robot.Constants.TapeConstants;
+import org.firstinspires.ftc.teamcode.robot.Constants.WinchConstants;
 import org.team1912.pyrogen.pyrolib.ftclib.command.SubsystemBase;
 import org.team1912.pyrogen.pyrolib.ftclib.controller.PController;
 import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.Motor;
 import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.MotorEx;
 
-public class Tape extends SubsystemBase {
+public class Winch extends SubsystemBase {
     private final MotorEx m_tape;
     private final Motor.Encoder m_encoder;
     private final Telemetry telemetry;
@@ -19,9 +19,9 @@ public class Tape extends SubsystemBase {
 
     public double current_target;
 
-    public Tape(HardwareMap hMap, Telemetry t_telemetry) {
+    public Winch(HardwareMap hMap, Telemetry t_telemetry) {
         telemetry = t_telemetry;
-        m_tape = new MotorEx(hMap, TapeConstants.motor_name, Motor.GoBILDA.RPM_30);
+        m_tape = new MotorEx(hMap, WinchConstants.motor_name, Motor.GoBILDA.RPM_30);
         m_tape.setInverted(true);
         m_encoder = m_tape.encoder;
         m_tape.stopAndResetEncoder();
@@ -29,8 +29,8 @@ public class Tape extends SubsystemBase {
         m_tape.setRunMode(Motor.RunMode.RawPower);
         m_tape.set(0.);
         m_tape.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        pid = new PController(TapeConstants.kP);
-        pid.setTolerance(TapeConstants.threshold);
+        pid = new PController(WinchConstants.kP);
+        pid.setTolerance(WinchConstants.threshold);
         pid.setSetPoint(current_target);
     }
 
@@ -47,8 +47,8 @@ public class Tape extends SubsystemBase {
     }
 
     public double fix_target(double target) {
-        return Math.min(TapeConstants.limit_high,
-                Math.max(TapeConstants.limit_low, target));
+        return Math.min(WinchConstants.limit_high,
+                Math.max(WinchConstants.limit_low, target));
     }
 
     public void runToPosition(double position) {
