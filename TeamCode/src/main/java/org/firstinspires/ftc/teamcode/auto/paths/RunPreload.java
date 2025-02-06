@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto.paths;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-//import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
 
@@ -14,12 +14,12 @@ public class RunPreload extends CommandOpMode {
     @Override
     public void initialize() {
 
-        Odometry odometry = new Odometry(hardwareMap, telemetry);
+        Odometry odometry = new Odometry(hardwareMap);
 
         // create our drive object
         Drive drive = new Drive(hardwareMap, telemetry);
         register(drive);
 
-        schedule(new PreloadTraj(drive, odometry));
+        schedule(new PreloadGoTo(drive, odometry));
     }
 }
