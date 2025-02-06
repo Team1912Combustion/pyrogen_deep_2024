@@ -20,6 +20,6 @@ public class RunPreload extends CommandOpMode {
         Drive drive = new Drive(hardwareMap, telemetry);
         register(drive);
 
-        schedule(new Preload(drive, odometry));
+        schedule(new PreloadGoTo(drive, odometry));
     }
 }
