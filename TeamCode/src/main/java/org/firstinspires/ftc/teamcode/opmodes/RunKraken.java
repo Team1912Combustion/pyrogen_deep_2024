@@ -3,14 +3,28 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.DefaultDrive;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.RunCommand;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.InstantCommand;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.gamepad.GamepadEx;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.gamepad.GamepadKeys;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmDownSpecimen;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmElevHighGoal;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmElevHome;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmElevIntake;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmElevLowGoal;
+import org.firstinspires.ftc.teamcode.commands.claw.ClawToggle;
+import org.firstinspires.ftc.teamcode.commands.elevator.ElevatorFullIn;
+import org.firstinspires.ftc.teamcode.commands.arm.LiftSpecimen;
+import org.firstinspires.ftc.teamcode.commands.specimen.SpecimenToggle;
+
+import org.firstinspires.ftc.teamcode.commands.lift.LiftDown;
+import org.firstinspires.ftc.teamcode.commands.lift.LiftUp;
+import org.firstinspires.ftc.teamcode.commands.Winch.WinchDown;
+import org.firstinspires.ftc.teamcode.commands.Winch.WinchUp;
+
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
+import org.team1912.pyrogen.pyrolib.ftclib.command.RunCommand;
+import org.team1912.pyrogen.pyrolib.ftclib.command.InstantCommand;
+import org.team1912.pyrogen.pyrolib.ftclib.gamepad.GamepadEx;
+import org.team1912.pyrogen.pyrolib.ftclib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.subsystems.*;
-import org.firstinspires.ftc.teamcode.commands.*;
 
 @TeleOp
 public class RunKraken extends CommandOpMode {
@@ -22,7 +36,7 @@ public class RunKraken extends CommandOpMode {
 
         GamePiece gamePiece = new GamePiece();
 
-        Odometry odometry = new Odometry(hardwareMap);
+        Odometry odometry = new Odometry(hardwareMap, telemetry);
 
         // create our drive object
         Drive drive = new Drive(hardwareMap, telemetry);
@@ -37,6 +51,12 @@ public class RunKraken extends CommandOpMode {
         Arm arm = new Arm(hardwareMap, telemetry);
         register(arm);
 
+        Lift lift = new Lift(hardwareMap, telemetry);
+        register(lift);
+
+        Winch winch = new Winch(hardwareMap, telemetry);
+        register(winch);
+
         Elevator elevator = new Elevator(hardwareMap, arm, telemetry);
         register(elevator);
 
@@ -47,12 +67,6 @@ public class RunKraken extends CommandOpMode {
         register(specimen);
 
         // button bindings for the mechanisms
-
-        // elevator adjustment
-        driverStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
-                whenPressed(new ElevatorDown(elevator));
-        driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
-                whenPressed(new ElevatorUp(elevator));
 
         // arm
         opStick.getGamepadButton(GamepadKeys.Button.DPAD_UP).
@@ -74,11 +88,17 @@ public class RunKraken extends CommandOpMode {
         opStick.getGamepadButton(GamepadKeys.Button.A).
                 whenPressed(new ElevatorFullIn(elevator));
 
-        // adjustments for arm
+        // adjustments for lift
         opStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
-                  whenPressed(new ArmDown(arm));
+                  whenPressed(new LiftDown(lift));
         opStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
-                  whenPressed(new ArmUp(arm));
+                  whenPressed(new LiftUp(lift));
+
+        // tape adjustment
+        driverStick.getGamepadButton(GamepadKeys.Button.LEFT_STICK_BUTTON).
+                whenPressed(new WinchDown(winch));
+        driverStick.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).
+                whenPressed(new WinchUp(winch));
 
         // claw
         opStick.getGamepadButton(GamepadKeys.Button.Y)

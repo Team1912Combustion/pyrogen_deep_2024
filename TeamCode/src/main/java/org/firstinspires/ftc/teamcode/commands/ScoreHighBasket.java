@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode.commands;
 
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.InstantCommand;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.ParallelCommandGroup;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.SequentialCommandGroup;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmHighGoal;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmIntake;
+import org.firstinspires.ftc.teamcode.commands.elevator.ElevatorFullIn;
+import org.firstinspires.ftc.teamcode.commands.elevator.ElevatorHighGoal;
+import org.team1912.pyrogen.pyrolib.ftclib.command.InstantCommand;
+import org.team1912.pyrogen.pyrolib.ftclib.command.ParallelCommandGroup;
+import org.team1912.pyrogen.pyrolib.ftclib.command.SequentialCommandGroup;
+import org.team1912.pyrogen.pyrolib.ftclib.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;

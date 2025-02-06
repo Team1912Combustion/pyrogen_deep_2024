@@ -32,8 +32,8 @@ package org.firstinspires.ftc.teamcode.auto.commands;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandBase;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
 
 public class PreloadParkSubStart extends CommandBase {
 

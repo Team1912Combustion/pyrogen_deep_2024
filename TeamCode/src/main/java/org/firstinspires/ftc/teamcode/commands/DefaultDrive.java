@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.commands;
 
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandBase;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Rotation2d;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.hardware.motors.Motor;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandBase;
+import org.team1912.pyrogen.pyrolib.ftclib.geometry.Rotation2d;
+import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.Motor;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 
 import java.util.function.DoubleSupplier;

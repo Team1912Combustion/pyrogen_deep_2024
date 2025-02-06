@@ -35,10 +35,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.pyrolib.OTOS.OTOSSensor;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.command.CommandOpMode;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Pose2d;
-import org.firstinspires.ftc.teamcode.pyrolib.ftclib.geometry.Rotation2d;
+import org.team1912.pyrogen.pyrolib.OTOS.OTOSSensor;
+import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
+import org.team1912.pyrogen.pyrolib.ftclib.geometry.Pose2d;
+import org.team1912.pyrogen.pyrolib.ftclib.geometry.Rotation2d;
 
 public class AutoDriveHelpers {
 
