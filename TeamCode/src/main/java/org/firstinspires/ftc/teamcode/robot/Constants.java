@@ -146,9 +146,9 @@ public class Constants {
     }
 
     public static class AutoConstants {
-        public static double kPXController  = 0.0001;
-        public static double kPYController  = 0.0001;
-        public static double kPThetaController  = 0.0001;
+        public static double kPXController  = 0.01;
+        public static double kPYController  = 0.01;
+        public static double kPThetaController  = 0.01;
         public static double kMaxSpeedMetersPerSecond  = 1;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;

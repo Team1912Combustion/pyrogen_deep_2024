@@ -39,10 +39,10 @@ public class Drive extends SubsystemBase {
         frontRightMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        frontLeftMotor.setRunMode(Motor.RunMode.VelocityControl);
-        frontRightMotor.setRunMode(Motor.RunMode.VelocityControl);
-        backLeftMotor.setRunMode(Motor.RunMode.VelocityControl);
-        backRightMotor.setRunMode(Motor.RunMode.VelocityControl);
+        //frontLeftMotor.setRunMode(Motor.RunMode.VelocityControl);
+        //frontRightMotor.setRunMode(Motor.RunMode.VelocityControl);
+        //backLeftMotor.setRunMode(Motor.RunMode.VelocityControl);
+        //backRightMotor.setRunMode(Motor.RunMode.VelocityControl);
         frontLeftMotor.setDistancePerPulse(DriveConstants.distancePerPulse);
         frontRightMotor.setDistancePerPulse(DriveConstants.distancePerPulse);
         backLeftMotor.setDistancePerPulse(DriveConstants.distancePerPulse);

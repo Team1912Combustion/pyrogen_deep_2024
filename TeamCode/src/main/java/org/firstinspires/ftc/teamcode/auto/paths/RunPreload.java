@@ -14,12 +14,15 @@ public class RunPreload extends CommandOpMode {
     @Override
     public void initialize() {
 
-        Odometry odometry = new Odometry(hardwareMap);
+        Odometry odometry = new Odometry(hardwareMap, telemetry);
+        register(odometry);
 
         // create our drive object
         Drive drive = new Drive(hardwareMap, telemetry);
         register(drive);
 
         schedule(new PreloadGoTo(drive, odometry));
+        run();
+
     }
 }

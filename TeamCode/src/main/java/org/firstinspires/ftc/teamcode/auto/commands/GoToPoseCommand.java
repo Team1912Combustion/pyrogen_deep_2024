@@ -41,6 +41,7 @@ import java.util.function.Supplier;
 public class GoToPoseCommand extends CommandBase {
     private final ElapsedTime m_timer;
     private final Pose2d m_finalPose;
+    private final double m_runtime;
     private final double m_timeout;
     private Pose2d m_startPose;
     private final boolean m_usePID;
@@ -95,6 +96,7 @@ public class GoToPoseCommand extends CommandBase {
 
     @SuppressWarnings({"PMD.ExcessiveParameterList", "ParameterName"})
     public GoToPoseCommand(Pose2d finalPose,
+                           double runtime,
                            double timeout,
                            double error,
                            Supplier<Pose2d> pose,
@@ -110,6 +112,7 @@ public class GoToPoseCommand extends CommandBase {
                            Supplier<MecanumDriveWheelSpeeds> currentWheelSpeeds,
                            Consumer<MecanumDriveMotorVoltages> outputDriveVoltages) {
         m_finalPose = finalPose;
+        m_runtime = runtime;
         m_timeout = timeout;
         m_pose = pose;
         m_kinematics = kinematics;
@@ -156,6 +159,7 @@ public class GoToPoseCommand extends CommandBase {
 
     @SuppressWarnings({"PMD.ExcessiveParameterList", "ParameterName"})
     public GoToPoseCommand(Pose2d finalPose,
+                           double runtime,
                            double timeout,
                            double error,
                            Supplier<Pose2d> pose,
@@ -166,6 +170,7 @@ public class GoToPoseCommand extends CommandBase {
                            double maxWheelVelocityMetersPerSecond,
                            Consumer<MecanumDriveWheelSpeeds> outputWheelSpeeds) {
         m_finalPose = finalPose;
+        m_runtime = runtime;
         m_timeout = timeout;
         m_pose = pose;
         m_kinematics = kinematics;
@@ -197,9 +202,8 @@ public class GoToPoseCommand extends CommandBase {
     public void execute() {
         double curTime = m_timer.seconds();
 
-        Pose2d desiredPose = interpolate(m_startPose, m_finalPose,curTime / m_timeout);
-        Transform2d poseError = desiredPose.minus(m_pose.get());
-        distError = poseError.getTranslation().getNorm();
+        Pose2d desiredPose = interpolate(m_startPose, m_finalPose,curTime / m_runtime);
+        distError = m_finalPose.minus(m_pose.get()).getTranslation().getNorm();
 
         double targetXVel = m_xController.calculate(
                 m_pose.get().getTranslation().getX(),
@@ -257,7 +261,8 @@ public class GoToPoseCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return m_timer.seconds() > m_timeout || distError < m_error;
+        return m_timer.seconds() > m_timeout ||
+               distError < m_error;
     }
 
     public Pose2d interpolate(Pose2d startPose, Pose2d endPose, double t) {
