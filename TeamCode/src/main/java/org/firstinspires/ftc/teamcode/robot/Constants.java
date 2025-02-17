@@ -4,44 +4,23 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.team1912.pyrogen.pyrolib.GoBildaPinpoint.GoBildaPinpointDriver;
 import org.team1912.pyrogen.pyrolib.ftclib.geometry.Translation2d;
 import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
 import org.team1912.pyrogen.pyrolib.ftclib.trajectory.TrapezoidProfile;
 
 public class Constants {
     public static class OdometryConstants {
-        public final static String sensor_name = "otos_sensor";
+        public final static String sensor_name = "pinpoint";
+        public final static double xOffset = 0.;
+        public final static double yOffset = 0.;
+        public final static GoBildaPinpointDriver.EncoderDirection xDirection =
+                GoBildaPinpointDriver.EncoderDirection.FORWARD;
+        public final static GoBildaPinpointDriver.EncoderDirection yDirection =
+                GoBildaPinpointDriver.EncoderDirection.FORWARD;
         public final static double[] vec_stateStdDevs = {1., 1., .1};
         public final static double[] vec_visionStdDevs = {4., 4., 999.};
         public final static double max_apriltag_poserr = 48.;
-    }
-
-    public static class WinchConstants {
-        public static final String motor_name = "winch";
-        public final static String limit_name = "winch_limit";
-        // 581 PPR
-        // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
-        public static final int full_out = 100;
-        public static final int full_in = 0;
-        public static final int limit_high = full_out;
-        public static final int limit_low = full_in;
-        public static final int threshold = 10;
-        // PController P
-        public static final double kP = 1.0; // V per tick
-    }
-
-    public static class LiftConstants {
-        public static final String motor_name = "lift";
-        public final static String limit_name = "lift_limit";
-        // 581 PPR
-        // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
-        public static final int full_out = 1600;
-        public static final int full_in = 0;
-        public static final int limit_high = full_out;
-        public static final int limit_low = full_in;
-        public static final int threshold = 10;
-        // PController P
-        public static final double kP = 1.0; // V per tick
     }
 
     public static class ArmConstants {
@@ -61,6 +40,8 @@ public class Constants {
         public static final double angle_limit_low = pos_limit_low * radPerTick;
         public static final int pos_level = 0;
         public static final double angle_level = pos_level * radPerTick;
+        public static final int pos_barrier = 300;
+        public static final double angle_barrier = pos_barrier * radPerTick;
 
         public class Sample {
             public static final int pos_high = 2500;
@@ -120,11 +101,29 @@ public class Constants {
         }
     }
 
+    public static class LiftConstants {
+        public static final String motor_name = "lift";
+        public static final int full_in = 0;
+        // 581 PPR
+        // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
+        public static final int full_out = 2100;
+        public static final int threshold =  50;
+        // PID controller
+        public static final double kP = .01 ; // percent power (-1/1) per encoder tick error
+        // ProfiledPIDcontroller
+        public static final double maxVelocity = 2000.; // ticks/s = 1 second full out
+        public static final double maxAcceleration = maxVelocity / 1.; // ticks/s/s = full speed in 1 s
+
+        public static final int high_goal = 2070;
+        public static final int low_goal = 1000;
+        public static final int intake = 0;
+    }
+
     public static class SpecimenConstants {
         public static final String servo_name = "specimen";
-        public static final double init_pos = 0.0;
-        public static final double safe_pos = 0.0;
-        public static final double hold_pos = 0.35;
+        public static final double init_pos = 0.80;
+        public static final double safe_pos = 0.80;
+        public static final double hold_pos = 0.70;
     }
 
     public static class ClawConstants {

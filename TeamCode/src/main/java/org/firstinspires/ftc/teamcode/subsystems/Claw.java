@@ -56,7 +56,7 @@ public class Claw extends SubsystemBase {
     public void periodic() {
         claw_left.setPosition(pos_left);
         claw_right.setPosition(pos_right);
-        telemetry.addLine(String.format("claw L/R pos %f:%f\n", pos_left, pos_right));
+        telemetry.addLine(String.format("claw L/R pos %f:%f", pos_left, pos_right));
     }
 
 }

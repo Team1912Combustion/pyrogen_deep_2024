@@ -38,7 +38,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.commands.DefaultDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Odometry;
-import org.team1912.pyrogen.pyrolib.OTOS.OTOSSensor;
+import org.team1912.pyrogen.pyrolib.GoBildaPinpoint.PinpointSensor;
 import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
 import org.team1912.pyrogen.pyrolib.ftclib.geometry.Pose2d;
 import org.team1912.pyrogen.pyrolib.ftclib.geometry.Rotation2d;

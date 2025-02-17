@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.commands.lift;
 
 import org.firstinspires.ftc.teamcode.robot.Constants;
-import org.firstinspires.ftc.teamcode.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.subsystems.SpecimenLift;
 import org.team1912.pyrogen.pyrolib.ftclib.command.CommandBase;
 
 /**
@@ -9,10 +9,10 @@ import org.team1912.pyrogen.pyrolib.ftclib.command.CommandBase;
  */
 public class LiftUp extends CommandBase {
 
-    private final Lift m_lift;
+    private final SpecimenLift m_lift;
     private double target;
 
-    public LiftUp(Lift lift) {
+    public LiftUp(SpecimenLift lift) {
         m_lift = lift;
         addRequirements(m_lift);
     }
@@ -21,7 +21,7 @@ public class LiftUp extends CommandBase {
     public void execute() {
         m_lift.runToPosition(
                 m_lift.current_target +
-                3. * Constants.LiftConstants.threshold);
+                3 * Constants.LiftConstants.threshold);
     }
 
     @Override

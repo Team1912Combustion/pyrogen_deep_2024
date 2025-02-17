@@ -42,7 +42,7 @@ public class Specimen extends SubsystemBase {
     @Override
     public void periodic() {
         m_specimen.setPosition(position);
-        telemetry.addLine(String.format("specimen position %f\n", position));
+        telemetry.addLine(String.format("specimen position %f", position));
     }
 
 }

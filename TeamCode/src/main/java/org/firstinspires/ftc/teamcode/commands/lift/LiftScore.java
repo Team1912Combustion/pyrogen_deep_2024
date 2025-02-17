@@ -7,21 +7,19 @@ import org.team1912.pyrogen.pyrolib.ftclib.command.CommandBase;
 /**
  * A command to nudge the lift down.
  */
-public class LiftDown extends CommandBase {
+public class LiftScore extends CommandBase {
 
     private final SpecimenLift m_lift;
     private double target;
 
-    public LiftDown(SpecimenLift lift) {
+    public LiftScore(SpecimenLift lift) {
         m_lift = lift;
         addRequirements(m_lift);
     }
 
     @Override
     public void execute() {
-        m_lift.runToPosition(
-                m_lift.current_target -
-                3 * Constants.LiftConstants.threshold);
+        m_lift.runToPosition( m_lift.current_target - 100);
     }
 
     @Override

@@ -35,7 +35,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.team1912.pyrogen.pyrolib.OTOS.OTOSSensor;
+import org.team1912.pyrogen.pyrolib.GoBildaPinpoint.PinpointSensor;
 import org.team1912.pyrogen.pyrolib.ftclib.command.CommandOpMode;
 import org.team1912.pyrogen.pyrolib.ftclib.geometry.Pose2d;
 import org.team1912.pyrogen.pyrolib.ftclib.geometry.Rotation2d;
@@ -45,11 +45,11 @@ public class AutoDriveHelpers {
     CommandOpMode opMode;
     Telemetry telemetry;
 
-    private DcMotor         leftFront   = null;
+    private DcMotor         leftFront  = null;
     private DcMotor         rightFront = null;
     private DcMotor         leftBack   = null;
     private DcMotor         rightBack  = null;
-    private OTOSSensor      imu         = null;      // Control/Expansion Hub IMU
+    private PinpointSensor  imu        = null;      // Control/Expansion Hub IMU
 
     private double          headingError  = 0;
 
@@ -109,7 +109,7 @@ public class AutoDriveHelpers {
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         rightBack.setDirection(DcMotor.Direction.FORWARD);
 
-        imu = hardwareMap.get(OTOSSensor.class, "otos_sensor");
+        imu = hardwareMap.get(PinpointSensor.class, "pinpoint");
         imu.initialize();
 
         // Ensure the robot is stationary.  Reset the encoders and set the motors to BRAKE mode

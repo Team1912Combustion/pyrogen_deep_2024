@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.team1912.pyrogen.pyrolib.OTOS.OTOSSensor;
+import org.team1912.pyrogen.pyrolib.GoBildaPinpoint.PinpointSensor;
 import org.team1912.pyrogen.pyrolib.ftclib.geometry.Rotation2d;
 import org.firstinspires.ftc.teamcode.robot.Constants;
 
@@ -21,12 +21,12 @@ public class Drive extends SubsystemBase {
     private final MecanumDrive m_drive;
     private boolean robotCentric;
     private boolean squareInputs;
-    private static OTOSSensor imu;
+    private static PinpointSensor imu;
 
     public final MecanumDriveKinematics kinematics;
 
     public Drive(MotorEx frontLeftMotor, MotorEx frontRightMotor,
-                 MotorEx backLeftMotor, MotorEx backRightMotor, OTOSSensor i_imu,
+                 MotorEx backLeftMotor, MotorEx backRightMotor, PinpointSensor i_imu,
                  Telemetry t_telemetry) {
 
         m_drive = new MecanumDrive(
@@ -60,7 +60,7 @@ public class Drive extends SubsystemBase {
     }
 
     public Drive(HardwareMap hMap, String frontLeftMotorName, String frontRightMotorName,
-                 String backLeftMotorName, String backRightMotorName, OTOSSensor i_imu,
+                 String backLeftMotorName, String backRightMotorName, PinpointSensor i_imu,
                  Telemetry t_telemetry) {
         this(
                 new MotorEx(hMap, frontLeftMotorName, Motor.GoBILDA.RPM_312),
@@ -77,7 +77,7 @@ public class Drive extends SubsystemBase {
                 new MotorEx(hMap, Constants.DriveConstants.front_right_name),
                 new MotorEx(hMap, Constants.DriveConstants.back_left_name),
                 new MotorEx(hMap, Constants.DriveConstants.back_right_name),
-                hMap.get(OTOSSensor.class, Constants.OdometryConstants.sensor_name),
+                hMap.get(PinpointSensor.class, Constants.OdometryConstants.sensor_name),
                 t_telemetry
         );
     }
@@ -112,7 +112,7 @@ public class Drive extends SubsystemBase {
     // speeds in inch per second send to MecanumDrive motors as ticks per second
     public void driveWithSpeeds(MecanumDriveWheelSpeeds speeds) {
         // speed in inches per second
-        telemetry.addLine(String.format("drive speeds %f %f %f %f \n",
+        telemetry.addLine(String.format("drive speeds %f %f %f %f",
                 speeds.frontLeftMetersPerSecond,
                 speeds.frontRightMetersPerSecond,
                 speeds.rearLeftMetersPerSecond,
@@ -122,7 +122,7 @@ public class Drive extends SubsystemBase {
         speeds.frontRightMetersPerSecond /= DriveConstants.distancePerPulse;
         speeds.rearLeftMetersPerSecond /= DriveConstants.distancePerPulse;
         speeds.rearRightMetersPerSecond /= DriveConstants.distancePerPulse;
-        telemetry.addLine(String.format("target tick/sec %f %f %f %f \n",
+        telemetry.addLine(String.format("target tick/sec %f %f %f %f",
                 speeds.frontLeftMetersPerSecond,
                 speeds.frontRightMetersPerSecond,
                 speeds.rearLeftMetersPerSecond,

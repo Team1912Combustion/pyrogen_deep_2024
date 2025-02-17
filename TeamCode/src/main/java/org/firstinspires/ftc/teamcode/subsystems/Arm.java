@@ -99,9 +99,9 @@ public class Arm extends SubsystemBase {
         double feed_power = feedforward.calculate(get_angle(),ArmConstants.vel_radpersec);
         double power =  pid_power + feed_power;
         m_arm.set(power);
-        telemetry.addLine(String.format("arm enc %d power %f \n", get_position(),power));
-        telemetry.addLine(String.format("arm pid %f feed %f\n", pid_power, feed_power));
-        telemetry.addLine(String.format("cur ang %f tgt ang %f\n", current_target, get_angle()));
+        telemetry.addLine(String.format("arm enc %d power %f", get_position(),power));
+        telemetry.addLine(String.format("arm pid %f feed %f", pid_power, feed_power));
+        telemetry.addLine(String.format("cur ang %f tgt ang %f", current_target, get_angle()));
         //telemetry.update();
     }
 

@@ -99,7 +99,7 @@ public class Elevator extends SubsystemBase {
         pid.setGoal(newSetpoint);
         double power = pid.calculate(get_position());
         elevator.set(power);
-        telemetry.addLine(String.format("elev enc %d tgt %d power %f touch %b\n",
+        telemetry.addLine(String.format("elev enc %d tgt %d power %f touch %b",
                 encoder.getPosition(),newSetpoint,power,atBottom()));
         //telemetry.update();
     }
