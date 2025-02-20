@@ -28,7 +28,7 @@ public class PreloadGoTo extends SequentialCommandGroup {
                         runtime,
                         timeout,
                         error,
-                        odometry::getPose,
+                        odometry::updatePose,
                         DriveConstants.kinematics,
                         new PIDController(AutoConstants.kPXController, 0, 0),
                         new PIDController(AutoConstants.kPYController, 0, 0),

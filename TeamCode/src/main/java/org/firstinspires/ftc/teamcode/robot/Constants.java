@@ -6,6 +6,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.team1912.pyrogen.pyrolib.GoBildaPinpoint.GoBildaPinpointDriver;
 import org.team1912.pyrogen.pyrolib.ftclib.geometry.Translation2d;
+import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.Motor;
 import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
 import org.team1912.pyrogen.pyrolib.ftclib.trajectory.TrapezoidProfile;
 
@@ -110,9 +111,9 @@ public class Constants {
         public static final int full_out = 2100;
         public static final int threshold =  50;
         // PID controller
-        public static final double kP = .01 ; // percent power (-1/1) per encoder tick error
+        public static final double kP = .005 ; // percent power (-1/1) per encoder tick error
         // ProfiledPIDcontroller
-        public static final double maxVelocity = 2000.; // ticks/s = 1 second full out
+        public static final double maxVelocity = 4000.; // ticks/s = 1 second full out
         public static final double maxAcceleration = maxVelocity / 1.; // ticks/s/s = full speed in 1 s
 
         public static final int high_goal = 1670;
@@ -149,7 +150,7 @@ public class Constants {
         public static double kPXController  = 0.01;
         public static double kPYController  = 0.01;
         public static double kPThetaController  = 0.01;
-        public static double kMaxSpeedMetersPerSecond  = 6.;
+        public static double kMaxSpeedMetersPerSecond  = 61.;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
@@ -163,6 +164,8 @@ public class Constants {
         public static final String front_right_name = "front_right";
         public static final String back_left_name = "back_left";
         public static final String back_right_name = "back_right";
+        public static final Motor.GoBILDA type = Motor.GoBILDA.RPM_312;
+
         public static Translation2d frontLeftInches = new Translation2d(8,8);
         public static Translation2d backLeftInches = new Translation2d(-8,8);
         public static Translation2d frontRightInches = new Translation2d(8,-8);

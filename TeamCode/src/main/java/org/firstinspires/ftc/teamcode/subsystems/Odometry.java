@@ -45,6 +45,11 @@ public class Odometry extends SubsystemBase {
         return getPose().getRotation();
     }
 
+    public Pose2d updatePose() {
+        m_pinpointOdometry.updatePose();
+        return getPose();
+    }
+
     public void update() {
         m_pinpointOdometry.updatePose();
     }

@@ -45,6 +45,10 @@ public class SpecimenLift extends SubsystemBase {
         return pid.atGoal();
     }
 
+    public boolean atTarget(int tolerance) {
+        return Math.abs(encoder.getPosition() - current_target) < tolerance;
+    }
+
     public boolean atBottom() {
         return touchSensor.isPressed();
     }
@@ -63,7 +67,12 @@ public class SpecimenLift extends SubsystemBase {
         if (atBottom()) { encoder.reset(); }
         int newSetpoint = safeLimit(current_target);
         pid.setGoal(newSetpoint);
-        double power = pid.calculate(get_position());
+        double power;
+        if (atTarget(LiftConstants.threshold)) {
+            power = 0.;
+        } else {
+            power = pid.calculate(get_position());
+        }
         lift.set(power);
         telemetry.addLine(String.format("lift enc %d tgt %d power %f touch %b",
                 encoder.getPosition(),newSetpoint,power,atBottom()));

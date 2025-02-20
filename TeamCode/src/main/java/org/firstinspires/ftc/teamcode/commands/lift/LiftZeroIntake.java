@@ -16,7 +16,7 @@ public class LiftZeroIntake extends SequentialCommandGroup {
 
     public LiftZeroIntake(SpecimenLift lift) {
         addCommands(
-                new LiftZero(lift),
+                new LiftZero(lift).withTimeout(1000),
                 new LiftIntake(lift)
         );
         addRequirements(lift);

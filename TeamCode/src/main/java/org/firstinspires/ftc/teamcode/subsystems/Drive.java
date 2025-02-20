@@ -74,10 +74,10 @@ public class Drive extends SubsystemBase {
 
     public Drive(HardwareMap hMap, Telemetry t_telemetry) {
         this(
-                new MotorEx(hMap, Constants.DriveConstants.front_left_name),
-                new MotorEx(hMap, Constants.DriveConstants.front_right_name),
-                new MotorEx(hMap, Constants.DriveConstants.back_left_name),
-                new MotorEx(hMap, Constants.DriveConstants.back_right_name),
+                new MotorEx(hMap, Constants.DriveConstants.front_left_name, Constants.DriveConstants.type),
+                new MotorEx(hMap, Constants.DriveConstants.front_right_name, Constants.DriveConstants.type),
+                new MotorEx(hMap, Constants.DriveConstants.back_left_name, Constants.DriveConstants.type),
+                new MotorEx(hMap, Constants.DriveConstants.back_right_name, Constants.DriveConstants.type),
                 hMap.get(PinpointSensor.class, Constants.OdometryConstants.sensor_name),
                 t_telemetry
         );
@@ -118,6 +118,7 @@ public class Drive extends SubsystemBase {
                 speeds.frontRightMetersPerSecond,
                 speeds.rearLeftMetersPerSecond,
                 speeds.rearRightMetersPerSecond));
+        telemetry.addLine(String.format("motor maxRPM %f",m_drive.getMaxRPM()));
         //telemetry.update();
         // mecanum drive with wheel speeds inch/sec
         m_drive.driveWithMecanumDriveWheelSpeeds(speeds);
