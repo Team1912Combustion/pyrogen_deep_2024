@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.commands.lift.LiftHighGoal;
 import org.firstinspires.ftc.teamcode.commands.lift.LiftLowGoal;
 import org.firstinspires.ftc.teamcode.commands.lift.LiftIntake;
 import org.firstinspires.ftc.teamcode.commands.lift.LiftScore;
+import org.firstinspires.ftc.teamcode.commands.lift.LiftZeroIntake;
 import org.firstinspires.ftc.teamcode.commands.specimen.SpecimenToggle;
 
 import org.firstinspires.ftc.teamcode.commands.lift.LiftDown;
@@ -74,9 +75,9 @@ public class RunKraken extends CommandOpMode {
         driverStick.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).
                 whenPressed(new ArmClearBarrier(arm));
         driverStick.getGamepadButton(GamepadKeys.Button.DPAD_UP).
-                whenPressed(new ArmDown(arm));
-        driverStick.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).
                 whenPressed(new ArmUp(arm));
+        driverStick.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).
+                whenPressed(new ArmDown(arm));
 
         // adjustments for elevator
         driverStick.getGamepadButton(GamepadKeys.Button.Y).
@@ -108,7 +109,7 @@ public class RunKraken extends CommandOpMode {
         opStick.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(new LiftLowGoal(lift));
         opStick.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new LiftIntake(lift));
+                .whenPressed(new LiftZeroIntake(lift));
         opStick.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new LiftScore(lift));
         // specimen grabber

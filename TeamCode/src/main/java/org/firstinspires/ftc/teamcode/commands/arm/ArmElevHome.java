@@ -14,7 +14,7 @@ public class ArmElevHome extends SequentialCommandGroup {
     public ArmElevHome(Arm arm, Elevator elevator) {
         addCommands(
                 new ElevatorFullIn(elevator),
-                new WaitCommand(1000),
+                new WaitCommand( 250),
                 new ArmLevel(arm)
         );
         addRequirements(arm, elevator);

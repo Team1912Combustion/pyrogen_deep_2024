@@ -1,5 +1,6 @@
 package org.team1912.pyrogen.pyrolib.ftclib.drivebase;
 
+import org.firstinspires.ftc.teamcode.robot.Constants;
 import org.team1912.pyrogen.pyrolib.ftclib.geometry.Vector2d;
 import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.Motor;
 import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveWheelSpeeds;
@@ -208,20 +209,33 @@ public class MecanumDrive extends RobotDrive {
                 .set(backRightSpeed * rightSideMultiplier * maxOutput);
     }
 
-    /**
-     * Drives the motors directly with the specified drive wheel speeds.
-     *
-     * @param speeds    MecanumDriveWheelSpeeds
-     */
     public void driveWithMecanumDriveWheelSpeeds(MecanumDriveWheelSpeeds speeds ) {
-        motors[MotorType.kFrontLeft.value]
-                .set(-1. * speeds.frontLeftMetersPerSecond * maxOutput);
-        motors[MotorType.kFrontRight.value]
-                .set(-1. * speeds.frontRightMetersPerSecond * rightSideMultiplier * maxOutput);
-        motors[MotorType.kBackLeft.value]
-                .set(-1. * speeds.rearLeftMetersPerSecond * maxOutput);
-        motors[MotorType.kBackRight.value]
-                .set(-1. * speeds.rearRightMetersPerSecond * rightSideMultiplier * maxOutput);
+        driveMotorWithWheelSpeed(motors[MotorType.kFrontLeft.value],
+                -1.*speeds.frontLeftMetersPerSecond);
+        driveMotorWithWheelSpeed(motors[MotorType.kFrontRight.value],
+                -1.*speeds.frontRightMetersPerSecond);
+        driveMotorWithWheelSpeed(motors[MotorType.kBackLeft.value],
+                -1.*speeds.rearLeftMetersPerSecond);
+        driveMotorWithWheelSpeed(motors[MotorType.kBackRight.value],
+                -1.*speeds.rearRightMetersPerSecond);
+    }
+
+    public void driveMotorWithWheelSpeed(Motor motor, double speed) {
+        double max = motor.getMaxRPM();
+        // target RPM is target speed inch/second / distanceperrotation inch/rotation * 60 sec/min
+        // double rpmout = speed / Constants.DriveConstants.distancePerRotation * 60.;
+        // fraction of maxRPM that target RPM represents
+        double fraction = speed / Constants.DriveConstants.distancePerRotation * 60. / max;
+        motor.set(fraction);
+    }
+
+    public double[] getPowers() {
+        double[] speeds = {0,0,0,0};
+        speeds[0] = motors[MotorType.kFrontLeft.value].get();
+        speeds[1] = motors[MotorType.kFrontRight.value].get();
+        speeds[2] = motors[MotorType.kBackLeft.value].get();
+        speeds[3] = motors[MotorType.kBackRight.value].get();
+        return speeds;
     }
 
 }

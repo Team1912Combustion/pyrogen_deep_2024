@@ -25,7 +25,7 @@ public class PreloadTraj extends SequentialCommandGroup {
         TrajectoryConfig config =
                 new TrajectoryConfig(
                         //AutoConstants.kMaxSpeedMetersPerSecond,
-                        1.,
+                        6.,
                         //AutoConstants.kMaxAccelerationMetersPerSecondSquared)
                         1.)
                         // Add kinematics to ensure max speed is actually obeyed

@@ -18,8 +18,8 @@ public class PreloadGoTo extends SequentialCommandGroup {
         Pose2d newPose = new Pose2d(12., 0., Rotation2d.fromDegrees(90.));
         Pose2d oldPose = Pose2d.kZero;
         odometry.update(oldPose);
-        double runtime = 5.;
-        double timeout = 5.;
+        double runtime = 30.;
+        double timeout = 30.;
         double error = 1.;
 
         GoToPoseCommand goToPoseCommand =

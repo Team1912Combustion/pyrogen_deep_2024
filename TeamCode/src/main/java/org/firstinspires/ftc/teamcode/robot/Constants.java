@@ -15,7 +15,7 @@ public class Constants {
         public final static double xOffset = 0.;
         public final static double yOffset = 0.;
         public final static GoBildaPinpointDriver.EncoderDirection xDirection =
-                GoBildaPinpointDriver.EncoderDirection.FORWARD;
+                GoBildaPinpointDriver.EncoderDirection.REVERSED;
         public final static GoBildaPinpointDriver.EncoderDirection yDirection =
                 GoBildaPinpointDriver.EncoderDirection.FORWARD;
         public final static double[] vec_stateStdDevs = {1., 1., .1};
@@ -103,6 +103,7 @@ public class Constants {
 
     public static class LiftConstants {
         public static final String motor_name = "lift";
+        public final static String touch_sensor_name = "lift_touch";
         public static final int full_in = 0;
         // 581 PPR
         // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
@@ -114,16 +115,16 @@ public class Constants {
         public static final double maxVelocity = 2000.; // ticks/s = 1 second full out
         public static final double maxAcceleration = maxVelocity / 1.; // ticks/s/s = full speed in 1 s
 
-        public static final int high_goal = 2070;
-        public static final int low_goal = 1000;
-        public static final int intake = 0;
+        public static final int high_goal = 1670;
+        public static final int low_goal = 670;
+        public static final int intake = 160;
     }
 
     public static class SpecimenConstants {
         public static final String servo_name = "specimen";
-        public static final double init_pos = 0.80;
-        public static final double safe_pos = 0.80;
-        public static final double hold_pos = 0.70;
+        public static final double init_pos = 0.90;
+        public static final double safe_pos = 0.90;
+        public static final double hold_pos = 0.50;
     }
 
     public static class ClawConstants {
@@ -148,7 +149,7 @@ public class Constants {
         public static double kPXController  = 0.01;
         public static double kPYController  = 0.01;
         public static double kPThetaController  = 0.01;
-        public static double kMaxSpeedMetersPerSecond  = 1;
+        public static double kMaxSpeedMetersPerSecond  = 6.;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
@@ -172,8 +173,10 @@ public class Constants {
                         frontRightInches,
                         backLeftInches,
                         backRightInches);
+        // 96mm wheels
+        public static double distancePerRotation = 96. * Math.PI / 25.4; // inch per wheel rotation
         // 96mm wheels / 312 RPM motor / 19.2:1 / 537.7 PPR
-        public static double distancePerPulse = 96. * Math.PI / 25.4 / 537.7; // inch per tick
+        public static double distancePerPulse = distancePerRotation / 537.7; // inch per tick
     }
 
     public static class VisionConstants {

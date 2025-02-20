@@ -10,7 +10,7 @@ import org.team1912.pyrogen.pyrolib.ftclib.drivebase.MecanumDrive;
 import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.Motor;
 import org.team1912.pyrogen.pyrolib.ftclib.hardware.motors.MotorEx;
 import org.firstinspires.ftc.teamcode.robot.Constants.DriveConstants;
-import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
+//import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
 import org.team1912.pyrogen.pyrolib.ftclib.kinematics.wpilibkinematics.MecanumDriveWheelSpeeds;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -23,13 +23,12 @@ public class Drive extends SubsystemBase {
     private boolean squareInputs;
     private static PinpointSensor imu;
 
-    public final MecanumDriveKinematics kinematics;
+    //public final MecanumDriveKinematics kinematics;
 
     public Drive(MotorEx frontLeftMotor, MotorEx frontRightMotor,
                  MotorEx backLeftMotor, MotorEx backRightMotor, PinpointSensor i_imu,
                  Telemetry t_telemetry) {
-
-        m_drive = new MecanumDrive(
+ m_drive = new MecanumDrive(
                 frontLeftMotor,
                 frontRightMotor,
                 backLeftMotor,
@@ -51,11 +50,13 @@ public class Drive extends SubsystemBase {
         telemetry = t_telemetry;
         robotCentric = true;
         squareInputs = true;
+        /*
         kinematics = new MecanumDriveKinematics(
                         DriveConstants.frontLeftInches,
                         DriveConstants.frontRightInches,
                         DriveConstants.backLeftInches,
                         DriveConstants.backRightInches);
+        */
 
     }
 
@@ -117,20 +118,18 @@ public class Drive extends SubsystemBase {
                 speeds.frontRightMetersPerSecond,
                 speeds.rearLeftMetersPerSecond,
                 speeds.rearRightMetersPerSecond));
-        // speed in ticks per second
-        speeds.frontLeftMetersPerSecond /= DriveConstants.distancePerPulse;
-        speeds.frontRightMetersPerSecond /= DriveConstants.distancePerPulse;
-        speeds.rearLeftMetersPerSecond /= DriveConstants.distancePerPulse;
-        speeds.rearRightMetersPerSecond /= DriveConstants.distancePerPulse;
-        telemetry.addLine(String.format("target tick/sec %f %f %f %f",
-                speeds.frontLeftMetersPerSecond,
-                speeds.frontRightMetersPerSecond,
-                speeds.rearLeftMetersPerSecond,
-                speeds.rearRightMetersPerSecond));
-        telemetry.update();
-        // mecanum drive with ticks per second
+        //telemetry.update();
+        // mecanum drive with wheel speeds inch/sec
         m_drive.driveWithMecanumDriveWheelSpeeds(speeds);
     }
 
+    @Override
+    public void periodic() {
+        double[] speeds = {0,0,0,0};
+        speeds = m_drive.getPowers();
+        telemetry.addLine(String.format("drive set %f %f %f %f",
+				speeds[0], speeds[1], speeds[2], speeds[3]));
+        telemetry.update();
+    }
 
 }

@@ -19,7 +19,7 @@ public class LiftScore extends CommandBase {
 
     @Override
     public void execute() {
-        m_lift.runToPosition( m_lift.current_target - 100);
+        m_lift.runToPosition( m_lift.current_target - 600);
     }
 
     @Override
