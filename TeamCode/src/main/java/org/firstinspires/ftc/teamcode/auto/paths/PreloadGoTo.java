@@ -20,7 +20,8 @@ public class PreloadGoTo extends SequentialCommandGroup {
         odometry.update(oldPose);
         double runtime = 30.;
         double timeout = 30.;
-        double error = 1.;
+        double error = 0.5;
+        double angerror = 10.;
 
         GoToPoseCommand goToPoseCommand =
                 new GoToPoseCommand(
@@ -28,6 +29,7 @@ public class PreloadGoTo extends SequentialCommandGroup {
                         runtime,
                         timeout,
                         error,
+                        angerror,
                         odometry::updatePose,
                         DriveConstants.kinematics,
                         new PIDController(AutoConstants.kPXController, 0, 0),

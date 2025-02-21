@@ -45,7 +45,7 @@ public class Constants {
         public static final double angle_barrier = pos_barrier * radPerTick;
 
         public class Sample {
-            public static final int pos_high = 2500;
+            public static final int pos_high = 2160;
             public static final int pos_mid = 1970;
             public static final int pos_intake = 0;
             public static final double angle_high = pos_high * radPerTick;
@@ -82,22 +82,24 @@ public class Constants {
         public static final int full_in = 0;
         // 581 PPR
         // gobilda.com/5203-series-yellow-jacket-planetary-gear-motor-19-2-1-ratio-24mm-length-8mm-rex-shaft-312-rpm-3-3-5v-encoder/
-        public static final int full_out = 4500;
-        public static final int threshold = 100;
+        // 1425  PPR??
+        // gobilda.com/117RPM motor
+        public static final int full_out = 12000; //4500;
+        public static final int threshold =  100;
         // PID controller
         public static final double kP = .01 ; // percent power (-1/1) per encoder tick error
         // ProfiledPIDcontroller
-        public static final double maxVelocity = 4000.; // ticks/s = 1 second full out
+        public static final double maxVelocity = 12000.; // 4000.; // ticks/s = 1 second full out
         public static final double maxAcceleration = maxVelocity / 1.; // ticks/s/s = full speed in 1 s
 
         public class Sample {
-            public static final int high_goal = 4470;
-            public static final int low_goal = 2164;
-            public static final int intake = 500;
+            public static final int high_goal = 11920; // 4470;
+            public static final int low_goal = 5771; // 2164;
+            public static final int intake = 1333; // 500;
         }
         public class Specimen {
-            public static final int high_goal = 1435;
-            public static final int low_goal = 480;
+            public static final int high_goal = 3827; // 1435;
+            public static final int low_goal = 1280; // 480;
             public static final int intake = 0;
         }
     }
@@ -149,9 +151,9 @@ public class Constants {
     public static class AutoConstants {
         public static double kPXController  = 0.01;
         public static double kPYController  = 0.01;
-        public static double kPThetaController  = 0.01;
-        public static double kMaxSpeedMetersPerSecond  = 61.;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+        public static double kPThetaController  = 0.1;
+        public static double kMaxSpeedMetersPerSecond  = 6.;
+        public static final double kMaxAngularSpeedRadiansPerSecond = 4.*Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

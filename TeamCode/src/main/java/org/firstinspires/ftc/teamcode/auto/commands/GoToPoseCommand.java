@@ -47,7 +47,9 @@ public class GoToPoseCommand extends CommandBase {
     private final boolean m_usePID;
 
     private double m_error;
+    private double m_angerror;
     private double distError;
+    private double angError;
 
     private final Supplier<Pose2d> m_pose;
     private final MecanumDriveKinematics m_kinematics;
@@ -99,6 +101,7 @@ public class GoToPoseCommand extends CommandBase {
                            double runtime,
                            double timeout,
                            double error,
+                           double angerror,
                            Supplier<Pose2d> pose,
                            MecanumDriveKinematics kinematics,
                            PIDController xController,
@@ -129,6 +132,7 @@ public class GoToPoseCommand extends CommandBase {
         m_outputWheelSpeeds = null;
         m_usePID = true;
         m_error = error;
+        m_angerror = angerror;
         m_timer = new ElapsedTime();
     }
 
@@ -162,6 +166,7 @@ public class GoToPoseCommand extends CommandBase {
                            double runtime,
                            double timeout,
                            double error,
+                           double angerror,
                            Supplier<Pose2d> pose,
                            MecanumDriveKinematics kinematics,
                            PIDController xController,
@@ -188,6 +193,7 @@ public class GoToPoseCommand extends CommandBase {
         m_outputDriveVoltages = null;
         m_usePID = false;
         m_error = error;
+        m_angerror = angerror;
         m_timer = new ElapsedTime();
     }
 
@@ -204,6 +210,7 @@ public class GoToPoseCommand extends CommandBase {
 
         Pose2d desiredPose = interpolate(m_startPose, m_finalPose,curTime / m_runtime);
         distError = m_finalPose.minus(m_pose.get()).getTranslation().getNorm();
+        angError = m_finalPose.minus(m_pose.get()).getRotation().getDegrees();
 
         double targetXVel = m_xController.calculate(
                 m_pose.get().getTranslation().getX(),
@@ -219,7 +226,7 @@ public class GoToPoseCommand extends CommandBase {
                 m_pose.get().getRotation().getRadians(),
                 m_finalPose.getRotation().getRadians());
 
-        ChassisSpeeds targetChassisSpeeds = new ChassisSpeeds(targetXVel, targetYVel, targetAngularVel);
+        ChassisSpeeds targetChassisSpeeds = new ChassisSpeeds(targetXVel, targetYVel, -1.*targetAngularVel);
         MecanumDriveWheelSpeeds targetWheelSpeeds = m_kinematics.toWheelSpeeds(targetChassisSpeeds);
         targetWheelSpeeds.normalize(m_maxWheelVelocityMetersPerSecond);
         double frontLeftSpeedSetpoint = targetWheelSpeeds.frontLeftMetersPerSecond;
@@ -262,7 +269,7 @@ public class GoToPoseCommand extends CommandBase {
     @Override
     public boolean isFinished() {
         return m_timer.seconds() > m_timeout ||
-               distError < m_error;
+               distError < m_error && angError < m_angerror;
     }
 
     public Pose2d interpolate(Pose2d startPose, Pose2d endPose, double t) {

@@ -34,6 +34,7 @@ public class Drive extends SubsystemBase {
                 backLeftMotor,
                 backRightMotor
         );
+ m_drive.deadband = 0.1;
         frontLeftMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);

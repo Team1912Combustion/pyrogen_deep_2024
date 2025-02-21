@@ -21,6 +21,7 @@ public class MecanumDrive extends RobotDrive {
     private double rightSideMultiplier;
 
     Motor[] motors;
+    public double deadband;
 
     /**
      * Sets up the constructor for the mecanum drive.
@@ -122,7 +123,7 @@ public class MecanumDrive extends RobotDrive {
     public void driveRobotCentric(double strafeSpeed, double forwardSpeed, double turnSpeed, boolean squareInputs) {
         strafeSpeed = squareInputs ? clipRange(squareInput(strafeSpeed)) : clipRange(strafeSpeed);
         forwardSpeed = squareInputs ? clipRange(squareInput(forwardSpeed)) : clipRange(forwardSpeed);
-        turnSpeed = squareInputs ? clipRange(squareInput(turnSpeed)) : clipRange(turnSpeed);
+        turnSpeed = squareInputs ? clipRange(squareInputDeadband(turnSpeed,deadband)) : clipRange(turnSpeed);
 
         driveRobotCentric(strafeSpeed, forwardSpeed, turnSpeed);
     }
@@ -183,9 +184,9 @@ public class MecanumDrive extends RobotDrive {
      * @param squareInputs Square the value of the input to allow for finer control
      */
     public void driveFieldCentric(double xSpeed, double ySpeed, double turnSpeed, double gyroAngle, boolean squareInputs) {
-        xSpeed = squareInputs ? clipRange(squareInput(xSpeed)) : clipRange(xSpeed);
-        ySpeed = squareInputs ? clipRange(squareInput(ySpeed)) : clipRange(ySpeed);
-        turnSpeed = squareInputs ? clipRange(squareInput(turnSpeed)) : clipRange(turnSpeed);
+        xSpeed = squareInputs ? clipRange(squareInputDeadband(xSpeed,deadband)) : clipRange(xSpeed);
+        ySpeed = squareInputs ? clipRange(squareInputDeadband(ySpeed,deadband)) : clipRange(ySpeed);
+        turnSpeed = squareInputs ? clipRange(squareInputDeadband(turnSpeed,deadband)) : clipRange(turnSpeed);
 
         driveFieldCentric(xSpeed, ySpeed, turnSpeed, gyroAngle);
     }
@@ -222,12 +223,11 @@ public class MecanumDrive extends RobotDrive {
     }
 
     public void driveMotorWithWheelSpeed(Motor motor, double speed) {
-        double max = motor.getMaxRPM();
-        max = 1.;
+        //double max = motor.getMaxRPM();
         // target RPM is target speed inch/second / distanceperrotation inch/rotation * 60 sec/min
         // double rpmout = speed / Constants.DriveConstants.distancePerRotation * 60.;
         // fraction of maxRPM that target RPM represents
-        double fraction = speed / Constants.DriveConstants.distancePerRotation * 60. / max;
+        double fraction = speed / Constants.DriveConstants.distancePerRotation * 60.;
         motor.set(fraction);
     }
 

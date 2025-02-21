@@ -119,5 +119,10 @@ public abstract class RobotDrive {
     protected double squareInput(double input) {
         return input * Math.abs(input);
     }
+    protected double squareInputDeadband(double input, double min) {
+        double val = input;
+        if (Math.abs(input) < min) {val = 0;}
+        return val * Math.abs(val);
+    }
 
 }

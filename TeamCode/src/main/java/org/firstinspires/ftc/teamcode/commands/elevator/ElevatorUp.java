@@ -20,7 +20,7 @@ public class ElevatorUp extends CommandBase {
     public void execute() {
         m_elevator.runToPosition(
                 m_elevator.get_position() +
-                Constants.ElevatorConstants.threshold);
+                5*Constants.ElevatorConstants.threshold);
     }
     @Override
     public boolean isFinished() {
